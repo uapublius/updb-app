@@ -1,0 +1,23 @@
+@import "./vendor/normalize.scss";
+@import "./vendor/reset.scss";
+@import "./vendor/system-font.scss";
+@import "flatpickr/dist/themes/dark.css";
+@import "./theme.scss";
+@import "./flatpickr.scss";
+@import "./elements.scss";
+@import "./utilities.scss";
+@import "./responsive.scss";
+@import "./tabulator.scss";
+@import "./element-plus.scss";
+
+#app {
+  height: 100vh;
+}
+
+.bg-highlight {
+  background-color: rgb(252, 252, 232);
+}
+
+pre.body-text {
+  max-width: 6in;
+}

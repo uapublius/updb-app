@@ -1,0 +1,63 @@
+:root {
+  --el-descriptions-item-bordered-label-background: red !important;
+}
+
+body {
+  font-family: system-ui;
+  font-size: 14px;
+}
+
+a,
+a:visited {
+  color: $color-tint;
+}
+
+pre {
+  white-space: pre-line;
+  margin: 0;
+}
+
+th {
+  font-weight: bold !important;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  font-size: 18pt;
+}
+
+h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  padding: 0 0.5rem;
+  vertical-align: middle;
+  line-height: 1.4rem;
+  font-size: 13px;
+  border: 1px solid #d5d5d5;
+  border-radius: 4px;
+  background-color: #efefef;
+  color: #333;
+}
+
+button.active {
+  font-weight: bold;
+  color: $color-tint;
+}
+
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+button svg {
+  height: 0.7rem;
+  padding: 0 2px 0 0;
+}
+
+button:active {
+  color: $color-tint;
+}

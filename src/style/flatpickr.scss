@@ -1,0 +1,42 @@
+// https://github.com/flatpickr/flatpickr/blob/master/src/plugins/confirmDate/confirmDate.css
+
+.flatpickr-calendar {
+  border-radius: 0;
+}
+
+.flatpickr-confirm {
+  height: 40px;
+  max-height: 0px;
+  visibility: hidden;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: #80cbc4;
+  color: #fff;
+}
+
+.flatpickr-confirm svg {
+  margin-right: 4px;
+}
+
+.flatpickr-confirm svg path {
+  fill: #fff;
+}
+
+.flatpickr-confirm.visible {
+  max-height: 40px;
+  visibility: visible;
+}
+
+.tabulator-header-filter {
+  .flatpickr-input {
+    padding: 3px 3px !important;
+    margin: 4px 0 0 0;
+  }
+
+  .flatpickr-input:first-child {
+    // margin: 1px 0 0 0;
+  }
+}

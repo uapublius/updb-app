@@ -1,0 +1,102 @@
+$color-darker: hsl(0, 1%, 15%);
+$color-dark: hsl(0, 1%, 25%);
+$color-light: hsl(0, 0%, 95%);
+$color-gray-30: hsl(0, 1%, 30%);
+$color-gray-40: hsl(0, 1%, 40%);
+$color-gray-50: hsl(0, 1%, 50%);
+$color-gray-60: hsl(0, 1%, 60%);
+$color-gray-70: hsl(0, 1%, 70%);
+$color-gray-80: hsl(0, 1%, 80%);
+$color-gray-85: hsl(0, 1%, 85%);
+$color-gray-90: hsl(0, 1%, 90%);
+$color-gray-95: hsl(0, 1%, 95%);
+$color-gray-97: hsl(0, 1%, 97%);
+$color-tint: #0979ff;
+
+.up-pane-header .up-layout-pane {
+  background-color: $color-dark;
+  color: #f8f8f8;
+
+  a.feedback-link {
+    &:hover {
+      text-decoration: underline;
+    }
+
+    color: $color-gray-70;
+    font-size: 13px;
+    align-items: center;
+    align-content: center;
+    text-decoration: none;
+
+    svg {
+      height: 12px;
+      margin-right: 6px;
+      fill: $color-gray-70;
+    }
+  }
+}
+
+.up-pane-toolbar .up-layout-pane,
+.up-pane-footer .up-layout-pane {
+  font-size: 13px;
+  background-color: #e6e6e6;
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.up-pane-main .up-layout-pane {
+  border-bottom: 1px solid #d5d5d5;
+}
+
+.up-pane-detail .up-layout-pane {
+  border-top: 1px solid #ffffff;
+}
+
+.up-toolbar {
+  .up-toolbar-overflow-item {
+    svg {
+      fill: $color-gray-30;
+    }
+  }
+
+  .up-toolbar-item {
+    color: $color-gray-30;
+
+    .up-icon svg {
+      fill: $color-gray-30;
+    }
+
+    &:active,
+    &.up-active {
+      color: $color-tint;
+
+      .up-icon svg {
+        fill: $color-tint;
+      }
+    }
+  }
+}
+
+.el-button--info {
+  svg {
+    margin-right: 6px;
+    fill: white;
+  }
+}
+
+.el-button > span {
+  align-items: baseline;
+}
+
+.el-button svg {
+  height: 11px;
+}
+
+.gradient-text {
+  background-color: #CD5BDE;
+  background-image: linear-gradient(90deg, #CD5BDE, #8CB4F3);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}

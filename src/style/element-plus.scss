@@ -1,0 +1,15 @@
+.el-descriptions {
+  border: 0 !important;
+}
+
+.el-descriptions__label.is-top {
+  vertical-align: top;
+}
+
+.el-descriptions__body .el-descriptions__table.is-bordered .el-descriptions__cell {
+  vertical-align: baseline;
+}
+
+.el-descriptions__label.el-descriptions__cell.is-bordered-label {
+  background: $color-gray-97;
+}

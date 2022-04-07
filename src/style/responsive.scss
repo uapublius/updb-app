@@ -1,0 +1,57 @@
+@media screen and (max-width: 420px) {
+  button[data-page="first"],
+  button[data-page="last"],
+  .tabulator-paginator > label,
+  .tabulator-page-size,
+  .tabulator-pages {
+    display: none;
+  }
+
+  .tabulator-header-filter input {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+  }
+
+  .el-descriptions__header {
+    flex-direction: column;
+
+    .el-descriptions__title {
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  body {
+    font-size: 12px;
+  }
+
+  button {
+    font-size: 12px;
+  }
+
+  .tabulator {
+    font-size: 12px !important;
+  }
+
+  .tabulator-col-title {
+    font-size: 10px;
+  }
+}
+
+@media screen and (min-width: 421px) {
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: $color-gray-97;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: $color-gray-70;
+    background-repeat: repeat;
+    background-position-x: 3px;
+    background-position-y: center;
+    background-size: 4px;
+  }
+}

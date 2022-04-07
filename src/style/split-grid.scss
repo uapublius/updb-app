@@ -1,0 +1,31 @@
+.up-gutter-column {
+  cursor: col-resize;
+}
+
+.up-gutter-row {
+  cursor: row-resize;
+}
+
+.up-gutter:not(.up-gutter-no-resize) {
+  &::after {
+    display: block;
+    position: relative;
+    content: ''
+  }
+
+  &.up-gutter-column::after {
+    width: 8px;
+    height: 100%;
+    margin-left: -4px;
+  }
+
+  &.up-gutter-row::after {
+    width: 100%;
+    height: 8px;
+    margin-top: -4px;
+  }
+}
+
+.up-layout-pane-maximized {
+  border: 0;
+}
