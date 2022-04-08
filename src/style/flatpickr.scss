@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background: #80cbc4;
+  background: $color-tint;
   color: #fff;
 }
 
@@ -34,9 +34,5 @@
   .flatpickr-input {
     padding: 3px 3px !important;
     margin: 4px 0 0 0;
-  }
-
-  .flatpickr-input:first-child {
-    // margin: 1px 0 0 0;
   }
 }

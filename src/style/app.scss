@@ -10,8 +10,8 @@
 @import "./tabulator.scss";
 @import "./element-plus.scss";
 
-#app {
-  height: 100vh;
+html, body, #app {
+  height: 100%;
 }
 
 .bg-highlight {

@@ -83,19 +83,24 @@
         </template>
       </el-descriptions-item>
 
-      <el-descriptions-item label="Attachments" class-name="p-w-xxs">
-        <a
-          v-for="(attachment, idx) in report.attachments"
-          class="p-w-xs p-e-xs m-e-xs attachment-link d-inline-flex flex-baseline text-center"
-          :title="`https://web.archive.org/web/${attachment}`"
-          :href="`https://web.archive.org/web/${attachment}`"
-          target="_blank"
-        >
-          <span>
-            {{ idx + 1 }}
-          </span>
-          <up-icon-external-link style="margin-left: 4px; height: 8px" />
-        </a>
+      <el-descriptions-item
+        v-if="report.attachments && report.attachments.length"
+        label="Attachments"
+        class-name="p-w-xxs"
+      >
+        <template v-for="(attachment, idx) in report.attachments">
+          <a
+            class="p-w-xs p-e-xs m-e-xs attachment-link d-inline-flex flex-baseline text-center"
+            :title="`https://web.archive.org/web/${attachment}`"
+            :href="`https://web.archive.org/web/${attachment}`"
+            target="_blank"
+          >
+            <span>
+              {{ idx + 1 }}
+            </span>
+            <up-icon-external-link style="margin-left: 4px; height: 8px" />
+          </a>
+        </template>
       </el-descriptions-item>
 
       <el-descriptions-item

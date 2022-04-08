@@ -21,17 +21,23 @@ import {
   SelectRowModule
 } from "tabulator-tables";
 
-Tabulator.registerModule([
+let isMobile = navigator.userAgent.includes(" Mobile/");
+
+let tabulatorModules = [
   AjaxModule,
   PageModule,
   SortModule,
   FilterModule,
   FormatModule,
   EditModule,
-  ResizeColumnsModule,
-  KeybindingsModule,
   SelectRowModule
-]);
+];
+
+if (!isMobile) {
+  tabulatorModules = tabulatorModules.concat([ResizeColumnsModule, KeybindingsModule]);
+}
+
+Tabulator.registerModule(tabulatorModules);
 
 let noop = () => {
   /* */

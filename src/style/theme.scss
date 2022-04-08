@@ -76,21 +76,6 @@ $color-tint: #0979ff;
   }
 }
 
-.el-button--info {
-  svg {
-    margin-right: 6px;
-    fill: white;
-  }
-}
-
-.el-button > span {
-  align-items: baseline;
-}
-
-.el-button svg {
-  height: 11px;
-}
-
 .gradient-text {
   background-color: #CD5BDE;
   background-image: linear-gradient(90deg, #CD5BDE, #8CB4F3);

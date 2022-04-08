@@ -9,9 +9,7 @@ function createDateEditor(placeholder: string, value: string, cb: () => void) {
   editor.value = value;
   editor.setAttribute("type", "date");
   editor.placeholder = placeholder;
-  editor.style.fontSize = "11px";
-  editor.style.width = "100%";
-  editor.style.display = "block";
+  editor.style.display = "flex";
 
   if (isMobile) {
     editor.addEventListener('blur', () => cb());

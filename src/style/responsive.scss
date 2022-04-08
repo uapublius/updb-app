@@ -35,6 +35,12 @@
   .tabulator-col-title {
     font-size: 10px;
   }
+
+  input[type="date"] {
+    background: #fff;
+    border: 1px solid #d5d5d5;
+    font-size: 11px;
+  }
 }
 
 @media screen and (min-width: 421px) {
@@ -53,5 +59,17 @@
     background-position-x: 3px;
     background-position-y: center;
     background-size: 4px;
+  }
+
+  .tabulator-header-filter input {
+    border: 1px solid #dddddd;
+  }
+
+  .tabulator-header-filter input[type=search] {
+    border-color: #dddddd;
+  }
+
+  .tabulator-header-filter input:hover {
+    border-color: #a0a0a0;
   }
 }

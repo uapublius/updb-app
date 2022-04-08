@@ -18,18 +18,6 @@
 
 // Headers
 
-.tabulator-header-filter input {
-  border: 1px solid #dddddd;
-}
-
-.tabulator-header-filter input[type=search] {
-  border-color: #dddddd;
-}
-
-.tabulator-header-filter input:hover {
-  border-color: #a0a0a0;
-}
-
 .tabulator-header
 .tabulator-col.tabulator-sortable[aria-sort="none"]
 .tabulator-col-content
@@ -101,8 +89,10 @@
   border-color: #d5d5d5;
 }
 
+.tabulator-row:active,
 .tabulator-row.tabulator-selected {
-  background-color: $color-tint;
+  background-color: $color-tint !important;
+  color: #fff;
 }
 
 .tabulator-row.tabulator-selected:not(:hover) .tabulator-cell {

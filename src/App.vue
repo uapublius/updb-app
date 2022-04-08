@@ -74,7 +74,11 @@ import {
   resetFilters
 } from "./lib/rowOps";
 
+let isMobile = navigator.userAgent.includes(" Mobile/");
+
 let table = ref(null);
+
+let splitDistribution = isMobile ? ["1fr", "1fr"] : ["3fr", "2fr"];
 
 let layout = ref({
   name: "app",
@@ -96,7 +100,7 @@ let layout = ref({
     {
       minSize: 100,
       direction: "row",
-      sizes: ["3fr", "2fr"],
+      sizes: splitDistribution,
       panes: [
         {
           name: "main",

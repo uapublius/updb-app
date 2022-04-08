@@ -41,8 +41,8 @@ let sourceIdColumn = {
 let dateColumn = {
   title: "Date",
   field: "date",
-  minWidth: isNarrow ? 40 : 86,
-  width: isNarrow ? 86 : undefined,
+  minWidth: 92,
+  width: isNarrow ? 92 : undefined,
   headerFilter: dateRangeEditor,
   headerFilterFunc: "ov",
   formatter(cell) {
