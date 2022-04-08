@@ -49,6 +49,7 @@ export default defineComponent({
 
   data() {
     return {
+      tabulator: null,
       totalResults: 0,
       initialHeaderFilter: [],
       initialSort: []
@@ -63,44 +64,35 @@ export default defineComponent({
     this.initialSort = parsedQs?.sort || [];
   },
 
-  computed: {
-    tabulator() {
-      let table = new Tabulator("#tabulator", {
-        index: "id",
-        height: "100%",
-        columns,
-        columnDefaults,
-        layout: "fitDataStretch",
-        initialHeaderFilter: this.initialHeaderFilter,
-        initialSort: this.initialSort,
-        selectable: 1,
-        keybindings: true,
-        footerElement: ".reports-table-footer",
-        filterMode: "remote",
-        headerFilterLiveFilterDelay: 1000,
-        sortMode: "remote",
-        pagination: true,
-        paginationSize: 50,
-        paginationSizeSelector: true,
-        paginationMode: "remote",
-        paginationButtonCount: 5,
-        paginationCounter: this.paginationCounter,
-        ajaxURL: "/api/report_view",
-        ajaxRequestFunc: ajaxRequestFunc(this)(total => {
-          this.$emit("totalRowsChanged", total);
-          this.totalResults = total;
-        })
-      });
-
-      return table;
-    }
-  },
-
   mounted() {
-    this.tabulator.on("rowSelectionChanged", (data, rows) => {
-      this.$emit("rowSelectionChanged", data);
+    this.tabulator = new Tabulator("#tabulator", {
+      index: "id",
+      height: "100%",
+      columns,
+      columnDefaults,
+      layout: "fitDataStretch",
+      initialHeaderFilter: this.initialHeaderFilter,
+      initialSort: this.initialSort,
+      selectable: 1,
+      keybindings: true,
+      footerElement: ".reports-table-footer",
+      filterMode: "remote",
+      headerFilterLiveFilterDelay: 1000,
+      sortMode: "remote",
+      pagination: true,
+      paginationSize: 50,
+      paginationSizeSelector: true,
+      paginationMode: "remote",
+      paginationButtonCount: 5,
+      paginationCounter: this.paginationCounter,
+      ajaxURL: "/api/report_view",
+      ajaxRequestFunc: ajaxRequestFunc(this)(total => {
+        this.$emit("totalRowsChanged", total);
+        this.totalResults = total;
+      })
     });
 
+    this.tabulator.on("rowSelectionChanged", data => this.$emit("rowSelectionChanged", data));
     this.tabulator.on("dataLoaded", data => this.$emit("dataLoaded"));
     this.tabulator.on("dataFiltered", data => this.$emit("dataFiltered"));
     this.tabulator.on("dataSorted", data => this.$emit("dataSorted"));

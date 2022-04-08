@@ -49,8 +49,11 @@ let updateRowsWithAttachments = (table) => ({ data }) => {
 };
 
 async function buildPaginationData(updateRowsWithAttachments, url, config, params) {
+  let urlParams = new URLSearchParams(window.location.search);
+  let count = urlParams.get('count') || 'estimated';
+
   let res = await axios.get(url, {
-    headers: { "Prefer": "count=exact" },
+    headers: { "Prefer": `count=${count}` },
     params: buildParams(params.filter, params.sort, params.page, params.size)
   });
   let rowCount = parseInt(res.headers["content-range"]?.split('/')?.[1]) || 1;

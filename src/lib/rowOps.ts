@@ -55,6 +55,7 @@ export function handleTotalRowsChanged(total: number) {
 
 export function resetFilters(table) {
   table.tabulator.clearFilter(true);
+  table.tabulator.clearSort();
 }
 
 export function handleDataFiltered(table) {
