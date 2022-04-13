@@ -55,6 +55,7 @@
     background: #fff;
     border: 1px solid #d5d5d5;
     font-size: 11px;
+    margin-bottom: 1px;
   }
 }
 
@@ -82,6 +83,7 @@
 
   .tabulator-header-filter input[type=search] {
     border-color: #dddddd;
+    padding: 2px 4px !important;
   }
 
   .tabulator-header-filter input:hover {
