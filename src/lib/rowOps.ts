@@ -1,4 +1,5 @@
 import qs from "qs";
+import { DateTime } from 'luxon';
 import { sources } from "./sources";
 import { computed, Ref, ref } from "vue";
 import { Report, ReportFormatted } from "../types";
@@ -30,7 +31,7 @@ export let formattedReport: Ref<ReportFormatted> = computed(() => {
     id,
     source: sources[source],
     source_id,
-    date,
+    date: DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_SHORT),
     attachments,
     references,
     city,
