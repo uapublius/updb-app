@@ -6,15 +6,38 @@
           <h1 class="gradient-text"><a href="/">UPDB</a></h1>
           <sup>beta</sup>
         </div>
-        <div class="d-flex flex-middle flex-center">
-          <a
-            class="d-flex flex-middle feedback-link"
-            title="uapublius@protonmail.com"
-            href="mailto:uapublius@protonmail.com?subject=UPDB Beta Feedback"
-          >
-            <up-icon-envelope />
-            <div>Beta Feedback</div>
-          </a>
+
+        <div class="d-flex">
+          <div class="d-flex m-e-lg">
+            <a
+              class="d-flex feedback-link"
+              target="_blank"
+              href="https://github.com/uapublius/updb-importers/raw/main/db/phenomenon.sql.gz"
+            >
+              <up-icon-download />
+              Download
+            </a>
+          </div>
+          <div class="d-flex m-e-lg">
+            <a
+              class="d-flex feedback-link"
+              target="_blank"
+              href="https://github.com/uapublius?tab=repositories&q=&type=source&language=&sort="
+            >
+              <up-icon-github />
+              GitHub
+            </a>
+          </div>
+          <div class="d-flex">
+            <a
+              class="d-flex feedback-link"
+              title="uapublius@protonmail.com"
+              href="mailto:uapublius@protonmail.com?subject=UPDB Beta Feedback"
+            >
+              <up-icon-envelope style="padding-top: 1px" />
+              <div>Feedback</div>
+            </a>
+          </div>
         </div>
       </div>
     </template>

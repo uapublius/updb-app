@@ -35,14 +35,13 @@ html, body, #app, .up-pane-header {
     }
 
     color: $color-gray-70;
-    font-size: 12px;
-    height: 14px;
-    align-items: center;
-    align-content: center;
+    font-size: 13px;
     text-decoration: none;
+    line-height: 1;
 
     svg {
       height: 12px;
+      width: auto;
       margin-right: 6px;
       fill: $color-gray-70;
     }
