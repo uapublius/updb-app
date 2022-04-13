@@ -11,6 +11,7 @@ export type Report = {
   other?: string;
   description: string;
   attachments: string[];
+  references: string[];
 };
 
 export type ReportFormatted = {
@@ -26,4 +27,5 @@ export type ReportFormatted = {
   other?: string;
   description: string;
   attachments: string[];
+  references: string[];
 };

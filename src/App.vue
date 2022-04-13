@@ -1,61 +1,59 @@
 <template>
-  <el-config-provider size="small">
-    <up-layout v-model:layout="layout">
-      <template #header>
-        <div class="d-flex flex-middle flex-space p-w-xs p-e-sm p-n-xxs p-s-xxs">
-          <div class="d-flex flex-middle">
-            <h1 class="gradient-text"><a href="/">UPDB</a></h1>
-            <sup>beta</sup>
-          </div>
-          <div class="d-flex flex-middle flex-center">
-            <a
-              class="d-flex flex-middle feedback-link"
-              title="uapublius@protonmail.com"
-              href="mailto:uapublius@protonmail.com?subject=UPDB Beta Feedback"
-            >
-              <up-icon-envelope />
-              <div>Beta Feedback</div>
-            </a>
-          </div>
+  <up-layout v-model:layout="layout">
+    <template #header>
+      <div class="d-flex flex-middle flex-space p-w-xs p-e-sm p-n-xxs p-s-xxs">
+        <div class="d-flex flex-middle">
+          <h1 class="gradient-text"><a href="/">UPDB</a></h1>
+          <sup>beta</sup>
         </div>
-      </template>
-
-      <template #toolbar>
-        <div class="flex flex-space p-xs flex flex-middle">
-          <div>
-            <button @click="handleDownloadAll(table)" class="m-e-xs">Download Results (CSV)</button>
-
-            <button @click="resetFilters(table)">Reset Filters</button>
-          </div>
+        <div class="d-flex flex-middle flex-center">
+          <a
+            class="d-flex flex-middle feedback-link"
+            title="uapublius@protonmail.com"
+            href="mailto:uapublius@protonmail.com?subject=UPDB Beta Feedback"
+          >
+            <up-icon-envelope />
+            <div>Beta Feedback</div>
+          </a>
         </div>
-      </template>
+      </div>
+    </template>
 
-      <template #main>
-        <ReportTable
-          ref="table"
-          @data-filtered="handleDataFiltered(table)"
-          @data-sorted="handleDataFiltered(table)"
-          @row-selection-changed="handleRowSelectionChanged"
-          @total-rows-changed="handleTotalRowsChanged"
-        />
-      </template>
+    <template #toolbar>
+      <div class="flex flex-space p-xs flex flex-middle">
+        <div>
+          <button @click="handleDownloadAll(table)" class="m-e-xs">Download Results (CSV)</button>
 
-      <template #detail>
-        <ReportDetail
-          v-if="formattedReport"
-          :report="formattedReport"
-          :permalink="reportPermalink"
-          @copy-text="handleCopyTextSelected"
-          @copy-link="handleCopyLinkSelected"
-          @download="handleDownloadSelected(table, formattedReport)"
-        />
-      </template>
+          <button @click="resetFilters(table)">Reset Filters</button>
+        </div>
+      </div>
+    </template>
 
-      <template #footer>
-        <div class="reports-table-footer tabulator-footer"></div>
-      </template>
-    </up-layout>
-  </el-config-provider>
+    <template #main>
+      <ReportTable
+        ref="table"
+        @data-filtered="handleDataFiltered(table)"
+        @data-sorted="handleDataFiltered(table)"
+        @row-selection-changed="handleRowSelectionChanged"
+        @total-rows-changed="handleTotalRowsChanged"
+      />
+    </template>
+
+    <template #detail>
+      <ReportDetail
+        v-if="formattedReport"
+        :report="formattedReport"
+        :permalink="reportPermalink"
+        @copy-text="handleCopyTextSelected"
+        @copy-link="handleCopyLinkSelected"
+        @download="handleDownloadSelected(table, formattedReport)"
+      />
+    </template>
+
+    <template #footer>
+      <div class="reports-table-footer tabulator-footer"></div>
+    </template>
+  </up-layout>
 </template>
 
 <script setup lang="ts">
@@ -64,7 +62,6 @@ import wrap from "word-wrap";
 import { computed, ref } from "vue";
 import ReportDetail from "./components/ReportDetail.vue";
 import ReportTable from "./components/ReportTable.vue";
-import { ElConfigProvider } from "element-plus";
 import { handleDownloadSelected, handleDownloadAll } from "./lib/handleDownload";
 import {
   formattedReport,

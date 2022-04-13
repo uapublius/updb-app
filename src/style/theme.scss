@@ -17,6 +17,10 @@ $color-tint: #0979ff;
   background-color: $color-dark;
   color: #f8f8f8;
 
+  h1 {
+    font-size: 1.5rem;
+  }
+
   a.feedback-link {
     &:hover {
       text-decoration: underline;

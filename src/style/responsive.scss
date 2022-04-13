@@ -1,3 +1,9 @@
+@media screen and (max-width: 720px) {
+  .flex-wide {
+    display: initial;
+  }
+}
+
 @media screen and (max-width: 420px) {
   button[data-page="first"],
   button[data-page="last"],
@@ -7,17 +13,22 @@
     display: none;
   }
 
+  .flex-wide {
+    display: initial;
+  }
+
+  .report-detail-header button {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .tabulator-header-filter input {
     padding-top: 1px !important;
     padding-bottom: 1px !important;
   }
 
-  .el-descriptions__header {
-    flex-direction: column;
-
-    .el-descriptions__title {
-      margin-bottom: 0.75rem;
-    }
+  .definition-table td {
+    padding: 4px 0;
   }
 
   body {
