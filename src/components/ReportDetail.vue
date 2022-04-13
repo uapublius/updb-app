@@ -104,7 +104,7 @@
     <h6 v-if="report.description" class="m-n-sm m-s-xs">Report</h6>
 
     <div v-if="report.description" class="bg-highlight d-inline-block p-z">
-      <pre class="body-text p-sm" v-html="body"></pre>
+      <pre class="p-sm" v-html="body"></pre>
     </div>
   </div>
 </template>
