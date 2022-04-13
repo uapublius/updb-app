@@ -1,3 +1,9 @@
+@media screen and (max-width: 720px) {
+  .flex-wide {
+    display: initial;
+  }
+}
+
 @media screen and (max-width: 420px) {
   button[data-page="first"],
   button[data-page="last"],
@@ -7,17 +13,26 @@
     display: none;
   }
 
-  .tabulator-header-filter input {
-    padding-top: 1px !important;
-    padding-bottom: 1px !important;
+  .flex-wide {
+    display: initial;
   }
 
-  .el-descriptions__header {
-    flex-direction: column;
+  .report-detail-header button {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
-    .el-descriptions__title {
-      margin-bottom: 0.75rem;
+  .tabulator-header-filter {
+    padding-top: 3px;
+
+    input {
+      padding-top: 1px !important;
+      padding-bottom: 1px !important;
     }
+  }
+
+  .definition-table td {
+    padding: 4px 0;
   }
 
   body {

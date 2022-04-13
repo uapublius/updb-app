@@ -13,9 +13,21 @@ $color-gray-95: hsl(0, 1%, 95%);
 $color-gray-97: hsl(0, 1%, 97%);
 $color-tint: #0979ff;
 
+html, body, #app, .up-pane-header {
+  background-color: $color-dark;
+}
+
+.up-layout-pane {
+  background-color: #fff;
+}
+
 .up-pane-header .up-layout-pane {
   background-color: $color-dark;
   color: #f8f8f8;
+
+  h1 {
+    font-size: 1.5rem;
+  }
 
   a.feedback-link {
     &:hover {
@@ -23,7 +35,8 @@ $color-tint: #0979ff;
     }
 
     color: $color-gray-70;
-    font-size: 13px;
+    font-size: 12px;
+    height: 14px;
     align-items: center;
     align-content: center;
     text-decoration: none;

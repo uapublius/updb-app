@@ -44,6 +44,8 @@ let noop = () => {
 };
 
 Tabulator.extendModule("filter", "filters", {
+  ulike: noop,
+  "u=": noop,
   fts: noop,
   ov: noop
 });

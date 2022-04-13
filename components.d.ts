@@ -4,8 +4,8 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
-    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
+    Credits: typeof import('./src/components/Credits.vue')['default']
+    DefinitionTable: typeof import('./src/components/DefinitionTable.vue')['default']
     ReportDetail: typeof import('./src/components/ReportDetail.vue')['default']
     ReportTable: typeof import('./src/components/ReportTable.vue')['default']
     UpIcon: typeof import('./src/components/UpIcon.vue')['default']

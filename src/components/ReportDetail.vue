@@ -1,125 +1,111 @@
 <template>
   <div v-show="report.date" class="p-sm">
-    <el-descriptions size="small" :direction="direction" :column="2" border>
-      <template #title>
+    <div class="report-detail-header flex flex-space flex-middle flex-wide">
+      <h2 class="m-s-sm">
         <a :href="permalink" target="_blank">{{ report.source }} {{ report.source_id }}</a>
-      </template>
+      </h2>
 
-      <template #extra>
-        <button @click="() => $emit('download')" class="m-e-sm">Download Report (CSV)</button>
+      <div class="m-s-sm">
+        <button @click="() => $emit('download')" class="m-e-sm m-s-xxs m-n-xxs">
+          Download (CSV)
+        </button>
 
-        <button @click="handleCopyLink" class="m-e-sm">
+        <button @click="handleCopyLink" class="m-e-sm m-s-xxs m-n-xxs">
           <template v-if="copiedLink">Copied</template>
           <template v-else>Copy Link</template>
         </button>
 
-        <button @click="handleCopyText">
+        <button @click="handleCopyText" class="m-e-sm m-s-xxs m-n-xxs">
           <template v-if="copiedText">Copied</template>
           <template v-else>Copy Text</template>
         </button>
-      </template>
+      </div>
+    </div>
 
-      <el-descriptions-item>
-        <template #label>
-          <div>
-            <up-icon-calendar />
-            <span class="m-w-xs">Date</span>
+    <div class="m-s-sm flex flex-wide">
+      <div class="p-e-med">
+        <DefinitionTable>
+          <tr v-if="report.date">
+            <td>Date</td>
+            <td>
+              {{ report.date }}
+            </td>
+          </tr>
+
+          <tr>
+            <td>Source</td>
+            <td>{{ report.source }}</td>
+          </tr>
+
+          <tr>
+            <td>Source ID</td>
+            <td>{{ report.source_id }}</td>
+          </tr>
+
+          <tr v-if="report.city">
+            <td>City</td>
+            <td>
+              {{ report.city }}
+            </td>
+          </tr>
+
+          <tr v-if="report.district">
+            <td>
+              <div>District</div>
+            </td>
+            <td>
+              {{ report.district }}
+            </td>
+          </tr>
+
+          <tr v-if="report.country">
+            <td>Country</td>
+            <td>
+              {{ report.country }}
+            </td>
+          </tr>
+
+          <tr
+            v-if="report.attachments && report.attachments.length"
+            label="Attachments"
+            class-name="p-w-xxs"
+          ></tr>
+        </DefinitionTable>
+      </div>
+
+      <div class="p-e-med">
+        <h6 v-if="report.references" class="m-n-xs m-s-xs">References</h6>
+
+        <ul class="break-all m-s-sm">
+          <li
+            class="m-s-xs"
+            v-for="reference in report.references"
+            v-html="lf2br(linkify(reference))"
+          />
+        </ul>
+
+        <h6 v-if="report.attachments" class="m-n-xs m-s-xs">Attachments</h6>
+
+        <div class="break-all m-s-sm">
+          <div v-for="(attachment, idx) in report.attachments">
+            <a
+              class="p-e-xs m-e-xs attachment-link"
+              :title="urlForAttachment(attachment)"
+              :href="`https://web.archive.org/web/${attachment}`"
+              target="_blank"
+            >
+              <span>{{ nameForAttachment(attachment) }}</span>
+            </a>
           </div>
-        </template>
-        <template v-if="report.date">
-          {{ report.date }}
-        </template>
-      </el-descriptions-item>
+        </div>
+      </div>
+    </div>
 
-      <el-descriptions-item>
-        <template #label>
-          <div>
-            <up-icon-books />
-            <span class="m-w-xs">Source</span>
-          </div>
-        </template>
-        {{ report.source }}
-      </el-descriptions-item>
+    <h6 v-if="report.description" class="m-n-sm m-s-xs">Report</h6>
 
-      <el-descriptions-item>
-        <template #label>
-          <div>
-            <up-icon-city />
-            <span class="m-w-xs">City</span>
-          </div>
-        </template>
-        <template v-if="report.city">
-          {{ report.city }}
-        </template>
-      </el-descriptions-item>
-
-      <el-descriptions-item label="Source ID">
-        {{ report.source_id }}
-      </el-descriptions-item>
-
-      <el-descriptions-item>
-        <template #label>
-          <div>
-            <up-icon-map />
-            <span class="m-w-xs">District</span>
-          </div>
-        </template>
-        <template v-if="report.district">
-          {{ report.district }}
-        </template>
-      </el-descriptions-item>
-
-      <el-descriptions-item />
-
-      <el-descriptions-item>
-        <template #label>
-          <div>
-            <up-icon-globe />
-            <span class="m-w-xs">Country</span>
-          </div>
-        </template>
-        <template v-if="report.country">
-          {{ report.country }}
-        </template>
-      </el-descriptions-item>
-
-      <el-descriptions-item
-        v-if="report.attachments && report.attachments.length"
-        label="Attachments"
-        class-name="p-w-xxs"
-      >
-        <template v-for="(attachment, idx) in report.attachments">
-          <a
-            class="p-w-xs p-e-xs m-e-xs attachment-link d-inline-flex flex-baseline text-center"
-            :title="`https://web.archive.org/web/${attachment}`"
-            :href="`https://web.archive.org/web/${attachment}`"
-            target="_blank"
-          >
-            <span>
-              {{ idx + 1 }}
-            </span>
-            <up-icon-external-link style="margin-left: 4px; height: 8px" />
-          </a>
-        </template>
-      </el-descriptions-item>
-
-      <el-descriptions-item
-        class-name="bg-highlight p-z valign-top"
-        label="Report"
-        label-align="top"
-        :span="2"
-      >
-        <template #label>
-          <div>
-            <up-icon-file-alt />
-            <span class="m-w-xs">Report</span>
-          </div>
-        </template>
-        <template v-if="report.description">
-          <pre class="body-text p-sm">{{ report.description }}</pre>
-        </template>
-      </el-descriptions-item>
-    </el-descriptions>
+    <div v-if="report.description" class="bg-highlight d-inline-block p-z">
+      <pre class="body-text p-sm" v-html="body"></pre>
+    </div>
   </div>
 </template>
 
@@ -127,10 +113,7 @@
 import { defineComponent, PropType } from "vue";
 import { DateTime } from "luxon";
 import { ReportFormatted } from "../types";
-import "element-plus/es/components/descriptions/style/css";
-import "element-plus/es/components/descriptions-item/style/css";
-
-let isMobile = navigator.userAgent.includes(" Mobile/");
+import { isMobile, lf2br, linkify, urlForAttachment } from "../lib/util";
 
 export default defineComponent({
   props: {
@@ -154,6 +137,11 @@ export default defineComponent({
   },
 
   computed: {
+    body() {
+      let body = this.report.description?.trim();
+      return linkify(body);
+    },
+
     direction() {
       return isMobile ? "vertical" : "horizontal";
     },
@@ -165,6 +153,20 @@ export default defineComponent({
   },
 
   methods: {
+    linkify,
+
+    lf2br,
+
+    nameForAttachment(attachment) {
+      let foo = new URL(attachment);
+      let fooParts = foo.pathname.split("/");
+      return fooParts[fooParts.length - 1];
+    },
+
+    urlForAttachment(attachment) {
+      return urlForAttachment(attachment);
+    },
+
     handleCopyLink() {
       this.copiedLink = true;
       this.$emit("copy-link");
@@ -186,25 +188,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 pre {
-  white-space: pre-line;
-  font: inherit;
-}
-
-.el-descriptions__label > div {
-  display: flex;
-  flex-grow: 0;
-  flex-shrink: 1;
-  align-items: center;
-  align-content: center;
-  justify-items: center;
-
-  svg {
-    height: 12px;
-  }
-}
-
-.el-descriptions__cell svg {
-  fill: rgb(96, 98, 102);
+  line-height: 1.5;
 }
 
 .attachment-link {

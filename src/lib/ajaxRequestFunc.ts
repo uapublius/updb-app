@@ -31,8 +31,16 @@ export function buildParams(filter: Record<string, any>, sort: Record<string, an
 }
 
 export let ajaxRequestFunc = (table) => (handleTotalRows: (total: number) => void) => async (url, config, params) => {
-  let paginationData = await buildPaginationData(updateRowsWithAttachments(table.tabulator), url, config, params);
+  let paginationData = await buildPaginationData(
+    updateRowsWithAttachments(table.tabulator),
+    updateRowsWithReferences(table.tabulator),
+    url,
+    config,
+    params
+  );
+
   handleTotalRows(paginationData.rowCount);
+
   return paginationData;
 };
 
@@ -48,7 +56,19 @@ let updateRowsWithAttachments = (table) => ({ data }) => {
   }
 };
 
-async function buildPaginationData(updateRowsWithAttachments, url, config, params) {
+let updateRowsWithReferences = (table) => ({ data }) => {
+  let referencesByReportId = data.reduce((acc, curr) => {
+    acc[curr.report] = acc[curr.report] || [];
+    acc[curr.report].push(curr.text);
+    return acc;
+  }, {});
+
+  for (let [id, references] of Object.entries(referencesByReportId)) {
+    table.updateData([{ id, references }]);
+  }
+};
+
+async function buildPaginationData(updateRowsWithAttachments, updateRowsWithReferences, url, config, params) {
   let urlParams = new URLSearchParams(window.location.search);
   let count = urlParams.get('count') || 'estimated';
 
@@ -64,6 +84,12 @@ async function buildPaginationData(updateRowsWithAttachments, url, config, param
       report: 'in.(' + res.data.map(d => d.id) + ')'
     }
   }).then(updateRowsWithAttachments);
+
+  axios.get('/api/report_reference_view', {
+    params: {
+      report: 'in.(' + res.data.map(d => d.id) + ')'
+    }
+  }).then(updateRowsWithReferences);
 
   return {
     last_page: lastPage,
@@ -81,8 +107,12 @@ function buildFilters(allFilters: any) {
 
   if (definedFilters.length) {
     filters = definedFilters.reduce((acc, curr) => {
+
       if (curr.type === 'like') {
         acc[curr.field] = curr.type + ".*" + curr.value + "*";
+      }
+      if (curr.type === 'ulike') {
+        acc[curr.field] = curr.type + ".*" + curr.value.toUpperCase() + "*";
       }
       else if (curr.type === '=') {
         if (Array.isArray(curr.value)) {
@@ -91,6 +121,15 @@ function buildFilters(allFilters: any) {
         }
         else {
           acc[curr.field] = "eq." + curr.value;
+        }
+      }
+      else if (curr.type === 'u=') {
+        if (Array.isArray(curr.value)) {
+          acc[curr.field] = acc[curr.field] || [];
+          acc[curr.field].push("in.(" + curr.value.map(v => v.toUpperCase()).join(',') + ")");
+        }
+        else {
+          acc[curr.field] = "eq." + curr.value.toUpperCase();
         }
       }
       else if (curr.type === 'in') {
