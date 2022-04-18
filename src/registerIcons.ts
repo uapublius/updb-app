@@ -3,6 +3,6 @@ export function registerIcons(app) {
 
   Object.entries(components).forEach(([path, definition]) => {
     let componentName = path.split('/').pop().replace(/\.\w+$/, '');
-    app.component("up-icon-" + componentName, definition.default);
+    app.component("icon-" + componentName, definition.default);
   });
 }

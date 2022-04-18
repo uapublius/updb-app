@@ -1,33 +1,46 @@
-@media screen and (max-width: 720px) {
-  .flex-wide {
-    display: initial;
-  }
-}
-
 @media screen and (max-width: 420px) {
+  #app > div {
+    padding: 0.5em !important;
+  }
+
   button[data-page="first"],
   button[data-page="last"],
   .tabulator-paginator > label,
   .tabulator-page-size,
   .tabulator-pages {
-    display: none;
+    display: none !important;
   }
 
-  .flex-wide {
-    display: initial;
+  .report-detail-fields {
+    display: block;
+    overflow: hidden;
   }
 
-  .report-detail-header button {
+  .report-detail-header {
     padding-top: 0;
     padding-bottom: 0;
-  }
+    align-items: start !important;
 
-  .tabulator-header-filter {
-    padding-top: 3px;
+    > div {
+      display: block;
+      margin-bottom: 1em;
+    }
 
-    input {
-      padding-top: 1px !important;
-      padding-bottom: 1px !important;
+    svg {
+      height: auto !important;
+      width: 44px !important;
+    }
+
+    .action-links {
+      margin-left: 0 !important;
+    }
+
+    .action-links {
+      margin-left: 0 !important;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
     }
   }
 
@@ -51,42 +64,29 @@
     font-size: 10px;
   }
 
+  .tabulator-header-filter input[type=search] {
+    padding-left: 7px !important;
+  }
+
   input[type="date"] {
     background: #fff;
-    border: 1px solid #d5d5d5;
+    border: 1px solid $color-gray-90;
     font-size: 11px;
     margin-bottom: 1px;
   }
 }
 
 @media screen and (min-width: 421px) {
-  ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: $color-gray-97;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: $color-gray-70;
-    background-repeat: repeat;
-    background-position-x: 3px;
-    background-position-y: center;
-    background-size: 4px;
-  }
-
   .tabulator-header-filter input {
-    border: 1px solid #dddddd;
+    border: 1px solid $color-gray-90;
   }
 
   .tabulator-header-filter input[type=search] {
-    border-color: #dddddd;
-    padding: 2px 4px !important;
+    border-color: $color-gray-90;
+    padding: 2px 4px 2px 8px !important;
   }
 
   .tabulator-header-filter input:hover {
-    border-color: #a0a0a0;
+    border-color: $color-gray-70;
   }
 }

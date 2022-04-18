@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import "./style/app.scss";
+import "./style/style.scss";
 import { registerIcons } from './registerIcons';
 
 let app = createApp(App);

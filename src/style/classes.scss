@@ -1,0 +1,19 @@
+.gradient-text {
+  background-color: $color-tint-secondary;
+  background-image: linear-gradient(90deg, $color-tint-secondary, $color-tint-tertiary);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+.bg-highlight {
+  background-color: #fcfce8;
+}
+
+.action-link,
+.action-link:active {
+  cursor: pointer;
+  border-bottom: 1px dotted $color-tint;
+}

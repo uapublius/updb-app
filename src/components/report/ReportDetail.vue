@@ -1,29 +1,33 @@
 <template>
-  <div v-show="report.date" class="p-sm">
-    <div class="report-detail-header flex flex-space flex-middle flex-wide">
-      <h2 class="m-s-sm">
-        <a :href="permalink" target="_blank">{{ report.source }} {{ report.source_id }}</a>
-      </h2>
+  <div class="ps-4">
+    <div class="flex report-detail-header justify-content-between align-items-center w-100">
+      <div class="flex align-items-center">
+        <h2 class="ms-1">
+          <a :href="permalink" target="_blank">{{ report.source }} {{ report.source_id }}</a>
+        </h2>
 
-      <div class="m-s-sm">
-        <button @click="() => $emit('download')" class="m-e-sm m-s-xxs m-n-xxs">
-          Download (CSV)
-        </button>
+        <div class="action-links ms-1 mw-4">
+          <a @click="() => $emit('download')" class="action-link me-3">Download (CSV)</a>
 
-        <button @click="handleCopyLink" class="m-e-sm m-s-xxs m-n-xxs">
-          <template v-if="copiedLink">Copied</template>
-          <template v-else>Copy Link</template>
-        </button>
+          <a @click="handleCopyLink" class="action-link me-3">
+            <template v-if="copiedLink">Copied</template>
+            <template v-else>Copy Link</template>
+          </a>
 
-        <button @click="handleCopyText" class="m-e-sm m-s-xxs m-n-xxs">
-          <template v-if="copiedText">Copied</template>
-          <template v-else>Copy Text</template>
-        </button>
+          <a @click="handleCopyText" class="action-link me-3">
+            <template v-if="copiedText">Copied</template>
+            <template v-else>Copy Text</template>
+          </a>
+        </div>
       </div>
+
+      <a class="icon-close" @click="$emit('close')">
+        <icon-chevron-down />
+      </a>
     </div>
 
-    <div class="m-s-sm flex flex-wide">
-      <div class="p-e-med">
+    <div class="report-detail-fields ms-1 w-100">
+      <div class="pe-2">
         <DefinitionTable>
           <tr v-if="report.date">
             <td>Date</td>
@@ -31,6 +35,13 @@
               {{ report.date }}
             </td>
           </tr>
+
+          <!-- <tr v-if="report.date_detail">
+            <td>Date Notes</td>
+            <td>
+              {{ report.date_detail }}
+            </td>
+          </tr> -->
 
           <tr>
             <td>Source</td>
@@ -65,29 +76,25 @@
             </td>
           </tr>
 
-          <tr
-            v-if="report.attachments && report.attachments.length"
-            label="Attachments"
-            class-name="p-w-xxs"
-          ></tr>
+          <tr v-if="report.attachments && report.attachments.length" label="Attachments"></tr>
         </DefinitionTable>
       </div>
 
-      <div class="p-e-med">
-        <h6 v-if="report.references" class="m-n-xs m-s-xs">References</h6>
+      <div class="pe-2">
+        <h6 v-if="report.references" class="ms-1 mn-2">References</h6>
 
-        <ul class="break-all m-s-sm">
+        <ul class="break-all ms-1">
           <li
-            class="m-s-xs"
+            class="ms-1"
             v-for="reference in report.references"
             v-html="lf2br(linkify(reference))"
           />
         </ul>
 
-        <h6 v-if="report.attachments" class="m-n-xs m-s-xs">Attachments</h6>
+        <h6 v-if="report.attachments" class="ms-1 mn-2">Attachments</h6>
 
-        <div class="break-all m-s-sm">
-          <div v-for="(attachment, idx) in report.attachments">
+        <div class="break-all ms-1">
+          <li class="ms-1" v-for="attachment in report.attachments">
             <a
               class="p-e-xs m-e-xs attachment-link"
               :title="urlForAttachment(attachment)"
@@ -96,15 +103,15 @@
             >
               <span>{{ nameForAttachment(attachment) }}</span>
             </a>
-          </div>
+          </li>
         </div>
       </div>
     </div>
 
-    <h6 v-if="report.description" class="m-n-sm m-s-xs">Report</h6>
+    <h6 v-if="report.description" class="ms-2 mn-3">Report</h6>
 
-    <div v-if="report.description" class="bg-highlight d-inline-block p-z">
-      <pre class="p-sm" v-html="body"></pre>
+    <div v-if="report.description" class="bg-highlight inline-block p-1">
+      <pre class="p-1" v-html="body"></pre>
     </div>
   </div>
 </template>
@@ -112,8 +119,8 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { DateTime } from "luxon";
-import { ReportFormatted } from "../types";
-import { isMobile, lf2br, linkify, urlForAttachment } from "../lib/util";
+import { ReportFormatted } from "../../types";
+import { isMobile, lf2br, linkify, urlForAttachment } from "../../lib/util";
 
 export default defineComponent({
   props: {
@@ -127,7 +134,7 @@ export default defineComponent({
     }
   },
 
-  emits: ["download", "copy-text", "copy-link"],
+  emits: ["download", "copy-text", "copy-link", "close"],
 
   data() {
     return {
@@ -187,6 +194,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/_vars.scss";
+
 pre {
   line-height: 1.5;
 }
@@ -194,6 +203,21 @@ pre {
 .attachment-link {
   &:hover {
     background-color: rgb(236, 238, 240);
+  }
+}
+
+.icon-close {
+  margin: -0.5em;
+
+  &:hover {
+    background-color: $color-gray-95;
+  }
+
+  svg {
+    fill: $color-gray-60;
+    height: 2.3em;
+    width: 2.9em;
+    padding: 0.3em 0.9em 0em;
   }
 }
 </style>

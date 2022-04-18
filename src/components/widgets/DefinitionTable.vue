@@ -4,7 +4,9 @@
   </table>
 </template>
 
-<style>
+<style lang="scss">
+@import "../../style/_vars.scss";
+
 table.definition-table {
   width: 100%;
   border-collapse: collapse;
@@ -16,7 +18,7 @@ table.definition-table {
 
 .definition-table td:first-child {
   font-weight: 600;
-  color: #909399;
+  color: $color-gray-60;
   padding-right: 10px;
   white-space: nowrap;
   width: 1%;

@@ -17,3 +17,14 @@ export function urlForAttachment(link: string) {
 
   return link;
 }
+
+export function saveFile(content: string, filename: string) {
+  let bl = new Blob([content], { type: "text/csv" });
+  let a = document.createElement("a");
+  a.href = URL.createObjectURL(bl);
+  a.download = filename;
+  a.hidden = true;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}

@@ -1,17 +1,63 @@
 import { DateTime } from 'luxon';
 import { dateRangeEditor } from './createDateEditor';
-import { sources } from './sources';
+import { sources } from '../../types';
 
 let isNarrow = document.body.offsetWidth <= 420;
 
+let svgChecked = '<svg class="icon-checked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm0 400H48V80h352v352zm-35.864-241.724L191.547 361.48c-4.705 4.667-12.303 4.637-16.97-.068l-90.781-91.516c-4.667-4.705-4.637-12.303.069-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l59.792 60.277 141.352-140.216c4.705-4.667 12.303-4.637 16.97.068l22.536 22.718c4.667 4.706 4.637 12.304-.068 16.971z"/></svg>';
+let svgUnchecked = '<svg class="icon-unchecked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"/></svg>';
+
+function headerMenu() {
+  let menu = [];
+  let columns = this.getColumns();
+
+  for (let column of columns) {
+    let icon = document.createElement("div");
+    icon.insertAdjacentHTML('afterbegin', svgChecked);
+    icon.insertAdjacentHTML('afterbegin', svgUnchecked);
+
+    let title = document.createElement("span");
+    title.textContent = " " + column.getDefinition().title;
+
+    if (column._column.parent.definition?.title) {
+      title.textContent = column._column.parent.definition.title + ": " + title.textContent;
+    }
+
+    let label = document.createElement("div");
+    if (column.isVisible()) {
+      label.classList.add("checked");
+    } else {
+      label.classList.remove("checked");
+    }
+    label.appendChild(icon);
+    label.appendChild(title);
+
+    menu.push({
+      label: label,
+      action(e) {
+        e.stopPropagation();
+        column.toggle();
+        if (column.isVisible()) {
+          label.classList.add("checked");
+        } else {
+          label.classList.remove("checked");
+        }
+      }
+    });
+  }
+
+  return menu;
+};
+
 export let columnDefaults = {
-  headerFilterLiveFilter: false
+  headerFilterLiveFilter: false,
+  headerMenu
 };
 
 let sourceColumn = {
   title: "Name",
   field: "source",
-  visible: !isNarrow,
+  visible: false,
   formatter: cell => sources[cell.getValue()],
   headerFilter: "select",
   headerFilterFunc: "in",
@@ -27,7 +73,7 @@ let sourceColumn = {
 let sourceIdColumn = {
   title: "ID",
   field: "source_id",
-  visible: !isNarrow,
+  visible: false,
   headerFilter: true,
   headerFilterFunc: "=",
   headerFilterParams: {
@@ -42,7 +88,7 @@ let dateColumn = {
   title: "Date",
   field: "date",
   minWidth: 92,
-  width: isNarrow ? 92 : undefined,
+  width: isNarrow ? 88 : undefined,
   headerFilter: dateRangeEditor,
   headerFilterFunc: "ov",
   formatter(cell) {
@@ -61,7 +107,7 @@ let locationColumns = {
     {
       title: "City",
       field: "city",
-      width: isNarrow ? 80 : undefined,
+      width: isNarrow ? 90 : undefined,
       headerFilter: true,
       headerFilterFunc: "ulike",
       headerFilterParams: {
@@ -74,6 +120,7 @@ let locationColumns = {
     },
     {
       title: "District",
+      titleFormatter: t => isNarrow ? '' : t,
       field: "district",
       width: isNarrow ? 45 : undefined,
       headerFilter: true,
@@ -88,6 +135,7 @@ let locationColumns = {
     },
     {
       title: "Country",
+      titleFormatter: t => isNarrow ? '' : t,
       field: "country",
       width: isNarrow ? 36 : undefined,
       headerFilter: true,
@@ -153,28 +201,24 @@ let descriptionColumn = {
 };
 
 let attachmentsColumn = {
-  title: "",
+  title: "Attachments",
   field: "attachments",
   visible: !isNarrow,
   headerTooltip: "Attachments",
   hozAlign: "center",
   headerSort: false,
-  titleFormatter() {
-    return '<div class="icon-col-title attachments-col-title">' + paperclipSvg + '</div>';
-  },
+  titleFormatter: () => paperclipSvg,
   formatter: cell => cell.getValue()?.length || '',
 };
 
 let referencesColumn = {
-  title: "",
+  title: "References",
   field: "references",
   visible: !isNarrow,
   headerTooltip: "References",
   hozAlign: "center",
   headerSort: false,
-  titleFormatter() {
-    return '<div class="icon-col-title references-col-title">' + quoteLeftSvg + '</div>';
-  },
+  titleFormatter: () => quoteLeftSvg,
   formatter: cell => cell.getValue()?.length || '',
 };
 

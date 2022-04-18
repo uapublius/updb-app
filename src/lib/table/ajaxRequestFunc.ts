@@ -9,6 +9,7 @@ export function buildParams(filter: Record<string, any>, sort: Record<string, an
     "source",
     "source_id",
     "date",
+    "date_detail",
     "description",
     "city",
     "district",
@@ -109,10 +110,10 @@ function buildFilters(allFilters: any) {
     filters = definedFilters.reduce((acc, curr) => {
 
       if (curr.type === 'like') {
-        acc[curr.field] = curr.type + ".*" + curr.value + "*";
+        acc[curr.field] = "like.*" + curr.value + "*";
       }
       if (curr.type === 'ulike') {
-        acc[curr.field] = curr.type + ".*" + curr.value.toUpperCase() + "*";
+        acc[curr.field] = "like.*" + curr.value.toUpperCase() + "*";
       }
       else if (curr.type === '=') {
         if (Array.isArray(curr.value)) {

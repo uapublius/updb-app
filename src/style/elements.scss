@@ -1,12 +1,22 @@
+html, body, #app {
+  min-height: 100%;
+}
+
 body {
   font-family: system-ui;
   font-size: 14px;
   color: $color-darker;
 }
 
+input {
+  color: $color-darker;
+}
+
 a,
 a:visited {
   color: $color-tint;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 pre {
@@ -24,44 +34,34 @@ li {
     content: ' ';
     position: absolute;
     margin-left: 0.55em;
-    left: -1.6em;
+    left: -1.4em;
     top: 0.425em;
-    width: 5px;
-    height: 5px;
-    background-color: $color-darker;
+    width: 4px;
+    height: 4px;
+    background-color: $color-gray-30;
     border-radius: 100%;
   }
 }
 
-h1 {
-  font-size: 1.6rem;
-}
-
-h2 {
-  font-size: 1.5em;
-}
-
-h3 {
-  font-size: 1.25rem;
-}
-
-h4 {
-  font-size: 1.05rem;
-}
-
-h5 {
-  font-size: 0.8rem;
-  font-weight: bold;
+input[type="search"] {
+  border: 1px solid $color-gray-90;
+  border-radius: 1rem;
+  padding-left: 8px;
 }
 
 h6 {
   font-size: inherit;
   font-weight: 600;
-  color: #909399;
+  color: $color-gray-60;
 }
 
 th {
   font-weight: bold !important;
+}
+
+svg {
+  height: 1em;
+  width: auto;
 }
 
 button {
@@ -69,9 +69,9 @@ button {
   vertical-align: middle;
   line-height: 1.4rem;
   font-size: 13px;
-  border: 1px solid #d5d5d5;
+  border: 1px solid $color-gray-80;
   border-radius: 4px;
-  background-color: #efefef;
+  background-color: $color-gray-95;
   color: #333;
 }
 

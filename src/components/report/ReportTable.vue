@@ -5,9 +5,9 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import qs from "qs";
-import "tabulator-tables/dist/css/tabulator.css";
-import { columnDefaults, columns } from "../lib/reportColumns";
-import { ajaxRequestFunc } from "../lib/ajaxRequestFunc";
+import "tabulator-tables/dist/css/tabulator_simple.css";
+import { columnDefaults, columns } from "../../lib/table/reportColumns";
+import { ajaxRequestFunc } from "../../lib/table/ajaxRequestFunc";
 import {
   Tabulator,
   AjaxModule,
@@ -18,7 +18,8 @@ import {
   EditModule,
   ResizeColumnsModule,
   KeybindingsModule,
-  SelectRowModule
+  SelectRowModule,
+  MenuModule
 } from "tabulator-tables";
 
 let isMobile = navigator.userAgent.includes(" Mobile/");
@@ -30,7 +31,8 @@ let tabulatorModules = [
   FilterModule,
   FormatModule,
   EditModule,
-  SelectRowModule
+  SelectRowModule,
+  MenuModule
 ];
 
 if (!isMobile) {
@@ -75,7 +77,6 @@ export default defineComponent({
   mounted() {
     this.tabulator = new Tabulator("#tabulator", {
       index: "id",
-      height: "100%",
       columns,
       columnDefaults,
       layout: "fitDataStretch",
@@ -83,12 +84,11 @@ export default defineComponent({
       initialSort: this.initialSort,
       selectable: 1,
       keybindings: true,
-      footerElement: ".reports-table-footer",
+      sortMode: "remote",
       filterMode: "remote",
       headerFilterLiveFilterDelay: 1000,
-      sortMode: "remote",
       pagination: true,
-      paginationSize: 50,
+      paginationSize: 25,
       paginationSizeSelector: true,
       paginationMode: "remote",
       paginationButtonCount: 5,
