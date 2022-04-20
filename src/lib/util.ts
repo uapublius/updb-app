@@ -21,7 +21,7 @@ if (storedCachedArchiveOrgUrls) {
   } catch (error) { }
 }
 
-export async function loadUrlsForAttachments(attachments: string[]) {
+export async function loadUrlsForAttachments(attachments: string[] = []) {
   return Promise.all(attachments.map(attachment => urlForAttachment(attachment)));
 }
 

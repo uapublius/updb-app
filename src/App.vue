@@ -75,7 +75,7 @@ export default defineComponent({
     return {
       totalRows: 0,
       firstLoad: true,
-      selectedReport: null,
+      selectedReport: {},
       currentSearch: "",
       panelOpen: false,
       panelHeight: 420,
@@ -107,7 +107,7 @@ export default defineComponent({
       if (this.formattedReport.attachments?.length)
         lines.push(
           `ATTACHMENTS: ${this.formattedReport.attachments
-            .map(a => urlForAttachment(a))
+            ?.map(a => urlForAttachment(a))
             .join("\n")}`
         );
       if (this.formattedReport.references?.length)
@@ -181,10 +181,10 @@ export default defineComponent({
     async handleRowSelectionChanged(reports: Report[]) {
       if (reports?.length) {
         this.selectedReport = reports[0];
-        this.attachmentUrls = this.selectedReport.attachments;
         this.$refs.panelBottom.scrollTop = 0;
         this.panelOpen = true;
-        this.attachmentUrls = await loadUrlsForAttachments(this.selectedReport.attachments);
+        this.attachmentUrls = this.selectedReport.attachments;
+        this.attachmentUrls = await loadUrlsForAttachments(this.attachmentUrls);
       }
     },
 

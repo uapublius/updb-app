@@ -89,7 +89,7 @@
           />
         </ul>
 
-        <h6 v-if="attachments.length" class="ms-1 mn-2">Attachments</h6>
+        <h6 v-if="attachments?.length" class="ms-1 mn-2">Attachments</h6>
 
         <div class="break-all ms-1">
           <li class="ms-1" v-for="attachment in attachments">
