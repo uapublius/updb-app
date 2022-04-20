@@ -1,0 +1,18 @@
+:root {
+  --c-brand: #CD5BDE !important;
+  --c-brand-light: #CD5BDE !important;
+}
+
+.site-name {
+  @extend .gradient-text
+}
+
+.gradient-text {
+  background-color: #CD5BDE;
+  background-image: linear-gradient(90deg, #CD5BDE, #8CB4F3);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
