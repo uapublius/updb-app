@@ -1,5 +1,8 @@
 html, body, #app {
+  height: 100%;
   min-height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -17,6 +20,29 @@ a:visited {
   color: $color-tint;
   cursor: pointer;
   text-decoration: none;
+}
+
+figure {
+  line-height: 1.2;
+  bottom: 0;
+  font-size: 11px;
+  letter-spacing: -0.3px;
+  color: $color-gray-70;
+  margin: 1em 1em 1em;
+
+  a,
+  a:visited {
+    color: $color-gray-70;
+    text-decoration: underline;
+  }
+}
+
+select {
+  background: #fff;
+}
+
+blockquote {
+  margin: 0;
 }
 
 pre {

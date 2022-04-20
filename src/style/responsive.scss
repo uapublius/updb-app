@@ -1,6 +1,15 @@
 @media screen and (max-width: 420px) {
-  #app > div {
-    padding: 0.5em !important;
+  .hide-narrow {
+    display: none !important;
+  }
+
+  main > header {
+    padding: 0 1em;
+  }
+
+  #app > div > div > main {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   button[data-page="first"],
@@ -9,6 +18,10 @@
   .tabulator-page-size,
   .tabulator-pages {
     display: none !important;
+  }
+
+  .feedback-link {
+    margin-left: 0.5rem !important;
   }
 
   .report-detail-fields {

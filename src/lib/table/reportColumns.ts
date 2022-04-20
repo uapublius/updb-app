@@ -57,7 +57,7 @@ export let columnDefaults = {
 let sourceColumn = {
   title: "Name",
   field: "source",
-  visible: false,
+  visible: isNarrow ? false : true,
   formatter: cell => sources[cell.getValue()],
   headerFilter: "select",
   headerFilterFunc: "in",
@@ -120,7 +120,7 @@ let locationColumns = {
     },
     {
       title: "District",
-      titleFormatter: t => isNarrow ? '' : t,
+      titleFormatter: () => isNarrow ? '' : "District",
       field: "district",
       width: isNarrow ? 45 : undefined,
       headerFilter: true,
@@ -135,7 +135,7 @@ let locationColumns = {
     },
     {
       title: "Country",
-      titleFormatter: t => isNarrow ? '' : t,
+      titleFormatter: () => isNarrow ? '' : "Country",
       field: "country",
       width: isNarrow ? 36 : undefined,
       headerFilter: true,

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const isMobile = navigator.userAgent.includes(" Mobile/");
 
 export function linkify(text: string) {
@@ -10,9 +12,43 @@ export function lf2br(text: string) {
 
 let shouldPrefix = ["http://www.nicap.org", "http://www.mufoncms.com"];
 
-export function urlForAttachment(link: string) {
+let cachedArchiveOrgUrls = {};
+let storedCachedArchiveOrgUrls = localStorage.getItem('cachedArchiveOrgUrls');
+
+if (storedCachedArchiveOrgUrls) {
+  try {
+    cachedArchiveOrgUrls = JSON.parse(storedCachedArchiveOrgUrls);
+  } catch (error) { }
+}
+
+export async function loadUrlsForAttachments(attachments: string[]) {
+  return Promise.all(attachments.map(attachment => urlForAttachment(attachment)));
+}
+
+export async function urlForAttachment(link: string): Promise<string> {
   if (shouldPrefix.some(prefix => link.startsWith(prefix))) {
-    return `https://web.archive.org/web/${link}`;
+    if (cachedArchiveOrgUrls[link]) return cachedArchiveOrgUrls[link];
+    let defaultUrl = `https://web.archive.org/web/${link}`;
+
+    try {
+      let apiUrl = `https://archive.org/wayback/available?url=${link}`;
+      let { data } = await axios.get(apiUrl);
+      let cachedUrl = data.archived_snapshots.closest?.url;
+
+      if (cachedUrl) {
+        let [id] = cachedUrl.match(/(\d{14})/);
+        let url = `https://web.archive.org/web/${id}if_/${link}`;
+
+        cachedArchiveOrgUrls[link] = url;
+        localStorage.setItem('cachedArchiveOrgUrls', JSON.stringify(cachedArchiveOrgUrls));
+        return url;
+      }
+      else {
+        return defaultUrl;
+      }
+    } catch (error) {
+      return defaultUrl;
+    }
   }
 
   return link;

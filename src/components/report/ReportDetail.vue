@@ -75,8 +75,6 @@
               {{ report.country }}
             </td>
           </tr>
-
-          <tr v-if="report.attachments && report.attachments.length" label="Attachments"></tr>
         </DefinitionTable>
       </div>
 
@@ -91,17 +89,17 @@
           />
         </ul>
 
-        <h6 v-if="report.attachments" class="ms-1 mn-2">Attachments</h6>
+        <h6 v-if="attachments.length" class="ms-1 mn-2">Attachments</h6>
 
         <div class="break-all ms-1">
-          <li class="ms-1" v-for="attachment in report.attachments">
+          <li class="ms-1" v-for="attachment in attachments">
             <a
               class="p-e-xs m-e-xs attachment-link"
-              :title="urlForAttachment(attachment)"
-              :href="`https://web.archive.org/web/${attachment}`"
+              :title="attachment"
+              :href="attachment"
               target="_blank"
             >
-              <span>{{ nameForAttachment(attachment) }}</span>
+              <span>{{ labelForAttachment(attachment) }}</span>
             </a>
           </li>
         </div>
@@ -120,7 +118,7 @@
 import { defineComponent, PropType } from "vue";
 import { DateTime } from "luxon";
 import { ReportFormatted } from "../../types";
-import { isMobile, lf2br, linkify, urlForAttachment } from "../../lib/util";
+import { isMobile, lf2br, linkify } from "../../lib/util";
 
 export default defineComponent({
   props: {
@@ -130,6 +128,10 @@ export default defineComponent({
     },
     permalink: {
       type: String,
+      required: true
+    },
+    attachments: {
+      type: Array as PropType<string[]>,
       required: true
     }
   },
@@ -164,14 +166,10 @@ export default defineComponent({
 
     lf2br,
 
-    nameForAttachment(attachment) {
-      let foo = new URL(attachment);
-      let fooParts = foo.pathname.split("/");
-      return fooParts[fooParts.length - 1];
-    },
-
-    urlForAttachment(attachment) {
-      return urlForAttachment(attachment);
+    labelForAttachment(attachment: string) {
+      let attachmentUrl = new URL(attachment);
+      let urlParts = attachmentUrl.pathname.split("/");
+      return urlParts[urlParts.length - 1];
     },
 
     handleCopyLink() {

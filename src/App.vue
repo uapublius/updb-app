@@ -1,37 +1,62 @@
 <template>
-  <div class="py-2 pw-3 pe-4" :style="{ paddingBottom }">
+  <div class="flex flex-column h-100">
+    <div class="flex-fill">
+      <main class="pn-2 pw-3 pe-4" :style="{ paddingBottom }">
+        <header>
+          <AppHeader />
+        </header>
+
+        <header class="flex justify-content-end mn-2 ps-1">
+          <div class="pe-1">
+            <a class="action-link me-3" @click="downloadAll">Download (CSV)</a>
+            <a class="action-link" @click="resetFilters">Reset</a>
+          </div>
+        </header>
+
+        <div>
+          <ReportTable
+            ref="tabulator"
+            @data-filtered="dataFiltered"
+            @data-sorted="dataFiltered"
+            @row-selection-changed="handleRowSelectionChanged"
+            @total-rows-changed="handleTotalRowsChanged"
+          />
+        </div>
+
+        <div ref="panelBottom" v-show="panelOpen" class="panel-bottom px-3 pn-3">
+          <ReportDetail
+            ref="detail"
+            v-if="formattedReport"
+            :attachments="attachmentUrls"
+            :report="formattedReport"
+            :permalink="reportPermalink"
+            @close="panelClose"
+            @copy-text="copyTextSelected"
+            @copy-link="copyLinkSelected"
+            @download="downloadSelected"
+          />
+        </div>
+      </main>
+    </div>
+
     <div>
-      <AppHeader />
-    </div>
-
-    <div class="flex justify-content-end mn-2 ps-1">
-      <div class="pe-1">
-        <a class="action-link me-3" @click="downloadAll">Download (CSV)</a>
-        <a class="action-link" @click="resetFilters">Reset</a>
-      </div>
-    </div>
-
-    <div>
-      <ReportTable
-        ref="tabulator"
-        @data-filtered="dataFiltered"
-        @data-sorted="dataFiltered"
-        @row-selection-changed="handleRowSelectionChanged"
-        @total-rows-changed="handleTotalRowsChanged"
-      />
-    </div>
-
-    <div ref="panelBottom" v-show="panelOpen" class="panel-bottom px-3 pn-3">
-      <ReportDetail
-        ref="detail"
-        v-if="formattedReport"
-        :report="formattedReport"
-        :permalink="reportPermalink"
-        @close="panelClose"
-        @copy-text="copyTextSelected"
-        @copy-link="copyLinkSelected"
-        @download="downloadSelected"
-      />
+      <footer v-show="!panelOpen">
+        <figure>
+          <blockquote cite="https://youtu.be/4-MbGYAv7Cg?t=32">
+            &ldquo;However, there have been a certain percentage of this volume of reports, that
+            have been made by credible observers, of relatively incredible things. It is this group
+            of observations that we now are attempting to resolve.&rdquo;
+          </blockquote>
+          <figcaption class="mn-1">
+            —Maj. Gen. John A. Samford,
+            <cite>
+              <a href="https://youtu.be/4-MbGYAv7Cg?t=32" target="_blank">
+                Statement on "Flying Saucers", Pentagon, Washington, DC, 07/31/1952
+              </a>
+            </cite>
+          </figcaption>
+        </figure>
+      </footer>
     </div>
   </div>
 </template>
@@ -42,7 +67,7 @@ import axios from "axios";
 import qs from "qs";
 import { DateTime } from "luxon";
 import { buildParams } from "./lib/table/ajaxRequestFunc";
-import { urlForAttachment, saveFile } from "./lib/util";
+import { urlForAttachment, saveFile, loadUrlsForAttachments } from "./lib/util";
 import { Report, ReportFormatted, sources } from "./types";
 
 export default defineComponent({
@@ -53,7 +78,8 @@ export default defineComponent({
       selectedReport: null,
       currentSearch: "",
       panelOpen: false,
-      panelHeight: 400
+      panelHeight: 420,
+      attachmentUrls: []
     };
   },
 
@@ -152,11 +178,13 @@ export default defineComponent({
       this.tabulator.setHeaderFilterValue("description", this.currentSearch);
     },
 
-    handleRowSelectionChanged(reports: Report[]) {
+    async handleRowSelectionChanged(reports: Report[]) {
       if (reports?.length) {
         this.selectedReport = reports[0];
+        this.attachmentUrls = this.selectedReport.attachments;
         this.$refs.panelBottom.scrollTop = 0;
         this.panelOpen = true;
+        this.attachmentUrls = await loadUrlsForAttachments(this.selectedReport.attachments);
       }
     },
 
