@@ -11,24 +11,40 @@ body {
   color: $color-darker;
 }
 
+main > header {
+  background-color: $color-darker;
+}
+
 input {
   color: $color-darker;
+  max-width: 100%;
 }
 
 a,
 a:visited {
+  word-break: break-all;
   color: $color-tint;
   cursor: pointer;
   text-decoration: none;
+  display: inline-flex;
+
+  svg {
+    fill: $color-tint;
+    padding: 1px;
+  }
+}
+
+strong {
+  font-weight: 500;
 }
 
 figure {
   line-height: 1.2;
   bottom: 0;
-  font-size: 11px;
-  letter-spacing: -0.3px;
-  color: $color-gray-70;
-  margin: 1em 1em 1em;
+  font-size: 12px;
+  color: $color-gray-60;
+  margin: 1em 0;
+  text-align: left;
 
   a,
   a:visited {
@@ -47,6 +63,7 @@ blockquote {
 
 pre {
   white-space: pre-line;
+  line-height: 1.5;
   margin: 0;
 }
 
@@ -77,8 +94,14 @@ input[type="search"] {
 
 h6 {
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
   color: $color-gray-60;
+}
+
+h6 > small {
+  line-height: 1rem;
+  display: block;
+  font-weight: normal;
 }
 
 th {
@@ -90,32 +113,6 @@ svg {
   width: auto;
 }
 
-button {
-  padding: 0 0.5rem;
-  vertical-align: middle;
-  line-height: 1.4rem;
-  font-size: 13px;
-  border: 1px solid $color-gray-80;
-  border-radius: 4px;
-  background-color: $color-gray-95;
-  color: #333;
-}
-
-button.active {
-  font-weight: bold;
-  color: $color-tint;
-}
-
 button:active {
-  position: relative;
-  top: 1px;
-}
-
-button svg {
-  height: 0.7rem;
-  padding: 0 2px 0 0;
-}
-
-button:active {
-  color: $color-tint;
+  transform: scale(0.95);
 }

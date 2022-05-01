@@ -1,6 +1,6 @@
 // Table
 
-.tabulator {
+div.tabulator {
   border-width: 0;
   font-size: 13px;
 
@@ -31,6 +31,11 @@
     .tabulator-col {
       border-color: transparent;
 
+      &.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+        border-top: none;
+        border-bottom: 6px solid $color-gray-90;
+      }
+
       .tabulator-col-content {
         .tabulator-header-menu-button {
           padding: 0 4px 0 0;
@@ -40,13 +45,12 @@
 
     border-bottom-color: transparent;
 
-    .tabulator-col.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
-      border-top: none;
-      border-bottom: 6px solid #dedede;
-    }
-
     .tabulator-header-filter {
       padding: 3px 0 0 1px;
+
+      input + input {
+        margin-top: 0.25em;
+      }
     }
   }
 

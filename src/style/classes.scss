@@ -6,6 +6,10 @@
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+
+  a {
+    display: inline;
+  }
 }
 
 .bg-highlight {
@@ -16,4 +20,87 @@
 .action-link:active {
   cursor: pointer;
   border-bottom: 1px dotted $color-tint;
+}
+
+.panel-open {
+  padding-bottom: 420px !important;
+}
+
+.panel-bottom {
+  height: 420px;
+  max-height: 420px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  background: #fff;
+  border-top: 1px solid $color-gray-90;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.icon-close {
+  &:hover {
+    background-color: $color-gray-95;
+  }
+
+  svg {
+    fill: $color-gray-60;
+    height: 24px;
+    padding: 0.25em 1em 0;
+  }
+}
+
+.page {
+  border-top: 1px solid $color-gray-95;
+  padding: 1em 0 0;
+  margin: 1em 0 0;
+}
+
+.feedback-links {
+  a,
+  a:visited {
+    color: $color-gray-50;
+    font-size: 13px;
+    text-decoration: none;
+    line-height: 1;
+    margin: 0 0 0 1rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    svg {
+      height: 12px;
+      width: auto;
+      margin-right: 4px;
+      padding-right: 1px;
+      fill: $color-gray-50;
+    }
+  }
+}
+
+table.definition-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td {
+    padding: 5px 0;
+  }
+
+  td:first-child {
+    font-weight: 500;
+    color: $color-gray-60;
+    padding-right: 10px;
+    white-space: nowrap;
+    width: 1%;
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+}
+
+.report-detail-fields a:visited {
+  color: adjust-hue($color: $color-tint, $degrees: -12);
 }

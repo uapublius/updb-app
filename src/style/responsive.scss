@@ -1,17 +1,4 @@
 @media screen and (max-width: 420px) {
-  .hide-narrow {
-    display: none !important;
-  }
-
-  main > header {
-    padding: 0 1em;
-  }
-
-  #app > div > div > main {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
   button[data-page="first"],
   button[data-page="last"],
   .tabulator-paginator > label,
@@ -20,72 +7,26 @@
     display: none !important;
   }
 
-  .feedback-link {
-    margin-left: 0.5rem !important;
-  }
+  .feedback-links {
+    a,
+    a:visited {
+      &:active, &:hover {
+        background-color: $color-dark;
+        transform: scale(0.95);
+        position: relative;
+        top: 1px;
+      }
 
-  .report-detail-fields {
-    display: block;
-    overflow: hidden;
-  }
+      > div {
+        display: none;
+      }
 
-  .report-detail-header {
-    padding-top: 0;
-    padding-bottom: 0;
-    align-items: start !important;
-
-    > div {
-      display: block;
-      margin-bottom: 1em;
+      svg {
+        height: 24px;
+        margin-right: 0;
+        min-width: 2.3rem;
+      }
     }
-
-    svg {
-      height: auto !important;
-      width: 44px !important;
-    }
-
-    .action-links {
-      margin-left: 0 !important;
-    }
-
-    .action-links {
-      margin-left: 0 !important;
-    }
-
-    h2 {
-      margin-bottom: 1rem;
-    }
-  }
-
-  .definition-table td {
-    padding: 4px 0;
-  }
-
-  body {
-    font-size: 12px;
-  }
-
-  button {
-    font-size: 12px;
-  }
-
-  .tabulator {
-    font-size: 12px !important;
-  }
-
-  .tabulator-col-title {
-    font-size: 10px;
-  }
-
-  .tabulator-header-filter input[type=search] {
-    padding-left: 7px !important;
-  }
-
-  input[type="date"] {
-    background: #fff;
-    border: 1px solid $color-gray-90;
-    font-size: 11px;
-    margin-bottom: 1px;
   }
 }
 

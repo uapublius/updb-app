@@ -4,10 +4,15 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AppHeader: typeof import('./src/components/AppHeader.vue')['default']
+    AppFooter: typeof import('./src/components/AppFooter.vue')['default']
+    AppHeader: typeof import('./src/components/app-header.vue')['default']
     DefinitionTable: typeof import('./src/components/widgets/DefinitionTable.vue')['default']
-    ReportDetail: typeof import('./src/components/report/ReportDetail.vue')['default']
-    ReportTable: typeof import('./src/components/report/ReportTable.vue')['default']
+    HomePage: typeof import('./src/components/pages/HomePage.vue')['default']
+    Icon: typeof import('./src/components/icon.vue')['default']
+    ReportDetail: typeof import('./src/components/report-detail.vue')['default']
+    ReportPage: typeof import('./src/components/pages/ReportPage.vue')['default']
+    ReportTable: typeof import('./src/components/report-table.vue')['default']
+    SamfordQuote: typeof import('./src/components/samford-quote.vue')['default']
   }
 }
 

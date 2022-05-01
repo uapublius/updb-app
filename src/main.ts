@@ -1,10 +1,19 @@
-import { createApp } from 'vue';
+import { createSSRApp } from 'vue';
 import App from './App.vue';
-import "./style/style.scss";
 import { registerIcons } from './registerIcons';
+import { createRouter } from './router';
+import meta from './plugins/meta';
+import head from './lib/headTags';
+import ClientOnly from './components/client-only';
 
-let app = createApp(App);
+export function createApp() {
+  const app = createSSRApp(App);
+  const router = createRouter();
 
-registerIcons(app);
+  registerIcons(app);
+  app.use(router);
+  app.use(meta, head);
+  app.component("ClientOnly", ClientOnly);
 
-app.mount('#app');
+  return { app, router, head };
+}

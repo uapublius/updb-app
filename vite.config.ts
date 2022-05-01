@@ -8,11 +8,34 @@ export default defineConfig({
   plugins: [
     vue(),
     svgLoader(),
-    AutoImport(),
+    AutoImport({
+      imports: [
+        'vue',
+        'vue-router',
+        {
+          '@vueuse/core': [
+            'useMouse',
+            ['useFetch', 'useMyFetch'],
+          ],
+          'axios': [
+            ['default', 'axios'],
+          ],
+          '[package-name]': [
+            '[import-names]',
+            ['[from]', '[alias]'],
+          ],
+        },
+      ]
+    }),
     Components(),
   ],
   build: {
     chunkSizeWarningLimit: 1024
+  },
+  resolve: {
+    alias: {
+      '@': '/src'
+    }
   },
   server: {
     proxy: {
