@@ -31,6 +31,10 @@ div.tabulator {
     .tabulator-col {
       border-color: transparent;
 
+      &.tabulator-field-filtered {
+        background-color: #fcfce8;
+      }
+
       &.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
         border-top: none;
         border-bottom: 6px solid $color-gray-90;

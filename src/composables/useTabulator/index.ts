@@ -8,6 +8,7 @@ import { columnDefaults, columns } from "./columns";
 import { updateRowsWithAttachments, updateRowsWithReferences } from "./updateRows";
 import "tabulator-tables/dist/css/tabulator_simple.css";
 import * as tabulator from 'tabulator-tables';
+import { sources } from "@/sources";
 const { Tabulator, KeybindingsModule, AjaxModule, PageModule, SortModule, FilterModule, FormatModule, EditModule, SelectRowModule } = tabulator;
 
 async function buildTableData(url, params): Promise<PaginationData> {
@@ -65,6 +66,7 @@ let totalResults = 0;
 function paginationCounter(pageSize, _, currentPage, __) {
   let from = (pageSize * (currentPage - 1) || 1).toLocaleString();
   let to = Math.min(pageSize * currentPage, totalResults).toLocaleString();
+  if (totalResults === 1) return "Showing 1 report";
   return "Showing " + from + "–" + to + " of " + totalResults.toLocaleString() + " reports";
 }
 
@@ -131,6 +133,53 @@ export default function useTabulator(tabulator) {
 
     function dataFiltered() {
       let filters = table.value.getFilters(true);
+
+      for (const column of table.value.columnManager.columnsByIndex) {
+        let headerNode = column.element;
+        let field = headerNode.attributes["tabulator-field"].value;
+        let filter = filters.find(f => f.field === field);
+
+        if (filter) {
+          headerNode.classList.add("tabulator-field-filtered");
+        }
+        else {
+          headerNode.classList.remove("tabulator-field-filtered");
+        }
+      }
+
+      let summary = document.querySelector('.table-filter-summary');
+      let filterString = `<strong>${totalResults.toLocaleString()}</strong> reports`;
+      if (filters.length) filterString += ' matching:';
+      let filterStrings = [];
+
+      for (const filter of filters) {
+        let field = filter.field;
+        let value = filter.value;
+        let formattedValue = filter.value;
+        if (field === 'date') {
+          if (value.length == 1) {
+            formattedValue = "From " + value;
+          }
+          else if (!value[0] && value[1]) {
+            formattedValue = "To " + value[1];
+          }
+          else if (!value[1] && value[0]) {
+            formattedValue = "From " + value[0];
+          }
+          else if (value.length == 2) {
+            formattedValue = value[0] + "–" + value[1];
+          }
+        }
+        if (field === 'source') {
+          formattedValue = [value].flat().map(s => sources[s]).join(', ');
+        }
+        if (field === 'description') formattedValue = `"${value}"`;
+
+        filterStrings.push(field.toUpperCase() + " = " + formattedValue);
+      }
+
+      summary.innerHTML = `${filterString} <small>${filterStrings.join('; ')}</small>`;
+
       let sort = table.value.getSorters().map(s => ({ dir: s.dir, field: s.field }));
       let f = filters?.length ? qs.stringify(filters) : undefined;
       let s = sort?.length ? qs.stringify(sort) : undefined;

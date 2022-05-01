@@ -6,13 +6,29 @@
           <a :href="permalink" target="_blank" title="Open report in new window">
             {{ sourceName }} {{ report.source_id }}
           </a>
-
-          <a @click="copyLink" target="_blank" title="Copy permalink">
-            <icon-copy class="mw-2" />
-          </a>
         </h3>
-
         <span class="mw-1" v-if="copiedLink">Copied Link</span>
+        <div class="icon-links flex align-items-center">
+          <a
+            class="mw-2 flex align-items-end"
+            @click="copyLink"
+            target="_blank"
+            title="Copy permalink"
+          >
+            <icon-copy class="mw-2" />
+            Copy
+          </a>
+
+          <a
+            class="mw-2 flex align-items-start twitter-share-button"
+            :href="tweetUrl"
+            title="Tweet report"
+            target="_blank"
+          >
+            <icon name="twitter" />
+            Tweet
+          </a>
+        </div>
       </div>
 
       <slot />
@@ -63,15 +79,24 @@
           </small>
         </h6>
         <ul class="break-all ms-1">
-          <li :title="tooltipForReference(reference)" class="ms-1" v-for="reference in formattedReferences"
-            v-html="reference" />
+          <li
+            :title="tooltipForReference(reference)"
+            class="ms-1"
+            v-for="reference in formattedReferences"
+            v-html="reference"
+          />
         </ul>
 
         <h6 v-if="attachments?.length" class="ms-1 mn-2">Attachments</h6>
 
         <div class="break-all ms-1">
           <li class="ms-1" v-for="attachment in attachments">
-            <a class="p-e-xs m-e-xs attachment-link" :title="attachment" :href="attachment" target="_blank">
+            <a
+              class="p-e-xs m-e-xs attachment-link"
+              :title="attachment"
+              :href="attachment"
+              target="_blank"
+            >
               <span>{{ labelForAttachment(attachment) }}</span>
             </a>
           </li>
@@ -93,7 +118,7 @@ import { DateTime } from "luxon";
 import { lf2br, linkify } from "@/lib/util";
 import { setupStorage } from "@/lib/attachments";
 import { sources } from "@/sources";
-import iconCopy from '@/assets/icons/copy.svg';
+import iconCopy from "@/assets/icons/copy.svg";
 
 const props = defineProps<{
   report: Report;
@@ -106,9 +131,7 @@ defineEmits(["close"]);
 let copiedLink = ref(false);
 
 onBeforeMount(() => {
-  if (!import.meta.env.SSR) {
-    setupStorage();
-  }
+  setupStorage();
 });
 
 let formattedReferences = computed(() => {
@@ -134,8 +157,8 @@ let date = computed(() => {
 });
 
 function tooltipForReference(reference) {
-  if (reference.includes('https://mufoncms.com')) {
-    return 'MUFON membership is required to view mufoncms.com links';
+  if (reference.includes("https://mufoncms.com")) {
+    return "MUFON membership is required to view mufoncms.com links";
   }
 }
 
@@ -144,6 +167,16 @@ function labelForAttachment(attachment: string) {
   let urlParts = attachmentUrl.pathname.split("/");
   return urlParts[urlParts.length - 1];
 }
+
+let tweetUrl = computed(() => {
+  const myUrlWithParams = new URL("https://twitter.com/intent/tweet");
+
+  myUrlWithParams.searchParams.append("text", document.title);
+  myUrlWithParams.searchParams.append("url", window.location.href);
+  myUrlWithParams.searchParams.append("hashtags", "UFOTwitter,UPDB");
+
+  return myUrlWithParams.href;
+});
 
 async function copyLink() {
   copiedLink.value = true;

@@ -5,9 +5,12 @@
         <h1 class="gradient-text"><a href="/" title="Home">UPDB</a></h1>
       </div>
 
-      <div class="feedback-links flex align-items-center justify-content-end">
-        <a target="_blank" title="Download database in postgreSQL format."
-          href="https://github.com/uapublius/updb-importers/raw/main/db/phenomenon.sql.gz">
+      <div class="icon-links flex align-items-center justify-content-end">
+        <a
+          target="_blank"
+          title="Download database in postgreSQL format."
+          href="https://github.com/uapublius/updb-importers/raw/main/db/phenomenon.sql.gz"
+        >
           <icon name="download" />
           <div>Dataset (SQL)</div>
         </a>
@@ -17,8 +20,11 @@
           <div>Contact</div>
         </a>
 
-        <a target="_blank" title="Download source code for UPDB app and data processing tools"
-          href="https://github.com/uapublius?tab=repositories&q=&type=source&language=&sort=">
+        <a
+          target="_blank"
+          title="Download source code for UPDB app and data processing tools"
+          href="https://github.com/uapublius?tab=repositories&q=&type=source&language=&sort="
+        >
           <icon name="github" />
           <div>GitHub</div>
         </a>

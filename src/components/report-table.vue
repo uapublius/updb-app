@@ -1,9 +1,16 @@
 <template>
   <div>
-    <header class="flex justify-content-end">
-      <div class="mn-1 px-2">
-        <a class="action-link me-3" @click="downloadAll">Download (CSV)</a>
-        <a class="action-link" @click="resetFilters">Reset</a>
+    <header class="table-header mn-2 p-2">
+      <div class="flex justify-content-between table-summary">
+        <div class="table-filter-summary" />
+        <div class="table-summary-actions mw-1 me-1">
+          <a class="action-link mw-2" @click="resetFilters">Reset</a>
+          <a class="action-link mw-2" @click="downloadAll">Download (CSV)</a>
+          <a class="action-link mw-2" :href="permalink" target="_blank">Permalink</a>
+          <a class="action-link mw-2 twitter-share-button" :href="tweetUrl" target="_blank">
+            Tweet
+          </a>
+        </div>
       </div>
     </header>
 
@@ -12,11 +19,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import axios from "axios";
 import { saveToFile } from "@/lib/util";
 import { buildAjaxParams } from "@/composables/useTabulator/buildAjaxParams";
 import useTabulator from "../composables/useTabulator";
+import { computed } from "@vue/reactivity";
 
 defineEmits(["rowSelectionChanged", "dataLoaded", "dataFiltered", "dataSorted"]);
 
@@ -40,4 +48,37 @@ function resetFilters() {
   table.value.clearFilter(true);
   table.value.clearSort();
 }
+
+let permalink = ref(window.location.href);
+
+function watchUrl() {
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    let url = location.href;
+    if (url !== lastUrl) {
+      lastUrl = url;
+      permalink.value = window.location.href;
+    }
+  }).observe(document, { subtree: true, childList: true });
+}
+
+onBeforeMount(() => {
+  watchUrl();
+});
+
+let tweetUrl = computed(() => {
+  const myUrlWithParams = new URL("https://twitter.com/intent/tweet");
+
+  myUrlWithParams.searchParams.append("text", document.title);
+  myUrlWithParams.searchParams.append("url", permalink.value);
+  myUrlWithParams.searchParams.append("hashtags", "UFOTwitter,UPDB");
+
+  return myUrlWithParams.href;
+});
 </script>
+
+<style>
+.table-summary .action-link {
+  font-size: 12px;
+}
+</style>

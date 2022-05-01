@@ -45,14 +45,13 @@ export function buildFilters(allFilters: any) {
         acc[field] = "wfts." + curr.value;
       }
       else if (curr.type === 'ov') {
+        if (curr.length < 2) return;
         let from = curr.value[0];
         let to = curr.value[1];
         let ff = [];
-        if (from)
-          ff.push(`${curr.field}.gte.${from}`);
-        if (to)
-          ff.push(`${curr.field}.lte.${to}`);
-        acc['and'] = `(${ff.join(',')})`;
+        if (from) ff.push(`${curr.field}.gte.${from}`);
+        if (to) ff.push(`${curr.field}.lte.${to}`);
+        if (ff.length) acc['and'] = `(${ff.join(',')})`;
       }
       else {
         console.log("Unknown filter type " + curr.type);

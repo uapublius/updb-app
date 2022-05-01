@@ -20,6 +20,8 @@
 .action-link:active {
   cursor: pointer;
   border-bottom: 1px dotted $color-tint;
+  line-height: 1em;
+  white-space: nowrap;
 }
 
 .panel-open {
@@ -57,7 +59,7 @@
   margin: 1em 0 0;
 }
 
-.feedback-links {
+.icon-links {
   a,
   a:visited {
     color: $color-gray-50;
@@ -103,4 +105,8 @@ table.definition-table {
 
 .report-detail-fields a:visited {
   color: adjust-hue($color: $color-tint, $degrees: -12);
+}
+
+.table-header {
+  background-color: $color-gray-97;
 }

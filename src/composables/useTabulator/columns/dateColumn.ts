@@ -28,7 +28,10 @@ export let dateRangeEditor = function (cell, onRendered, success, cancel, editor
   container.appendChild(editor2);
 
   function successFunc() {
-    if (!editor.value && !editor2.value) return;
+    if (!editor.value && !editor2.value) {
+      success();
+      return;
+    }
     let start = chrono.parse(editor.value);
     let startTime;
     if (start?.length) startTime = `${start[0].start.get('month')}/${start[0].start.get('day')}/${start[0].start.get('year')}`;
