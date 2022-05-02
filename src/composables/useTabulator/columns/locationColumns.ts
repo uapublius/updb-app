@@ -36,7 +36,7 @@ export let locationColumns = {
       title: "Country",
       titleFormatter: () => isNarrow ? '' : "Country",
       field: "country",
-      width: isNarrow ? 36 : undefined,
+      width: isNarrow ? 45 : undefined,
       headerFilter: true,
       headerFilterFunc: "u=",
       headerFilterParams: {

@@ -1,13 +1,25 @@
 <template>
   <div>
-    <header class="table-header mn-2 p-2">
+    <header class="table-header mn-2 p-2 pn-2">
       <div class="flex justify-content-between table-summary">
-        <div class="table-filter-summary" />
-        <div class="table-summary-actions mw-1 me-1">
-          <a class="action-link mw-2" @click="resetFilters">Reset</a>
-          <a class="action-link mw-2" @click="downloadAll">Download (CSV)</a>
-          <a class="action-link mw-2" :href="permalink" target="_blank">Permalink</a>
-          <a class="action-link mw-2 twitter-share-button" :href="tweetUrl" target="_blank">
+        <div class="table-filter-summary ms-1">...</div>
+        <div class="table-summary-actions mn-1 mx-1">
+          <a class="action-link mx-2" @click="resetFilters">Reset</a>
+
+          <a class="action-link mx-2" @click="downloadAll">Download (CSV)</a>
+
+          <a
+            class="action-link mx-2"
+            :class="{ 'bg-highlight-vivid': copiedLink }"
+            @click="copyLink"
+          >
+            <span>
+              <template v-if="copiedLink">Copied</template>
+              <template v-else="copiedLink">Permalink</template>
+            </span>
+          </a>
+
+          <a class="action-link mx-2 twitter-share-button" :href="tweetUrl" target="_blank">
             Tweet
           </a>
         </div>
@@ -65,6 +77,16 @@ function watchUrl() {
 onBeforeMount(() => {
   watchUrl();
 });
+
+let copiedLink = ref(false);
+
+async function copyLink() {
+  copiedLink.value = true;
+  await navigator.clipboard.writeText(permalink.value);
+  setTimeout(() => {
+    copiedLink.value = false;
+  }, 3000);
+}
 
 let tweetUrl = computed(() => {
   const myUrlWithParams = new URL("https://twitter.com/intent/tweet");

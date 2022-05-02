@@ -7,10 +7,35 @@
     display: none !important;
   }
 
+  .page-reports {
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .table-header {
+    margin: 0 !important;
+
+    .table-summary {
+      display: block !important;
+
+      .table-summary-actions {
+        margin: 0 !important;
+        padding: 0 !important;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .action-link {
+        margin: 0 !important;
+      }
+    }
+  }
+
   .icon-links {
     a,
     a:visited {
-      &:active, &:hover {
+      &:active {
         background-color: $color-dark;
         transform: scale(0.95);
         position: relative;

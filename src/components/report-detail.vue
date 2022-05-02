@@ -7,7 +7,6 @@
             {{ sourceName }} {{ report.source_id }}
           </a>
         </h3>
-        <span class="mw-1" v-if="copiedLink">Copied Link</span>
         <div class="icon-links flex align-items-center">
           <a
             class="mw-2 flex align-items-end"
@@ -15,8 +14,9 @@
             target="_blank"
             title="Copy permalink"
           >
-            <icon-copy class="mw-2" />
-            Copy
+            <icon-copy v-if="!copiedLink" class="mw-2" />
+            <span class="mw-1" v-if="copiedLink">Copied Link</span>
+            <div v-if="!copiedLink">Copy</div>
           </a>
 
           <a
@@ -26,7 +26,7 @@
             target="_blank"
           >
             <icon name="twitter" />
-            Tweet
+            <div>Tweet</div>
           </a>
         </div>
       </div>
@@ -143,7 +143,7 @@ let sourceName = computed(() => {
 });
 
 let permalink = computed(() => {
-  return `/report/${props.report.source}-${props.report.source_id}`;
+  return `https://updb.app/report/${props.report.source}-${props.report.source_id}`;
 });
 
 let body = computed(() => {
@@ -183,6 +183,6 @@ async function copyLink() {
   await navigator.clipboard.writeText(permalink.value);
   setTimeout(() => {
     copiedLink.value = false;
-  }, 2000);
+  }, 3000);
 }
 </script>

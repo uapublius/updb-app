@@ -13,7 +13,11 @@
 }
 
 .bg-highlight {
-  background-color: #fcfce8;
+  background: #fcfce8 !important;
+}
+
+.bg-highlight-vivid {
+  background: #ffffb4 !important;
 }
 
 .action-link,
@@ -63,7 +67,7 @@
   a,
   a:visited {
     color: $color-gray-50;
-    font-size: 13px;
+    font-size: 12px;
     text-decoration: none;
     line-height: 1;
     margin: 0 0 0 1rem;

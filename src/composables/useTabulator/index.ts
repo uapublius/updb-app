@@ -148,8 +148,10 @@ export default function useTabulator(tabulator) {
       }
 
       let summary = document.querySelector('.table-filter-summary');
-      let filterString = `<strong>${totalResults.toLocaleString()}</strong> reports`;
+      let filterString = `<span><strong>${totalResults.toLocaleString()}</strong> reports`;
       if (filters.length) filterString += ' matching:';
+      filterString += '</span>';
+
       let filterStrings = [];
 
       for (const filter of filters) {

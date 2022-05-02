@@ -29,4 +29,4 @@ export function object2array(o) {
 
 export const isMobile = !import.meta.env.SSR && navigator.userAgent.includes(" Mobile/");
 export const isNarrow = !import.meta.env.SSR && document.body.offsetWidth <= 420;
-export const baseUrl = import.meta.env.VITE_DOMAIN || 'http://localhost:3000';
+export const baseUrl = (import.meta.env.PROD && !import.meta.env.SSR) ? 'https://updb.app' : 'http://localhost:3000';

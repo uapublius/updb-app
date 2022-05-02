@@ -12,7 +12,7 @@ div.tabulator {
     }
 
     &.tabulator-selected {
-      background-color: $color-tint-tertiary;
+      background-color: $color-tint-tertiary !important;
       border-bottom-color: $color-tint-tertiary;
       border-top: 1px solid $color-tint-tertiary;
       margin-top: -1px;
@@ -32,7 +32,7 @@ div.tabulator {
       border-color: transparent;
 
       &.tabulator-field-filtered {
-        background-color: #fcfce8;
+        background-color: #ffffb4;
       }
 
       &.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {

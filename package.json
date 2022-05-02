@@ -6,12 +6,15 @@
     "@/*": "src/*.ts"
   },
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "app:dev": "vite",
-    "app:build": "vue-tsc --noEmit && vite build",
-    "app:preview": "vite preview",
-    "build": "npm run app:build && npm run docs:build"
+    "dev": "node server-dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:noExternal": "npm run build:client && npm run build:server:noExternal",
+    "build:client": "vite build --ssrManifest --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
+    "build:server:noExternal": "vite build --config vite.config.noexternal.js --ssr src/entry-server.ts --outDir dist/server",
+    "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender",
+    "serve": "cross-env NODE_ENV=production node server",
+    "debug": "node --inspect-brk server"
   },
   "dependencies": {
     "axios": "^0.26.1",
@@ -35,7 +38,6 @@
     "unplugin-vue-components": "^0.18.3",
     "vite": "^2.8.0",
     "vite-svg-loader": "^3.2.0",
-    "vue-tsc": "^0.29.8",
-    "vuepress": "^2.0.0-beta.39"
+    "vue-tsc": "^0.29.8"
   }
 }

@@ -1,61 +1,36 @@
-// @ts-check
 let fs = require('fs');
 let path = require('path');
 let express = require('express');
 
 let resolve = (p) => path.resolve(__dirname, p);
 
-async function buildApp(root, isProd) {
+async function buildApp() {
   let app = express();
   let vite;
 
-  if (!isProd) {
-    vite = await require('vite').createServer({
-      root,
-      logLevel: 'info',
-      server: {
-        middlewareMode: 'ssr'
-      }
-    });
-
-    app.use(vite.middlewares);
-  } else {
-    app.use(require('compression')());
-    app.use(
-      require('serve-static')(resolve('dist/client'), {
-        index: false
-      })
-    );
-  }
+  app.use(require('compression')());
+  app.use(
+    require('serve-static')(resolve('dist/client'), {
+      index: false
+    })
+  );
 
   return { app, vite };
 }
 
-async function getTemplateRender(vite, url, isProd) {
-  let template;
-  let render;
-
-  if (!isProd) {
-    template = fs.readFileSync(resolve('index.html'), 'utf-8');
-    template = await vite.transformIndexHtml(url, template);
-    render = (await vite.ssrLoadModule('./entry-server.ts')).render;
-  } else {
-    let indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : '';
-    template = indexProd;
-    // @ts-ignore
-    render = require('./dist/server/entry-server.js').render;
-  }
+async function getTemplateRender() {
+  let indexProd = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8');
+  let template = indexProd;
+  let render = require('./dist/server/entry-server.js').render;
 
   return { template, render };
 }
 
-async function handleRequest(vite, req, res, isProd) {
+async function handleRequest(vite, req, res) {
   try {
-    // @ts-ignore
-    let manifest = isProd ? require('./dist/client/ssr-manifest.json') : {};
     let url = req.originalUrl;
-    let { template, render } = await getTemplateRender(vite, url, isProd);
-    let [appHtml, meta] = await render(url, manifest);
+    let { template, render } = await getTemplateRender(vite, url);
+    let [appHtml, meta] = await render(url, {});
     let html = template
       .replace(`<!--meta-tags-->`, meta)
       .replace(`<!--app-html-->`, appHtml);
@@ -68,10 +43,10 @@ async function handleRequest(vite, req, res, isProd) {
   }
 }
 
-async function createServer(root = process.cwd(), isProd = process.env.NODE_ENV === 'production') {
-  let { app, vite } = await buildApp(root, isProd);
+async function createServer(root = process.cwd()) {
+  let { app, vite } = await buildApp(root);
 
-  app.use('*', async (req, res) => handleRequest(vite, req, res, isProd));
+  app.use('*', async (req, res) => handleRequest(vite, req, res));
 
   return { app, vite };
 }
