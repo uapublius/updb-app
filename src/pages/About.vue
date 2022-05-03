@@ -41,7 +41,9 @@
     </client-only>
 
     <figure class="mn-4 ms-2">
-      <img src="../assets/uapublius.jpg" style="height: 400px" />
+      <a href="https://twitter.com/uapublius" target="_blank">
+        <img src="../assets/uapublius.jpg" style="height: 400px" />
+      </a>
       <blockquote class="mn-1">
         &ldquo;Nothing which we can imagine about Nature is incredible.&rdquo;
       </blockquote>
