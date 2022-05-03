@@ -24,6 +24,10 @@ div.tabulator {
   }
 
   .tabulator-header {
+    [aria-title="Location"] > .tabulator-col-content {
+      padding-bottom: 0 !important;
+    }
+
     .tabulator-col.tabulator-col-group .tabulator-col-group-cols {
       border-color: transparent;
     }
@@ -73,18 +77,19 @@ div.tabulator {
     }
   }
 
+  .tabulator-col-title svg {
+    fill: $color-gray-50;
+    margin-top: 2px;
+    width: 12px;
+}
+
+  [tabulator-field="word_count"],
   [tabulator-field="references"],
   [tabulator-field="attachments"] {
     .tabulator-col-title {
       height: 20px;
-      fill: $color-gray-50;
       display: flex;
       justify-content: center;
-
-      svg {
-        margin-top: 2px;
-        width: 12px;
-      }
     }
   }
 

@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
-import * as chrono from 'chrono-node';
-import { Tabulator } from 'tabulator-tables';
+import * as chrono from "chrono-node";
+import { Tabulator } from "tabulator-tables";
 import { isNarrow } from "@/lib/util";
 
 function createDateEditor(placeholder: string, value: string, cb: () => void) {
@@ -10,9 +10,9 @@ function createDateEditor(placeholder: string, value: string, cb: () => void) {
   editor.placeholder = placeholder;
   editor.style.display = "block";
 
-  editor.addEventListener('blur', () => cb());
+  editor.addEventListener("blur", () => cb());
 
-  editor.addEventListener("keyup", (event) => {
+  editor.addEventListener("keyup", event => {
     if (event.key === "Enter") cb();
   });
 
@@ -20,8 +20,8 @@ function createDateEditor(placeholder: string, value: string, cb: () => void) {
 }
 
 export let dateRangeEditor = function (cell, onRendered, success, cancel, editorParams) {
-  let editor = createDateEditor("From", cell.getValue()?.[0] || '', successFunc);
-  let editor2 = createDateEditor("To", cell.getValue()?.[1] || '', successFunc);
+  let editor = createDateEditor("From", cell.getValue()?.[0] || "", successFunc);
+  let editor2 = createDateEditor("To", cell.getValue()?.[1] || "", successFunc);
 
   let container = document.createElement("div");
   container.appendChild(editor);
@@ -34,10 +34,16 @@ export let dateRangeEditor = function (cell, onRendered, success, cancel, editor
     }
     let start = chrono.parse(editor.value);
     let startTime;
-    if (start?.length) startTime = `${start[0].start.get('month')}/${start[0].start.get('day')}/${start[0].start.get('year')}`;
+    if (start?.length)
+      startTime = `${start[0].start.get("month")}/${start[0].start.get("day")}/${start[0].start.get(
+        "year"
+      )}`;
     let end = chrono.parse(editor2.value);
     let endTime;
-    if (end?.length) endTime = `${end[0].start.get('month')}/${end[0].start.get('day')}/${end[0].start.get('year')}`;
+    if (end?.length)
+      endTime = `${end[0].start.get("month")}/${end[0].start.get("day")}/${end[0].start.get(
+        "year"
+      )}`;
     success([startTime, endTime]);
   }
 
@@ -47,15 +53,14 @@ export let dateRangeEditor = function (cell, onRendered, success, cancel, editor
 export let dateColumn: Tabulator.ColumnDefinition = {
   title: "Date",
   field: "date",
-  minWidth: 92,
-  width: isNarrow ? 64 : undefined,
+  minWidth: 72,
+  width: isNarrow ? 62 : undefined,
   headerFilter: dateRangeEditor,
   headerFilterFunc: "ov",
   formatter(cell) {
     if (isNarrow) {
       return DateTime.fromISO(cell.getValue()).toLocaleString(DateTime.DATE_SHORT);
-    }
-    else {
+    } else {
       return DateTime.fromISO(cell.getValue()).toLocaleString(DateTime.DATETIME_SHORT);
     }
   }

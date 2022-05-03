@@ -1,4 +1,8 @@
 @media screen and (max-width: 420px) {
+  .hide-narrow {
+    display: none !important;
+  }
+
   button[data-page="first"],
   button[data-page="last"],
   .tabulator-paginator > label,
@@ -32,6 +36,10 @@
     }
   }
 
+  .table-header {
+    background-color: #fff;
+  }
+
   .icon-links {
     a,
     a:visited {
@@ -53,9 +61,32 @@
       }
     }
   }
+
+  div.tabulator {
+    .tabulator-footer .tabulator-footer-contents {
+      padding: 0.5em 0.75em 0.5em 0.5em;
+
+      .tabulator-page {
+        padding: 0.3em 1em;
+
+        &:hover {
+          background: initial;
+          color: $color-tint;
+        }
+      }
+    }
+
+    .tabulator-row .tabulator-cell {
+      letter-spacing: -0.5px;
+    }
+  }
 }
 
 @media screen and (min-width: 421px) {
+  .show-narrow {
+    display: none !important;
+  }
+
   .tabulator-header-filter input {
     border: 1px solid $color-gray-90;
   }

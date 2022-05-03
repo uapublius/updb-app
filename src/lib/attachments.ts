@@ -4,12 +4,12 @@ let shouldPrefix = ["http://www.nicap.org", "http://www.mufoncms.com"];
 let cachedArchiveOrgUrls = {};
 
 export function setupStorage() {
-  let storedCachedArchiveOrgUrls = localStorage.getItem('cachedArchiveOrgUrls');
+  let storedCachedArchiveOrgUrls = localStorage.getItem("cachedArchiveOrgUrls");
 
   if (storedCachedArchiveOrgUrls) {
     try {
       cachedArchiveOrgUrls = JSON.parse(storedCachedArchiveOrgUrls);
-    } catch (error) { }
+    } catch (error) {}
   }
 }
 
@@ -20,11 +20,10 @@ export async function loadUrlsForAttachments(attachments: string[] = []) {
 export async function urlForAttachment(link: string): Promise<string> {
   if (shouldPrefix.some(prefix => link.startsWith(prefix))) {
     let date = +new Date();
-    let oneMonth = 2.628e+9;
+    let oneMonth = 2.628e9;
     let cachedLink = cachedArchiveOrgUrls[link];
 
-    if (cachedLink?.link && (date - cachedLink?.date < oneMonth)) {
-      console.log("Returning cached link", cachedLink.link);
+    if (cachedLink?.link && date - cachedLink?.date < oneMonth) {
       return cachedLink.link;
     }
 
@@ -44,12 +43,11 @@ export async function urlForAttachment(link: string): Promise<string> {
         let [id] = cachedUrl.match(/(\d{14})/);
         url = `https://web.archive.org/web/${id}if_/${link}`;
         cachedArchiveOrgUrls[link] = { date, link: url };
-      }
-      else {
+      } else {
         cachedArchiveOrgUrls[link] = { date, link: null };
       }
 
-      localStorage.setItem('cachedArchiveOrgUrls', JSON.stringify(cachedArchiveOrgUrls));
+      localStorage.setItem("cachedArchiveOrgUrls", JSON.stringify(cachedArchiveOrgUrls));
 
       return url;
     } catch (error) {

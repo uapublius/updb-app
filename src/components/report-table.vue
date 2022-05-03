@@ -1,12 +1,18 @@
 <template>
   <div>
-    <header class="table-header mn-2 p-2 pn-2">
-      <div class="flex justify-content-between table-summary">
-        <div class="table-filter-summary ms-1">...</div>
-        <div class="table-summary-actions mn-1 mx-1">
+    <header class="table-header mn-2 px-1 py-1">
+      <div class="flex justify-content-between align-items-center table-summary">
+        <div class="table-filter-summary my-1">...</div>
+        <div class="table-summary-actions my-1 mx-1">
           <a class="action-link mx-2" @click="resetFilters">Reset</a>
 
-          <a class="action-link mx-2" @click="downloadAll">Download (CSV)</a>
+          <a
+            class="action-link mx-2"
+            @click="downloadAll"
+            title="CSV download is limited to 10,000 records. Download full dataset for custom analysis."
+          >
+            Download (CSV)
+          </a>
 
           <a
             class="action-link mx-2"

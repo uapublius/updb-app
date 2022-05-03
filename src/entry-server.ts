@@ -1,5 +1,5 @@
-import { createApp } from './main';
-import { renderToString } from 'vue/server-renderer';
+import { createApp } from "./main";
+import { renderToString } from "vue/server-renderer";
 
 export async function render(url) {
   let { app, router, head } = createApp();

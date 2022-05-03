@@ -1,9 +1,5 @@
 # UPDB
 
-# Introduction
-
-UPDB is an open database of unexplained phenomena reports.
-
 ## Tips
 
 ### Searching reports
@@ -11,13 +7,6 @@ UPDB is an open database of unexplained phenomena reports.
 * "quoted text": text inside quote marks will be converted to a single term
 * OR: boolean operator between terms
 * -: negation operator preceding a term
-
-## Credits
-
-* MUFON
-* NUFORC
-* NICAP
-* UFODNA.COM
 
 ## Database
 

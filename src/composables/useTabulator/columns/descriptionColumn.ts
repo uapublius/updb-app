@@ -2,6 +2,7 @@ export let descriptionColumn = {
   title: "Report",
   field: "description",
   tooltip: true,
+  minWidth: 72,
   headerSort: false,
   headerFilter: true,
   headerFilterFunc: "fts",
@@ -13,5 +14,5 @@ export let descriptionColumn = {
       name: "header-description-search",
       autocomplete: true
     }
-  },
+  }
 };

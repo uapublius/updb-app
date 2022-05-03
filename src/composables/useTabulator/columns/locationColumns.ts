@@ -12,29 +12,29 @@ export let locationColumns = {
       headerFilterParams: {
         search: true,
         elementAttributes: {
-          autocomplete: "no",
+          autocomplete: "no"
         }
       },
       maxInitialWidth: 175
     },
     {
       title: "District",
-      titleFormatter: () => isNarrow ? '' : "District",
+      titleFormatter: () => (isNarrow ? "&nbsp;" : "District"),
       field: "district",
-      width: isNarrow ? 45 : undefined,
+      width: isNarrow ? 65 : undefined,
       headerFilter: true,
       headerFilterFunc: "ulike",
       headerFilterParams: {
         search: true,
         elementAttributes: {
-          autocomplete: "no",
+          autocomplete: "no"
         }
       },
       maxInitialWidth: 175
     },
     {
       title: "Country",
-      titleFormatter: () => isNarrow ? '' : "Country",
+      titleFormatter: () => (isNarrow ? "&nbsp;" : "Country"),
       field: "country",
       width: isNarrow ? 45 : undefined,
       headerFilter: true,
@@ -44,18 +44,9 @@ export let locationColumns = {
         mask: "AA",
         elementAttributes: {
           maxlength: "2",
-          autocomplete: "no",
+          autocomplete: "no"
         }
       }
-    },
-    {
-      title: "Continent",
-      field: "continent",
-      headerFilter: true,
-      headerFilterParams: {
-        search: true
-      },
-      visible: false
     },
     {
       title: "Water",
@@ -73,7 +64,7 @@ export let locationColumns = {
       headerFilterParams: {
         search: true,
         elementAttributes: {
-          autocomplete: "no",
+          autocomplete: "no"
         }
       },
       visible: false

@@ -1,16 +1,16 @@
 import axios from "axios";
-import { baseUrl } from '@/lib/util';
+import { baseUrl } from "@/lib/util";
 import { reportColumns } from "@/composables/useTabulator/columns";
 
 axios.defaults.baseURL = baseUrl;
 
 export async function getReport(source: number, sourceId: string) {
   try {
-    let res = await axios.get('/api/report_view', {
+    let res = await axios.get("/api/report_view", {
       params: {
-        select: reportColumns.join(','),
-        source: 'eq.' + source,
-        source_id: 'eq.' + sourceId,
+        select: reportColumns.join(","),
+        source: "eq." + source,
+        source_id: "eq." + sourceId,
         limit: 1
       }
     });
@@ -25,14 +25,14 @@ export async function getReport(source: number, sourceId: string) {
 export async function getAttachmentsReferences(report: Report) {
   try {
     return Promise.all([
-      axios.get('/api/attachment', {
+      axios.get("/api/attachment", {
         params: {
-          report: 'in.(' + report.id + ')'
+          report: "in.(" + report.id + ")"
         }
       }),
-      axios.get('/api/report_reference_view', {
+      axios.get("/api/report_reference_view", {
         params: {
-          report: 'in.(' + report.id + ')'
+          report: "in.(" + report.id + ")"
         }
       })
     ]);

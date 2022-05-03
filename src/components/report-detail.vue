@@ -19,15 +19,17 @@
             <div v-if="!copiedLink">Copy</div>
           </a>
 
-          <a
-            class="mw-2 flex align-items-start twitter-share-button"
-            :href="tweetUrl"
-            title="Tweet report"
-            target="_blank"
-          >
-            <icon name="twitter" />
-            <div>Tweet</div>
-          </a>
+          <client-only>
+            <a
+              class="mw-2 flex align-items-start twitter-share-button"
+              :href="tweetUrl"
+              title="Tweet report"
+              target="_blank"
+            >
+              <icon name="twitter" />
+              <div>Tweet</div>
+            </a>
+          </client-only>
         </div>
       </div>
 

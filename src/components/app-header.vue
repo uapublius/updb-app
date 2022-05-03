@@ -1,11 +1,17 @@
 <template>
-  <header class="p-2 pe-3">
-    <div class="flex align-items-center justify-content-between w-100">
-      <div>
+  <header class="pn-2 pw-2 pe-3">
+    <div class="flex align-items-end justify-content-between w-100">
+      <div class="ms-2">
         <h1 class="gradient-text"><a href="/" title="Home">UPDB</a></h1>
       </div>
 
-      <div class="icon-links flex align-items-center justify-content-end">
+      <div class="hide-narrow header-tabs flex justify-content-end align-items-end">
+        <div><router-link to="/reports">Reports</router-link></div>
+        <div><router-link to="/about">About</router-link></div>
+        <div><router-link to="/changelog">Changelog</router-link></div>
+      </div>
+
+      <div class="icon-links flex align-items-center justify-content-end ms-2">
         <a
           target="_blank"
           title="Download database in postgreSQL format."
@@ -15,10 +21,12 @@
           <div>Dataset (SQL)</div>
         </a>
 
-        <a title="uapublius@protonmail.com" href="mailto:uapublius@protonmail.com?subject=UPDB">
-          <icon name="envelope" style="padding-top: 1px" />
-          <div>Contact</div>
-        </a>
+        <client-only>
+          <a title="uapublius@protonmail.com" href="mailto:uapublius@protonmail.com?subject=UPDB">
+            <icon name="envelope" style="padding-top: 1px" />
+            <div>Contact</div>
+          </a>
+        </client-only>
 
         <a
           target="_blank"
@@ -35,5 +43,33 @@
         </a>
       </div>
     </div>
+
+    <div class="show-narrow header-tabs flex justify-content-center">
+      <div><router-link to="/reports">Reports</router-link></div>
+      <div><router-link to="/about">About</router-link></div>
+      <div><router-link to="/changelog">Changelog</router-link></div>
+    </div>
   </header>
 </template>
+
+<style>
+h1 {
+  white-space: nowrap;
+}
+
+.header-tabs {
+}
+
+.header-tabs > div a.router-link-active {
+  background: #fff;
+  color: initial;
+}
+
+.header-tabs > div a {
+  white-space: nowrap;
+  padding: 0 0.75em;
+  text-decoration: none;
+  color: #ddd;
+  line-height: 2rem;
+}
+</style>
