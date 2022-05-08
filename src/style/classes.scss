@@ -114,3 +114,29 @@ table.definition-table {
 .table-header {
   background-color: $color-gray-97;
 }
+
+.app-header {
+  h1 {
+    white-space: nowrap;
+  }
+
+  .header-tabs > div a.router-link-active {
+    background: #fff;
+    color: initial;
+  }
+
+  .header-tabs > div a:not(.router-link-active):hover {
+    background: #444;
+  }
+
+  .header-tabs > div a {
+    border-radius: 2px 2px 0 0;
+    white-space: nowrap;
+    padding: 0 0.75em;
+    text-decoration: none;
+    color: #ddd;
+    line-height: 2em;
+    font-weight: bold;
+    letter-spacing: 0.1px;
+  }
+}

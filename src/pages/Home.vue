@@ -7,10 +7,10 @@
       <samford-quote />
     </div>
     <h2 class="my-3">
-      <a href="/about">About →</a>
+      <a href="/news">News →</a>
     </h2>
     <h2 class="my-3">
-      <a href="/changelog">Changelog →</a>
+      <a href="/about">About →</a>
     </h2>
   </div>
 </template>

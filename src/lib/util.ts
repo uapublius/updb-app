@@ -3,7 +3,7 @@ export function linkify(text: string) {
 }
 
 export function lf2br(text: string) {
-  return text.replace(/\n/gm, '<br />');
+  return text.replace(/\n/gm, "<br />");
 }
 
 export function saveToFile(content: string, filename: string) {
@@ -27,6 +27,11 @@ export function object2array(o) {
   return arr;
 }
 
+export function capitalize(str): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export const isMobile = !import.meta.env.SSR && navigator.userAgent.includes(" Mobile/");
 export const isNarrow = !import.meta.env.SSR && document.body.offsetWidth <= 420;
-export const baseUrl = (import.meta.env.PROD && !import.meta.env.SSR) ? 'https://updb.app' : 'http://localhost:3000';
+export const baseUrl =
+  import.meta.env.PROD && !import.meta.env.SSR ? "https://updb.app" : "http://localhost:3000";

@@ -3,7 +3,7 @@ import Home from "./pages/Home.vue";
 import Reports from "./pages/Reports.vue";
 import Report from "./pages/Report.vue";
 import About from "./pages/About.vue";
-import Changelog from "./pages/Changelog.vue";
+import News from "./pages/News.vue";
 
 let routes = [
   {
@@ -25,9 +25,9 @@ let routes = [
     props: true
   },
   {
-    name: "Changelog",
-    path: "/changelog",
-    component: Changelog,
+    name: "News",
+    path: "/news",
+    component: News,
     props: true
   },
   {

@@ -1,6 +1,7 @@
 <template>
-  <main class="flex flex-column h-100 flex-fill">
+  <main class="flex flex-column h-100">
     <app-header />
+
     <router-view v-slot="{ Component }">
       <Suspense>
         <div>
@@ -10,7 +11,3 @@
     </router-view>
   </main>
 </template>
-
-<script setup lang="ts">
-import "./style/style.scss";
-</script>

@@ -592,10 +592,42 @@
   display: flex;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-shrink {
+  flex-shrink: 1;
+}
+
 .inline {
   display: inline;
 }
 
 .inline-block {
   display: inline-block;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.valign-top {
+  vertical-align: top !important;
+}
+
+.valign-bottom {
+  vertical-align: bottom !important;
+}
+
+.valign-middle {
+  vertical-align: middle !important;
+}
+
+.valign-baseline {
+  vertical-align: baseline !important;
 }
