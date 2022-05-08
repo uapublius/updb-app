@@ -93,7 +93,7 @@ function paramSummary() {
         .map(s => sources[s])
         .join(", ");
     } else if (field === "description") {
-      descValue = ` matching "${value}"`;
+      descValue = `matching &ldquo;${value}&rdquo;`;
     }
 
     filterStrings.push(formattedValue);
@@ -124,11 +124,11 @@ function paramSummary() {
 
 function setMeta() {
   title.value = paramSummary();
+  meta.title = title.value;
   meta.meta["og:title"] = { content: title.value };
   meta.meta["twitter:title"] = { content: title.value };
-  meta.meta["og:url"] = { content: baseUrl + route.path };
-  meta.meta["twitter:url"] = { content: baseUrl + route.path };
-  meta.title = title.value;
+  meta.meta["og:url"] = { content: "https://updb.app" + route.fullPath };
+  meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
 }
 
 try {

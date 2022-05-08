@@ -54,9 +54,11 @@ function setMeta() {
   meta.title = title.value;
   meta.meta["og:title"] = { content: title.value };
   meta.meta["twitter:title"] = { content: title.value };
-  meta.meta["og:url"] = { content: baseUrl + route.path };
-  meta.meta["twitter:url"] = { content: baseUrl + route.path };
+  meta.meta["og:url"] = { content: "https://updb.app" + route.fullPath };
+  meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
   meta.meta["description"] = { content: description.value };
+  meta.meta["og:description"] = { content: description.value };
+  meta.meta["twitter:description"] = { content: description.value };
 }
 
 async function loadReport() {

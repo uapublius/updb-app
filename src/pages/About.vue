@@ -18,11 +18,19 @@
 
     <h3 class="mn-3 ms-2">Credits</h3>
 
+    <div>
+      Thank you to the following organizations for helping to build to an open and public record of
+      unknown phenomena:
+    </div>
+
     <ul>
       <li>MUFON</li>
       <li>NUFORC</li>
       <li>NICAP</li>
-      <li>UFODNA.COM</li>
+      <li>UFODNA</li>
+      <li>BAASS</li>
+      <li>NIDS</li>
+      <li>PhenomAInon</li>
     </ul>
 
     <h3 class="mn-3 ms-2">Dedications</h3>

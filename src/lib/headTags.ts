@@ -16,6 +16,7 @@ const meta = {
   "og:image": { content: "https://updb.app" + "/updb.jpg" },
   "og:url": { content: "https://updb.app" },
   "twitter:title": { content: title },
+  "twitter:card": { content: "summary_large_image" },
   "twitter:description": { content: description },
   "twitter:image": { content: "https://updb.app" + "/updb.jpg" },
   "twitter:url": { content: "https://updb.app" }
