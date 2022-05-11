@@ -6,21 +6,15 @@
 
         <div class="hide-narrow header-tabs flex justify-content-end align-items-end pw-3">
           <div><router-link to="/reports">Reports</router-link></div>
+          <div><router-link to="/documents">Documents</router-link></div>
           <div><router-link to="/news">News</router-link></div>
           <div><router-link to="/about">About</router-link></div>
+          <div><router-link to="/sources">Sources</router-link></div>
+          <div><router-link to="/download">Download</router-link></div>
         </div>
       </div>
 
       <div class="icon-links flex align-items-center justify-content-end ms-2">
-        <a
-          target="_blank"
-          title="Download database in postgreSQL format."
-          href="https://github.com/uapublius/updb-importers/raw/main/db/phenomenon.sql.gz"
-        >
-          <icon name="download" />
-          <div>Dataset</div>
-        </a>
-
         <a
           target="_blank"
           title="Download source code for UPDB app and data processing tools"

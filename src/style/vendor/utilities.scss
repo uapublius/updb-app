@@ -605,7 +605,7 @@
 }
 
 .inline-block {
-  display: inline-block;
+  display: inline-block !important;
 }
 
 .overflow-hidden {
@@ -630,4 +630,8 @@
 
 .valign-baseline {
   vertical-align: baseline !important;
+}
+
+.text-center {
+  text-align: center !important;
 }

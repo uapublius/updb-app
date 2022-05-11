@@ -1,11 +1,6 @@
 <template>
   <div class="py-3 px-2">
-    <report-detail
-      v-if="report?.id"
-      :report="report"
-      :attachments="attachments"
-      :references="references"
-    />
+    <report-detail :report="report" :attachments="attachments" :references="references" />
   </div>
 </template>
 
@@ -16,6 +11,7 @@ import { loadUrlsForAttachments } from "@/lib/attachments";
 import { useRoute, useRouter } from "vue-router";
 import { getAttachmentsReferences, getReport } from "@/composables/getReport";
 import { baseUrl } from "@/lib/util";
+import { sources } from "@/sources";
 
 let meta = inject("meta") as HeadTags;
 let report = ref({} as Report);
@@ -27,12 +23,9 @@ let source = route.params.source as string;
 let sourceId = route.params.sourceId as string;
 
 let title = computed(() => {
-  if (!location.value || !date.value) return "";
-  return `${location.value} – ${date.value}`;
-});
-
-let description = computed(() => {
-  return report.value.description?.trim().substring(0, 180).split(/\n+/).join(" | ") + "...";
+  let defaultTitle = `${sources[source]} ${sourceId}`;
+  if (!location.value || !date.value) return defaultTitle;
+  return `${defaultTitle} | ${location.value} – ${date.value}`;
 });
 
 let location = computed(() => {
@@ -56,9 +49,6 @@ function setMeta() {
   meta.meta["twitter:title"] = { content: title.value };
   meta.meta["og:url"] = { content: "https://updb.app" + route.fullPath };
   meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
-  meta.meta["description"] = { content: description.value };
-  meta.meta["og:description"] = { content: description.value };
-  meta.meta["twitter:description"] = { content: description.value };
 }
 
 async function loadReport() {
@@ -74,6 +64,7 @@ async function loadReport() {
 }
 
 try {
+  setMeta();
   await router.isReady();
   await loadReport();
   setMeta();

@@ -6,7 +6,7 @@ axios.defaults.baseURL = baseUrl;
 
 export async function getReport(source: number, sourceId: string) {
   try {
-    let res = await axios.get("/api/report_view", {
+    let res = await axios.get("/api/reports/report_view", {
       params: {
         select: reportColumns.join(","),
         source: "eq." + source,
@@ -25,12 +25,12 @@ export async function getReport(source: number, sourceId: string) {
 export async function getAttachmentsReferences(report: Report) {
   try {
     return Promise.all([
-      axios.get("/api/attachment", {
+      axios.get("/api/reports/attachment", {
         params: {
           report: "in.(" + report.id + ")"
         }
       }),
-      axios.get("/api/report_reference_view", {
+      axios.get("/api/reports/report_reference_view", {
         params: {
           report: "in.(" + report.id + ")"
         }

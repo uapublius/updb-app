@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
-import Components from 'unplugin-vue-components/vite';
-import svgLoader from 'vite-svg-loader';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   plugins: [
@@ -10,39 +10,36 @@ export default defineConfig({
     svgLoader(),
     AutoImport({
       imports: [
-        'vue',
-        'vue-router',
+        "vue",
+        "vue-router",
         {
-          '@vueuse/core': [
-            'useMouse',
-            ['useFetch', 'useMyFetch'],
-          ],
-          'axios': [
-            ['default', 'axios'],
-          ],
-          '[package-name]': [
-            '[import-names]',
-            ['[from]', '[alias]'],
-          ],
-        },
+          "@vueuse/core": ["useMouse", ["useFetch", "useMyFetch"]],
+          axios: [["default", "axios"]],
+          "[package-name]": ["[import-names]", ["[from]", "[alias]"]]
+        }
       ]
     }),
-    Components(),
+    Components()
   ],
   build: {
     chunkSizeWarningLimit: 1024
   },
   resolve: {
     alias: {
-      '@': '/src'
+      "@": "/src"
     }
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:4000',
+      "/api/reports": {
+        target: "http://127.0.0.1:4000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: path => path.replace(/^\/api\/reports/, "")
+      },
+      "/api/docs": {
+        target: "http://127.0.0.1:4010",
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/docs/, "")
       }
     }
   }

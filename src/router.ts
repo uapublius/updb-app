@@ -1,9 +1,12 @@
 import { createMemoryHistory, createRouter as _createRouter, createWebHistory } from "vue-router";
 import Home from "./pages/Home.vue";
 import Reports from "./pages/Reports.vue";
+import Documents from "./pages/Documents.vue";
 import Report from "./pages/Report.vue";
 import About from "./pages/About.vue";
 import News from "./pages/News.vue";
+import Download from "./pages/Download.vue";
+import Sources from "./pages/Sources.vue";
 
 let routes = [
   {
@@ -19,15 +22,33 @@ let routes = [
     props: true
   },
   {
+    name: "Documents",
+    path: "/documents",
+    component: Documents,
+    props: true
+  },
+  {
     name: "About",
     path: "/about",
     component: About,
     props: true
   },
   {
+    name: "Sources",
+    path: "/sources",
+    component: Sources,
+    props: true
+  },
+  {
     name: "News",
     path: "/news",
     component: News,
+    props: true
+  },
+  {
+    name: "Download",
+    path: "/download",
+    component: Download,
     props: true
   },
   {

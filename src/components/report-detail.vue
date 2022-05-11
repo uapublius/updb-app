@@ -7,30 +7,30 @@
             {{ sourceName }} {{ report.source_id }}
           </a>
         </h3>
-        <div class="icon-links flex align-items-center">
-          <a
-            class="mw-2 flex align-items-end"
-            @click="copyLink"
-            target="_blank"
-            title="Copy permalink"
-          >
-            <icon-copy v-if="!copiedLink" class="mw-2" />
-            <span class="mw-1" v-if="copiedLink">Copied Link</span>
-            <div v-if="!copiedLink">Copy</div>
-          </a>
-
-          <client-only>
+        <client-only>
+          <div class="icon-links flex">
             <a
-              class="mw-2 flex align-items-start twitter-share-button"
+              class="mw-2 flex align-items-center"
+              @click="copyLink"
+              target="_blank"
+              title="Copy permalink"
+            >
+              <icon-copy />
+              <div v-if="copiedLink">Copied</div>
+              <div v-else>Copy link</div>
+            </a>
+
+            <a
+              class="mw-2 flex align-items-center"
               :href="tweetUrl"
               title="Tweet report"
               target="_blank"
             >
               <icon name="twitter" />
-              <div>Tweet</div>
+              <div>Tweet link</div>
             </a>
-          </client-only>
-        </div>
+          </div>
+        </client-only>
       </div>
 
       <slot />
@@ -173,9 +173,9 @@ function labelForAttachment(attachment: string) {
 let tweetUrl = computed(() => {
   const myUrlWithParams = new URL("https://twitter.com/intent/tweet");
 
-  myUrlWithParams.searchParams.append("text", document.title);
-  myUrlWithParams.searchParams.append("url", window.location.href);
-  myUrlWithParams.searchParams.append("hashtags", "UFOTwitter,UPDB");
+  myUrlWithParams.searchParams.append("text", `${sourceName} ${props.report.source_id}`);
+  myUrlWithParams.searchParams.append("url", permalink.value);
+  myUrlWithParams.searchParams.append("hashtags", "UFOTwitter");
 
   return myUrlWithParams.href;
 });

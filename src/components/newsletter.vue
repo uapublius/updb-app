@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg-highlight inline-block">
     <form
       method="post"
       class="p-2"
@@ -48,7 +48,7 @@ let hasSignedUp = ref(document.location.href.endsWith("#signedup"));
 
 <style scoped>
 form {
-  border: 1px solid #eee;
+  border: 1px solid rgb(249, 244, 117);
   display: inline-block;
 }
 </style>

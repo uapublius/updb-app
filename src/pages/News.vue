@@ -7,6 +7,20 @@
     </client-only>
 
     <h3 class="mn-3 ms-2">Changelog</h3>
+
+    <div>1652031380</div>
+    <ul class="ms-2">
+      <li>Add: BAASS source</li>
+      <li>Add: NIDS source</li>
+      <li>Add: BLUEBOOK source</li>
+      <li>Add: SKINWALKER source</li>
+      <li>Add: PILOTS source</li>
+      <li>Add: CANADAGOV source</li>
+      <li>Add: UKTNA source</li>
+      <li>Add: BRAZILGOV source</li>
+      <li>(h/t PhenomAInon)</li>
+    </ul>
+
     <div>1651532031</div>
     <ul>
       <li>Fix: Month wrong on MUFON records</li>
@@ -20,3 +34,21 @@
     </ul>
   </div>
 </template>
+
+<script setup lang="ts">
+import { inject } from "vue";
+import { useRoute } from "vue-router";
+let route = useRoute();
+let meta = inject("meta") as HeadTags;
+
+function setMeta() {
+  let title = "UPDB | News";
+  meta.title = title;
+  meta.meta["og:title"] = { content: title };
+  meta.meta["twitter:title"] = { content: title };
+  meta.meta["og:url"] = { content: "https://updb.app" + route.fullPath };
+  meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
+}
+
+setMeta();
+</script>

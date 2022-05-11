@@ -13,12 +13,12 @@ const meta = {
   type: { content: "website" },
   "og:title": { content: title },
   "og:description": { content: description },
-  "og:image": { content: "https://updb.app" + "/updb.jpg" },
+  "og:image": { content: "https://updb.app" + "/updb_wide.jpg" },
   "og:url": { content: "https://updb.app" },
   "twitter:title": { content: title },
   "twitter:card": { content: "summary_large_image" },
   "twitter:description": { content: description },
-  "twitter:image": { content: "https://updb.app" + "/updb.jpg" },
+  "twitter:image": { content: "https://updb.app" + "/updb_wide.jpg" },
   "twitter:url": { content: "https://updb.app" }
 };
 

@@ -23,7 +23,7 @@ import { inject, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import { loadUrlsForAttachments } from "@/lib/attachments";
-import { baseUrl, object2array } from "@/lib/util";
+import { object2array } from "@/lib/util";
 import { sources } from "@/sources";
 
 let meta = inject("meta") as HeadTags;
@@ -51,8 +51,8 @@ function openPanel() {
 
 async function rowSelectionChanged(reports: Report[]) {
   if (!reports?.length) return;
-  await loadReport(reports[0]);
   openPanel();
+  await loadReport(reports[0]);
 }
 
 function paramSummary() {
@@ -118,7 +118,6 @@ function paramSummary() {
   s += dateValue;
   s += descValue;
 
-  // s = capitalize(s);
   return "Reports " + s;
 }
 

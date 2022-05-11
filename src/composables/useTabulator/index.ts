@@ -103,7 +103,7 @@ export default function useTabulator(tabulator) {
     totalResults = paginationData.rowCount;
 
     axios
-      .get("/api/attachment", {
+      .get("/api/reports/attachment", {
         params: {
           report: "in.(" + paginationData.data.map(d => d.id) + ")"
         }
@@ -111,7 +111,7 @@ export default function useTabulator(tabulator) {
       .then(updateRowsWithAttachments(table.value));
 
     axios
-      .get("/api/report_reference_view", {
+      .get("/api/reports/report_reference_view", {
         params: {
           report: "in.(" + paginationData.data.map(d => d.id) + ")"
         }
@@ -146,7 +146,7 @@ export default function useTabulator(tabulator) {
       paginationMode: "remote",
       paginationButtonCount: 5,
       paginationCounter,
-      ajaxURL: "/api/report_view",
+      ajaxURL: "/api/reports/report_view",
       ajaxRequestFunc: ajaxRequestFunc(handleAjaxData)
     });
 

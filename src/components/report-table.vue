@@ -25,9 +25,7 @@
             </span>
           </a>
 
-          <a class="action-link mx-2 twitter-share-button" :href="tweetUrl" target="_blank">
-            Tweet
-          </a>
+          <a class="action-link mx-2" :href="tweetUrl" target="_blank">Tweet</a>
         </div>
       </div>
     </header>
@@ -53,7 +51,7 @@ async function downloadAll() {
   let filter = table.value.getFilters(true);
   let sort = table.value.getSorters();
   let params = buildAjaxParams(filter, sort);
-  let { data } = await axios.get("/api/report_view", {
+  let { data } = await axios.get("/api/reports/report_view", {
     headers: { Accept: "text/csv" },
     params
   });

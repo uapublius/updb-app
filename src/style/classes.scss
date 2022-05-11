@@ -69,11 +69,15 @@
     color: $color-gray-50;
     font-size: 12px;
     text-decoration: none;
-    line-height: 1;
+    line-height: 1.2;
     margin: 0 0 0 1rem;
 
     &:hover {
-      text-decoration: underline;
+      color: $color-dark;
+    }
+
+    > div {
+      border-bottom: 1px dotted $color-gray-50;
     }
 
     svg {
@@ -138,5 +142,27 @@ table.definition-table {
     line-height: 2em;
     font-weight: bold;
     letter-spacing: 0.1px;
+  }
+}
+
+.result {
+  a {
+    font-size: 19px;
+  }
+
+  .result-prefix {
+    color: $color-gray-50;
+    line-height: 1.1;
+  }
+
+  .result-name {
+    color: $color-darker;
+    line-height: 1.5;
+  }
+
+  .result-links a {
+    display: inline-block;
+    line-height: 1.1;
+    padding: 1px 0;
   }
 }
