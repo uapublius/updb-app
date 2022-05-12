@@ -2,30 +2,33 @@
   <div>
     <header class="table-header mn-2 px-1 py-1">
       <div class="flex justify-content-between align-items-center table-summary">
-        <div class="table-filter-summary my-1">...</div>
-        <div class="table-summary-actions my-1 mx-1">
-          <a class="action-link mx-2" @click="resetFilters">Reset</a>
+        <div class="flex align-items-center">
+          <div class="table-filter-summary">...</div>
 
-          <a
-            class="action-link mx-2"
-            @click="downloadAll"
-            title="CSV download is limited to 10,000 records. Download full dataset for custom analysis."
-          >
-            Download (CSV)
+          <a class="mw-2 flex align-items-center" style="font-size: 11px; line-height: 1; margin-top: 2px"
+            @click="resetFilters">
+            <icon-undo />&nbsp;Reset
+          </a>
+        </div>
+
+        <div class="table-summary-actions my-1 mx-1">
+          <a class="action-link mx-2" @click="downloadAll"
+            title="CSV download is limited to 10,000 records. Download full dataset for custom analysis.">
+            <icon-download /> Download results
           </a>
 
-          <a
-            class="action-link mx-2"
-            :class="{ 'bg-highlight-vivid': copiedLink }"
-            @click="copyLink"
-          >
+          <a class="action-link mx-2" :class="{ 'bg-highlight-vivid': copiedLink }" @click="copyLink">
             <span>
+              <icon-link />
               <template v-if="copiedLink">Copied</template>
               <template v-else="copiedLink">Permalink</template>
             </span>
           </a>
 
-          <a class="action-link mx-2" :href="tweetUrl" target="_blank">Tweet</a>
+          <a class="action-link mx-2" :href="tweetUrl" target="_blank">
+            <icon-twitter />
+            Tweet
+          </a>
         </div>
       </div>
     </header>
@@ -94,11 +97,9 @@ async function copyLink() {
 
 let tweetUrl = computed(() => {
   const myUrlWithParams = new URL("https://twitter.com/intent/tweet");
-
   myUrlWithParams.searchParams.append("text", document.title);
   myUrlWithParams.searchParams.append("url", permalink.value);
   myUrlWithParams.searchParams.append("hashtags", "UFOTwitter,UPDB");
-
   return myUrlWithParams.href;
 });
 </script>
@@ -106,5 +107,9 @@ let tweetUrl = computed(() => {
 <style>
 .table-summary .action-link {
   font-size: 12px;
+}
+
+.table-filter-summary small {
+  background: #ffffb4;
 }
 </style>

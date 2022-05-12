@@ -21,11 +21,6 @@
     <div>More information about the project.</div>
 
     <h2 class="mn-3 ms-1">
-      <a href="/sources">Sources →</a>
-    </h2>
-    <div>Details about the sources and providers used for the database.</div>
-
-    <h2 class="mn-3 ms-1">
       <a href="/download">Download →</a>
     </h2>
     <div>Download the raw data in postgreSQL format.</div>

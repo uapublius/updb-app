@@ -3,6 +3,14 @@
     display: none !important;
   }
 
+  .min-height-tall {
+    min-height: none !important;
+  }
+
+  .search-box {
+    width: 100% !important;
+  }
+
   button[data-page="first"],
   button[data-page="last"],
   .tabulator-paginator > label,

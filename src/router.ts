@@ -34,12 +34,6 @@ let routes = [
     props: true
   },
   {
-    name: "Sources",
-    path: "/sources",
-    component: Sources,
-    props: true
-  },
-  {
     name: "News",
     path: "/news",
     component: News,
@@ -59,9 +53,10 @@ let routes = [
   }
 ];
 
-export function createRouter() {
+export function createRouter(args) {
   return _createRouter({
     history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
-    routes
+    routes,
+    ...args
   });
 }

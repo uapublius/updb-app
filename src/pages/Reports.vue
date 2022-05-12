@@ -57,6 +57,7 @@ async function rowSelectionChanged(reports: Report[]) {
 
 function paramSummary() {
   let filtersParam = route.query.filters ? qs.parse(route.query.filters) : [];
+  console.log(filtersParam);
   let filters = object2array(filtersParam);
 
   if (!filters.length) return "UPDB | All reports";
@@ -93,7 +94,7 @@ function paramSummary() {
         .map(s => sources[s])
         .join(", ");
     } else if (field === "description") {
-      descValue = `matching &ldquo;${value}&rdquo;`;
+      descValue = `matching “${value}”`;
     }
 
     filterStrings.push(formattedValue);

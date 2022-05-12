@@ -1,20 +1,23 @@
+import { encode } from "html-entities";
+
 function toString() {
-  let title = `<title>${this.title.trim()}</title>`;
+  let titleVal = this.title?.trim() || "UPDB";
+  let title = `<title>${titleVal}</title>`;
+
+  let clean = v => encode(v?.trim() || "");
 
   let meta = Object.entries(this.meta)
     .map(([name, meta]) => {
-      let e = `  <meta name="${name}" `;
-      Object.entries(meta).forEach(([n, v]) => (e += `${n.trim()}="${v.trim()}" `));
-      e += "/>";
+      let es = Object.entries(meta).map(([n, v]) => `${clean(n)}="${clean(v)}"`);
+      let e = `  <meta name="${name}" ${es.join(" ")} />`;
       return e;
     })
     .join("\n");
 
   let linkTags = Object.entries(this.link)
     .map(([rel, link]) => {
-      let e = `  <link rel="${rel}" `;
-      Object.entries(link).forEach(([n, v]) => (e += `${n}="${v}" `));
-      e += "/>";
+      let es = Object.entries(link).map(([n, v]) => `${clean(n)}="${clean(v)}" `);
+      let e = `  <link rel="${rel} ${es.join(" ")} />`;
       return e;
     })
     .join("\n");

@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as chrono from "chrono-node";
 import { Tabulator } from "tabulator-tables";
-import { isNarrow } from "@/lib/util";
+import { infoSvg, isNarrow } from "@/lib/util";
 
 function createDateEditor(placeholder: string, value: string, cb: () => void) {
   let editor = document.createElement("input");
@@ -63,5 +63,7 @@ export let dateColumn: Tabulator.ColumnDefinition = {
     } else {
       return DateTime.fromISO(cell.getValue()).toLocaleString(DateTime.DATETIME_SHORT);
     }
-  }
+  },
+  titleFormatter: () =>
+    `<div class="title-wrapper">Date <span title="Dates are in the local time of report location.">${infoSvg}</span></div>`
 };

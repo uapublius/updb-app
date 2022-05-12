@@ -26,6 +26,11 @@
   border-bottom: 1px dotted $color-tint;
   line-height: 1em;
   white-space: nowrap;
+  user-select: none;
+
+  svg {
+    margin-right: 2px;
+  }
 }
 
 .panel-open {
@@ -165,4 +170,40 @@ table.definition-table {
     line-height: 1.1;
     padding: 1px 0;
   }
+}
+
+.max-width-narrow {
+  max-width: 512px;
+}
+
+.max-width {
+  max-width: 768px;
+}
+
+.max-width-wide {
+  max-width: 960px;
+}
+
+.title-wrapper {
+  display: flex;
+
+  a:hover {
+    svg {
+      fill: $color-tint !important;
+    }
+  }
+
+  svg {
+    height: 13px !important;
+    margin: 0 0 0 3px !important;
+    margin-top: 1px !important;
+    width: 16px !important;
+    padding: 0px !important;
+    fill: $color-gray-70 !important;
+
+  }
+}
+
+.min-height-tall {
+  min-height: 2500px;
 }

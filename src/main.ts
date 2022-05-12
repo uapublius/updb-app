@@ -9,7 +9,16 @@ import "./style/style.scss";
 
 export function createApp() {
   const app = createSSRApp(App);
-  const router = createRouter();
+  const router = createRouter({
+    scrollBehavior(to, from, savedPosition) {
+      if (to.hash) {
+        return {
+          el: to.hash,
+          behavior: "smooth"
+        };
+      }
+    }
+  });
 
   registerIcons(app);
   app.use(router);

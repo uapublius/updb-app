@@ -20,7 +20,7 @@
     "axios": "^0.26.1",
     "chrono-node": "^2.3.8",
     "compression": "^1.7.4",
-    "flatpickr": "^4.6.11",
+    "html-entities": "^2.3.3",
     "luxon": "^2.3.1",
     "qs": "^6.10.3",
     "tabulator-tables": "^5.1.7",
