@@ -21,9 +21,17 @@
       Install postgreSQL then use the following commands to restore the database:
       <pre class="mn-1 bg-highlight p-1">
 createdb phenomenon
-gunzip -c phenomenon.sql.gz | psql -v ON_ERROR_STOP=1 phenomenon</pre
-      >
+gunzip -c phenomenon.sql.gz | psql -v ON_ERROR_STOP=1 phenomenon</pre>
     </div>
+
+    <figure class="mn-4 ms-2">
+      <img src="../assets/pliny.jpg" style="height: 400px" />
+      <blockquote class="mn-1">
+        &ldquo;Nothing which we can imagine about Nature is incredible.&rdquo;
+      </blockquote>
+      <figcaption>&nbsp;&nbsp;—Pliny the Elder (23–79 AD)</figcaption>
+    </figure>
+
   </div>
 </template>
 

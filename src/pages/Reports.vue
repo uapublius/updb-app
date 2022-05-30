@@ -1,5 +1,5 @@
 <template>
-  <div class="page-reports px-2 ms-2" :class="{ 'panel-open': panel.open }">
+  <div class="px-2 ms-2" :class="{ 'panel-open': panel.open }">
     <client-only>
       <report-table @row-selection-changed="rowSelectionChanged" />
     </client-only>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { inject, reactive, ref } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import qs from "qs";
 import { loadUrlsForAttachments } from "@/lib/attachments";
@@ -57,7 +57,6 @@ async function rowSelectionChanged(reports: Report[]) {
 
 function paramSummary() {
   let filtersParam = route.query.filters ? qs.parse(route.query.filters) : [];
-  console.log(filtersParam);
   let filters = object2array(filtersParam);
 
   if (!filters.length) return "UPDB | All reports";
@@ -116,8 +115,8 @@ function paramSummary() {
     s += filterString + " ";
   }
 
-  s += dateValue;
-  s += descValue;
+  if (dateValue) s += dateValue + " ";
+  if (descValue) s += descValue;
 
   return "Reports " + s;
 }
@@ -131,7 +130,12 @@ function setMeta() {
   meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
 }
 
+onMounted(async () => {
+  setMeta();
+});
+
 try {
+  setMeta();
   await router.isReady();
   setMeta();
 } catch (error) {

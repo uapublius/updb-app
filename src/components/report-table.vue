@@ -5,19 +5,22 @@
         <div class="flex align-items-center">
           <div class="table-filter-summary">...</div>
 
-          <a class="mw-2 flex align-items-center" style="font-size: 11px; line-height: 1; margin-top: 2px"
-            @click="resetFilters">
-            <icon-undo />&nbsp;Reset
+          <a
+            class="mw-2 flex align-items-center"
+            style="font-size: 11px; line-height: 1; margin-top: 2px"
+            @click="resetFilters"
+          >
+            <icon-undo />
+            &nbsp;Reset
           </a>
         </div>
 
         <div class="table-summary-actions my-1 mx-1">
-          <a class="action-link mx-2" @click="downloadAll"
-            title="CSV download is limited to 10,000 records. Download full dataset for custom analysis.">
-            <icon-download /> Download results
-          </a>
-
-          <a class="action-link mx-2" :class="{ 'bg-highlight-vivid': copiedLink }" @click="copyLink">
+          <a
+            class="action-link mx-2"
+            :class="{ 'bg-highlight-vivid': copiedLink }"
+            @click="copyLink"
+          >
             <span>
               <icon-link />
               <template v-if="copiedLink">Copied</template>
@@ -27,7 +30,16 @@
 
           <a class="action-link mx-2" :href="tweetUrl" target="_blank">
             <icon-twitter />
-            Tweet
+            Tweet results
+          </a>
+
+          <a
+            class="action-link mx-2"
+            @click="downloadAll"
+            title="CSV download is limited to 20,000 records. Download full dataset for custom analysis."
+          >
+            <icon-download />
+            Download results (CSV)
           </a>
         </div>
       </div>
@@ -53,7 +65,7 @@ let { table } = useTabulator(tabulator);
 async function downloadAll() {
   let filter = table.value.getFilters(true);
   let sort = table.value.getSorters();
-  let params = buildAjaxParams(filter, sort);
+  let params = buildAjaxParams(filter, sort, 1, 0);
   let { data } = await axios.get("/api/reports/report_view", {
     headers: { Accept: "text/csv" },
     params
@@ -97,7 +109,6 @@ async function copyLink() {
 
 let tweetUrl = computed(() => {
   const myUrlWithParams = new URL("https://twitter.com/intent/tweet");
-  myUrlWithParams.searchParams.append("text", document.title);
   myUrlWithParams.searchParams.append("url", permalink.value);
   myUrlWithParams.searchParams.append("hashtags", "UFOTwitter,UPDB");
   return myUrlWithParams.href;
@@ -110,6 +121,6 @@ let tweetUrl = computed(() => {
 }
 
 .table-filter-summary small {
-  background: #ffffb4;
+  background-color: rgba(255, 255, 180, 0.4);
 }
 </style>

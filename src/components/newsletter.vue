@@ -2,7 +2,7 @@
   <div class="bg-highlight inline-block">
     <form
       method="post"
-      class="p-2"
+      class="p-2 d-inline-block"
       accept-charset="UTF-8"
       action="https://www.aweber.com/scripts/addlead.pl"
     >
@@ -22,19 +22,18 @@
 
       <div v-if="hasSignedUp">Newsletter subscription successful.</div>
       <div v-else>
-        <div class="ms-2">
-          Subscribe to low-traffic newsletter for announcements related to UPDB.
-        </div>
+        <div class="ms-2">Subscribe to low-traffic announcements newsletter.</div>
 
         <input
           placeholder="Email"
           required
+          autofocus
           id="awf_field-114058979"
           type="email"
           name="email"
           value=""
         />
-        <input name="submit" class="submit mw-1" type="submit" value="Signup" />
+        <input name="submit" class="submit mw-1" type="submit" value="Subscribe" />
       </div>
     </form>
   </div>
@@ -45,10 +44,3 @@ import { ref } from "vue";
 let value = ref(document.location + "#signedup");
 let hasSignedUp = ref(document.location.href.endsWith("#signedup"));
 </script>
-
-<style scoped>
-form {
-  border: 1px solid rgb(249, 244, 117);
-  display: inline-block;
-}
-</style>

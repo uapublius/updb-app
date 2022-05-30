@@ -8,6 +8,7 @@ export function buildFilters(allFilters: any) {
   if (!definedFilters.length) return filters;
 
   filters = definedFilters.reduce((acc, curr) => {
+    if (!curr.value) return acc;
     if (curr.type === "like") {
       acc[curr.field] = "like.*" + curr.value + "*";
     } else if (curr.type === "ulike") {

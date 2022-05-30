@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject } from "vue";
+import { computed, ref, inject, onMounted } from "vue";
 import { DateTime } from "luxon";
 import { loadUrlsForAttachments } from "@/lib/attachments";
 import { useRoute, useRouter } from "vue-router";
@@ -66,9 +66,12 @@ async function loadReport() {
 try {
   setMeta();
   await router.isReady();
-  await loadReport();
   setMeta();
 } catch (error) {
   console.log(error.message);
 }
+
+onMounted(() => {
+  loadReport();
+});
 </script>

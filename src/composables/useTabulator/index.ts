@@ -6,7 +6,8 @@ import { object2array } from "@/lib/util";
 import { buildAjaxParams } from "@/composables/useTabulator/buildAjaxParams";
 import { columnDefaults, columns } from "./columns";
 import { updateRowsWithAttachments, updateRowsWithReferences } from "./updateRows";
-import "tabulator-tables/dist/css/tabulator_simple.css";
+// import "tabulator-tables/dist/css/tabulator_simple.css";
+import "tabulator-tables/dist/css/tabulator_midnight.css";
 import * as tabulator from "tabulator-tables";
 import { sources } from "@/sources";
 const {
@@ -141,7 +142,7 @@ export default function useTabulator(tabulator) {
       filterMode: "remote",
       headerFilterLiveFilterDelay: 1000,
       pagination: true,
-      paginationSize: 25,
+      paginationSize: 40,
       paginationSizeSelector: true,
       paginationMode: "remote",
       paginationButtonCount: 5,

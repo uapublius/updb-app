@@ -1,5 +1,5 @@
 <template>
-  <div class="max-width">
+  <div>
     <div class="flex report-detail-header justify-content-between align-items-center w-100 ps-1">
       <div class="flex align-items-center">
         <h3 class="flex align-items-center">
@@ -89,7 +89,7 @@
 
     <h6 v-if="report.description" class="ms-2 mn-3">Report</h6>
 
-    <div v-if="report.description" class="bg-highlight inline-block p-1">
+    <div v-if="report.description" class="bg-highlight max-width inline-block p-1">
       <pre class="p-1" v-html="body"></pre>
     </div>
   </div>
