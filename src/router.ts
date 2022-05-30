@@ -7,7 +7,8 @@ import About from "./pages/About.vue";
 import Maps from "./pages/Maps.vue";
 import News from "./pages/News.vue";
 import Download from "./pages/Download.vue";
-import Sources from "./pages/Sources.vue";
+import SearchDocs from "./pages/SearchDocs.vue";
+import SearchReports from "./pages/SearchReports.vue";
 
 let routes = [
   {
@@ -50,6 +51,18 @@ let routes = [
     name: "Download",
     path: "/download",
     component: Download,
+    props: true
+  },
+  {
+    name: "SearchDocs",
+    path: "/search/docs",
+    component: SearchDocs,
+    props: true
+  },
+  {
+    name: "SearchReports",
+    path: "/search/reports",
+    component: SearchReports,
     props: true
   },
   {

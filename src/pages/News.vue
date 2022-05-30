@@ -1,7 +1,6 @@
 <template>
   <div class="p-2 max-width-narrow">
     <h2 class="ms-3">News</h2>
-
     <client-only>
       <newsletter />
     </client-only>

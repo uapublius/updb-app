@@ -1,4 +1,5 @@
 import { createSSRApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import { registerIcons } from "./registerIcons";
 import { createRouter } from "./router";
@@ -22,6 +23,7 @@ export function createApp() {
 
   registerIcons(app);
   app.use(router);
+  app.use(createPinia());
   app.use(meta, head);
   app.component("ClientOnly", ClientOnly);
 

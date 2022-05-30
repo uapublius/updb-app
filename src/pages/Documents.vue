@@ -1,5 +1,5 @@
 <template>
-  <div class="p-2 page-documents max-width">
+  <div class="p-2 max-width">
     <h2 class="ms-1">Documents</h2>
     <div class="ms-3">Search 500,000+ pages of UAP/UFO related documents.</div>
 
@@ -14,28 +14,19 @@
 
     <ul v-show="showTips" class="tips mn-1">
       <li>
-        Results are unranked. For best results, use maximally specific queries, wrap terms in quotes, and use unique
-        words.
+        Results are unranked. For best results, use maximally specific queries, wrap terms in
+        quotes, and use unique words.
       </li>
       <li>
-        For dates, try different formats: e.g. "March 13 1997" or "13th March 1997" or
-        "3/13/1997".
+        For dates, try different formats: e.g. "March 13 1997" or "13th March 1997" or "3/13/1997".
       </li>
-      <li>
-        Similar lexemes are combined; e.g. bounced, bouncing, bounces.
-      </li>
-      <li>
-        Diametrics are indexed unaccented: i.e. search for "Bollnas" not "Bollnäs".
-      </li>
-      <li>
-        The "or" search operator is supported.
-      </li>
+      <li>Similar lexemes are combined; e.g. bounced, bouncing, bounces.</li>
+      <li>Diametrics are indexed unaccented: i.e. search for "Bollnas" not "Bollnäs".</li>
+      <li>The "or" search operator is supported.</li>
     </ul>
 
     <ul class="tips mn-1">
-      <li>
-        Terms must appear together on the same page to match.
-      </li>
+      <li>Terms must appear together on the same page to match.</li>
       <li>
         Links will jump to the specific page the term appears in, if your browser supports it.
       </li>
@@ -45,7 +36,10 @@
 
     <div v-else class="results">
       <div v-if="results?.length" class="my-3">
-        <strong>{{ count }}</strong> pages found in <strong>{{ results.length }}</strong> documents.
+        <strong>{{ count }}</strong>
+        pages found in
+        <strong>{{ results.length }}</strong>
+        documents.
 
         <div v-for="result in results" class="my-3 result">
           <div class="result-prefix">{{ result.prefix }}</div>
@@ -98,14 +92,19 @@ async function search() {
   } catch (error) {
     console.log(error);
     return;
-  }
-  finally {
+  } finally {
     isSearching.value = false;
   }
 
+  let entries = entriesFromRes(res.data);
+
+  results.value = entries;
+}
+
+function entriesFromRes(data) {
   let entries = [];
 
-  for (const entry of res.data) {
+  for (const entry of data) {
     let candidateEntry = entries.find(p => p.id === entry.document.id);
     let newEntry = false;
 
@@ -133,12 +132,14 @@ async function search() {
     if (newEntry) entries.push(candidateEntry);
   }
 
-  results.value = entries;
-
+  return entries;
 }
 
 let count = computed(() => {
-  return results.value.reduce((acc, curr) => { acc += curr.pages.length; return acc; }, 0);
+  return results.value.reduce((acc, curr) => {
+    acc += curr.pages.length;
+    return acc;
+  }, 0);
 });
 
 if (route.query.q) {
@@ -152,17 +153,14 @@ function hrefForResultPage(result, page) {
   return href;
 }
 
-
-function paramSummary() {
-  if (!route.query.q) return "UPDB | Documents";
-
+function querySummary() {
+  if (!route.query.q) return "";
   let value = route.query.q.toString();
-
   return ` matching “${value}”`;
 }
 
 function setMeta() {
-  let title = "UPDB | Documents" + paramSummary();
+  let title = "UPDB | Documents" + querySummary();
   meta.title = title;
   meta.meta["og:title"] = { content: title };
   meta.meta["twitter:title"] = { content: title };
@@ -170,18 +168,25 @@ function setMeta() {
   meta.meta["twitter:url"] = { content: "https://updb.app" + route.fullPath };
 }
 
-setMeta();
-
 onMounted(async () => {
+  setMeta();
   setTimeout(() => {
-    document.querySelector("input[autofocus]").focus();
+    (document.querySelector("input[autofocus]") as HTMLInputElement).focus();
   }, 0);
 });
+
+try {
+  setMeta();
+  await router.isReady();
+  setMeta();
+} catch (error) {
+  console.log(error.message);
+}
 </script>
 
 <style scoped>
 .search-box {
-  width: 460px
+  width: 460px;
 }
 
 input[type="search"] {
@@ -190,11 +195,5 @@ input[type="search"] {
 
 .tips {
   font-size: 12px;
-}
-
-.searching {
-  font-size: 16px;
-  font-weight: 600;
-  color: #cb4fde;
 }
 </style>

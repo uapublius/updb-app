@@ -6,10 +6,15 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppHeader: typeof import('./src/components/app-header.vue')['default']
     Icon: typeof import('./src/components/icon.vue')['default']
+    Map: typeof import('./src/components/Map.vue')['default']
     Newsletter: typeof import('./src/components/newsletter.vue')['default']
     ReportDetail: typeof import('./src/components/report-detail.vue')['default']
     ReportTable: typeof import('./src/components/report-table.vue')['default']
+    ResultDoc: typeof import('./src/components/result-doc.vue')['default']
+    ResultReport: typeof import('./src/components/result-report.vue')['default']
     SamfordQuote: typeof import('./src/components/samford-quote.vue')['default']
+    SearchNav: typeof import('./src/components/search-nav.vue')['default']
+    UpMap: typeof import('./src/components/up-map.vue')['default']
   }
 }
 
