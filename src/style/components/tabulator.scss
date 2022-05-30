@@ -3,21 +3,7 @@
 div.tabulator {
   border-width: 0;
   font-size: 13px;
-
-  .tabulator-row {
-    border-bottom: 1px solid $color-gray-90;
-
-    &.tabulator-selectable:hover {
-      background-color: $color-gray-90;
-    }
-
-    &.tabulator-selected {
-      background-color: $color-tint-tertiary !important;
-      border-bottom-color: $color-tint-tertiary;
-      border-top: 1px solid $color-tint-tertiary;
-      margin-top: -1px;
-    }
-  }
+  background-color: transparent;
 
   .tabulator-row .tabulator-cell {
     border-color: transparent;
@@ -33,15 +19,16 @@ div.tabulator {
     }
 
     .tabulator-col {
+      background-color: transparent;
       border-color: transparent;
 
       &.tabulator-field-filtered {
-        background-color: #ffffb4;
+        background-color: rgba(255, 255, 180, 0.4);
       }
 
       &.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
         border-top: none;
-        border-bottom: 6px solid $color-gray-90;
+        // border-bottom: 6px solid $color-gray-90;
       }
 
       .tabulator-col-content {
@@ -52,6 +39,7 @@ div.tabulator {
     }
 
     border-bottom-color: transparent;
+    background-color: transparent;
 
     .tabulator-header-filter {
       padding: 3px 0 0 1px;
@@ -64,9 +52,7 @@ div.tabulator {
 
   .tabulator-footer {
     border-top-color: transparent;
-  }
 
-  .tabulator-footer {
     .tabulator-footer-contents {
       padding: 0.5em 0.25em;
 
@@ -78,7 +64,7 @@ div.tabulator {
   }
 
   .tabulator-col-title svg {
-    fill: $color-gray-50;
+    fill: $color-gray-60;
     margin-top: 2px;
     width: 12px;
 }
@@ -95,6 +81,10 @@ div.tabulator {
 
   [tabulator-field="attachments"] .tabulator-col-title svg {
     transform: rotate(-44deg);
+  }
+
+  .tabulator-table {
+    width: 100%;
   }
 }
 

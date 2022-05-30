@@ -1,0 +1,105 @@
+$color-darker: hsl(0, 1%, 15%);
+$color-dark: hsl(0, 1%, 25%);
+$color-light: hsl(0, 0%, 95%);
+$color-gray-10: hsl(0, 1%, 10%);
+$color-gray-20: hsl(0, 1%, 20%);
+$color-gray-30: hsl(0, 1%, 30%);
+$color-gray-40: hsl(0, 1%, 40%);
+$color-gray-50: hsl(0, 1%, 50%);
+$color-gray-60: hsl(0, 1%, 60%);
+$color-gray-70: hsl(0, 1%, 70%);
+$color-gray-80: hsl(0, 1%, 80%);
+$color-gray-85: hsl(0, 1%, 85%);
+$color-gray-90: hsl(0, 1%, 90%);
+$color-gray-95: hsl(0, 1%, 95%);
+$color-gray-97: hsl(0, 1%, 97%);
+$color-tint: #8CB4F3;
+$color-tint-secondary: #cb4fde;
+$color-tint-tertiary: #8CB4F3;
+
+.mapboxgl-popup .mapboxgl-popup-content {
+  color: #efefef;
+  background: hsl(0, 1%, 15%);
+}
+
+.mapbox-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-family: 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 1px 3px;
+  min-width: 22px;
+  min-height: 22px;
+
+  &.marker-reports {
+    background-color: #f00;
+    margin-top: -22px;
+  }
+
+  &.marker-docs {
+    background-color: orange;
+    margin-top: 24px;
+    border-radius: 4px;
+  }
+}
+
+.mapbox-marker.active {
+  background-color: #00f;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip {
+  border-bottom-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+  border-bottom-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip {
+  border-top-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+  border-top-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: $color-darker;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: $color-darker;
+}
+
+#map-inspector {
+  resize: horizontal;
+  overflow: auto;
+  position: absolute;
+  left: 10px;
+  bottom: 34px;
+  top: 10px;
+  min-width: 300px;
+  width: 300px;
+  max-width: 75%;
+  padding: 1em;
+  background: rgba(39, 38, 38, 0.98);
+
+  .snippet {
+    white-space: pre-wrap;
+  }
+}

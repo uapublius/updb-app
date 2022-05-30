@@ -604,6 +604,14 @@
   display: inline;
 }
 
+.flex-inline {
+  display: flex-inline !important;
+}
+
+.flex-inline-block {
+  display: flex-inline-block !important;
+}
+
 .inline-block {
   display: inline-block !important;
 }
@@ -634,4 +642,16 @@
 
 .text-center {
   text-align: center !important;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute {
+  position: relative;
 }

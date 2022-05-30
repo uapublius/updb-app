@@ -1,5 +1,6 @@
 declare type Report = {
   id: number;
+  location?: number;
   source: number;
   source_id: string;
   date: string;
@@ -12,6 +13,7 @@ declare type Report = {
   description: string;
   attachments: string[];
   references: string[];
+  snippet?: string;
 };
 
 declare type PaginationData = {
@@ -24,4 +26,15 @@ declare type HeadTags = {
   title: string;
   link: Record<string, any>;
   meta: Record<string, any>;
+};
+
+declare type LocationReportSummary = {
+  count: number;
+  location: number;
+  id: number;
+  city: number;
+  district: number;
+  country: number;
+  latitude: number;
+  longitude: number;
 };

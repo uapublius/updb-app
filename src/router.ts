@@ -4,6 +4,7 @@ import Reports from "./pages/Reports.vue";
 import Documents from "./pages/Documents.vue";
 import Report from "./pages/Report.vue";
 import About from "./pages/About.vue";
+import Maps from "./pages/Maps.vue";
 import News from "./pages/News.vue";
 import Download from "./pages/Download.vue";
 import Sources from "./pages/Sources.vue";
@@ -31,6 +32,12 @@ let routes = [
     name: "About",
     path: "/about",
     component: About,
+    props: true
+  },
+  {
+    name: "Maps",
+    path: "/maps",
+    component: Maps,
     props: true
   },
   {
