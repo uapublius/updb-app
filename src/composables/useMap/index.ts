@@ -8,7 +8,7 @@ import { useLocationsStore } from "@/store/locations";
 import { useReportsStore } from "@/store/reports";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAP_KEY;
-mapboxgl.baseApiUrl = "https://api.maptiler.com";
+mapboxgl.baseApiUrl = import.meta.env.VITE_MAP_BASEURL;
 
 export let mapInstance = null;
 
@@ -163,6 +163,12 @@ export function useMap(id: string) {
     });
   }
 
+  function transformRequest(url) {
+    return {
+      url: url.replace("https://api.maptiler.com", mapboxgl.baseApiUrl)
+    };
+  }
+
   function createMap(
     center,
     zoom = 8,
@@ -178,8 +184,10 @@ export function useMap(id: string) {
       center,
       maxZoom,
       minZoom,
-      zoom
+      zoom,
+      transformRequest
     });
+
 
     mapInstance = map;
 

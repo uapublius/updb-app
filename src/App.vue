@@ -84,7 +84,6 @@ import {
 } from 'element-plus';
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { setupStorage } from "./attachments";
 import { mapInstance } from "@/composables/useMap";
 let route = useRoute();
 let router = useRouter();
@@ -118,8 +117,6 @@ router.afterEach(() => addPageClass());
 
 onMounted(async () => {
   addPageClass();
-  // TODO: Switch to localforage
-  setupStorage();
 
   if (localStorage.getItem('collapseSidebar')) {
     collapseSidebar = true;

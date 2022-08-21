@@ -1,7 +1,7 @@
 import axios from "axios";
-import { parse } from 'csv-parse/browser/esm';
 import localforage from "localforage";
 import { defineStore } from "pinia";
+import { parse } from '@/lib/csv-parse.js';
 import { Location } from "@/models";
 
 let counts = {} as Record<number, number>;

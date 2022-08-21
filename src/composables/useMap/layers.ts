@@ -3,7 +3,8 @@ export function addReportsLayer(map) {
     type: "geojson",
     data: {
       type: "FeatureCollection",
-      features: []
+      features: [],
+      tiles: [import.meta.env.VITE_MAP_BASEURL]
     }
   });
 

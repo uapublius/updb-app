@@ -208,14 +208,14 @@
 <script setup lang="ts">
 import axios from "axios";
 import {
- ElHeader, ElMain, ElCard, ElRow, ElCol
+ ElMain, ElCard, ElRow, ElCol
 } from 'element-plus';
 import { onMounted } from "vue";
 import { usePageMeta } from "@/composables/usePageMeta";
 
 let { setPageTitle } = usePageMeta();
 
-setPageTitle('UPDB | Download');
+setPageTitle('UPDB');
 
 let phenomainon =
   'Downloaded from <a href="https://www.phenomainon.com/data" target="_blank">phenomAInon</a> on 2022-05-08, case details parsed by Publius.';
