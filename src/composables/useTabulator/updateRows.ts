@@ -1,4 +1,4 @@
-export let updateRowsWithAttachments = (table) => ({ data }) => {
+export let updateRowsWithAttachments = table => ({ data }) => {
   let attachmentsByReportId = data.reduce((acc, curr) => {
     acc[curr.report] = acc[curr.report] || [];
     if (curr.url.endsWith('.eml')) return acc;
@@ -11,7 +11,7 @@ export let updateRowsWithAttachments = (table) => ({ data }) => {
   }
 };
 
-export let updateRowsWithReferences = (table) => ({ data }) => {
+export let updateRowsWithReferences = table => ({ data }) => {
   let referencesByReportId = data.reduce((acc, curr) => {
     acc[curr.report] = acc[curr.report] || [];
     acc[curr.report].push(curr.text);

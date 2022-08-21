@@ -19,6 +19,10 @@
         "./src/*"
       ]
     },
+    "types": [
+      "element-plus/global",
+      "vue/ref-macros"
+    ]
   },
   "include": [
     "src"

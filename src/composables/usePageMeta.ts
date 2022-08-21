@@ -6,6 +6,10 @@ export function usePageMeta() {
   let meta = inject("meta") as HeadTags;
 
   function setPageTitle(title) {
+    if (!import.meta.env.SSR) {
+      document.title = title;
+    }
+
     meta.title = title;
     meta.meta["og:title"] = { content: title };
     meta.meta["twitter:title"] = { content: title };

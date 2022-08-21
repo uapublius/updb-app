@@ -26,7 +26,8 @@ export function headerMenu() {
     let label = document.createElement("div");
     if (column.isVisible()) {
       label.classList.add("checked");
-    } else {
+    }
+ else {
       label.classList.remove("checked");
     }
     label.appendChild(icon);
@@ -41,7 +42,8 @@ export function headerMenu() {
         localStorage.setItem("visibleReportColumns", JSON.stringify(isVisible));
         if (column.isVisible()) {
           label.classList.add("checked");
-        } else {
+        }
+ else {
           label.classList.remove("checked");
         }
       }

@@ -1,14 +1,14 @@
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useSearchStore } from "@/store";
 
 export function useSaveFocus() {
   let store = useSearchStore();
-  let searchBox = ref(null);
+  let searchBox = $ref(null);
 
   onMounted(() => {
     if (store.lastFocused) {
       setTimeout(() => {
-        let el = searchBox.value.querySelector(`input[name="${store.lastFocused}"]`);
+        let el = searchBox.querySelector(`input[name="${store.lastFocused}"]`);
         el.focus();
         el.select();
       }, 0);

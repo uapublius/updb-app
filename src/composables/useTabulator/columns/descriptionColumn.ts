@@ -3,6 +3,7 @@ export let descriptionColumn = {
   field: "description",
   tooltip: true,
   minWidth: 72,
+  width: 300,
   headerSort: false,
   headerFilter: true,
   headerFilterFunc: "fts",

@@ -1,28 +1,34 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import { defineConfig } from "vite";
 import svgLoader from "vite-svg-loader";
+import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      reactivityTransform: true
+    }),
     svgLoader(),
     AutoImport({
       imports: [
         "vue",
-        "vue-router",
-        {
-          "@vueuse/core": ["useMouse", ["useFetch", "useMyFetch"]],
-          axios: [["default", "axios"]],
-          "[package-name]": ["[import-names]", ["[from]", "[alias]"]]
-        }
+        "vue-router"
       ]
     }),
     Components()
   ],
   build: {
-    chunkSizeWarningLimit: 1024
+    chunkSizeWarningLimit: 1024,
+    rollupOptions: {
+      manualChunks: {
+        'tabulator-tables': ['tabulator-tables'],
+        'mapbox-gl': ['mapbox-gl']
+      },
+      output: {
+        inlineDynamicImports: false
+      },
+    },
   },
   resolve: {
     alias: {

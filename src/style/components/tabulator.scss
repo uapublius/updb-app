@@ -1,15 +1,25 @@
-// Table
-
 div.tabulator {
   border-width: 0;
-  font-size: 13px;
+  // font-size: 13px;
   background-color: transparent;
 
-  .tabulator-row .tabulator-cell {
-    border-color: transparent;
+  .tabulator-row {
+
+    &:last-child {
+      border-bottom: 1px solid transparent;
+    }
+
+    .tabulator-cell {
+      border-color: transparent;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      height: auto !important;
+    }
   }
 
   .tabulator-header {
+    margin: 0 0 0.5rem 0;
+
     [aria-title="Location"] > .tabulator-col-content {
       padding-bottom: 0 !important;
     }
@@ -28,7 +38,6 @@ div.tabulator {
 
       &.tabulator-sortable[aria-sort="none"] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
         border-top: none;
-        // border-bottom: 6px solid $color-gray-90;
       }
 
       .tabulator-col-content {
@@ -51,10 +60,11 @@ div.tabulator {
   }
 
   .tabulator-footer {
+    padding: 1rem 0 0;
     border-top-color: transparent;
 
     .tabulator-footer-contents {
-      padding: 0.5em 0.25em;
+      padding: 0;
 
       .tabulator-page-counter {
         font-weight: 700;
@@ -81,6 +91,11 @@ div.tabulator {
 
   [tabulator-field="attachments"] .tabulator-col-title svg {
     transform: rotate(-44deg);
+  }
+
+  &.expanded-description [tabulator-field="description"] {
+    font-size: 12px;
+    white-space: normal;
   }
 
   .tabulator-table {

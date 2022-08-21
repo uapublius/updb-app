@@ -13,9 +13,6 @@ $color-gray-85: hsl(0, 1%, 85%);
 $color-gray-90: hsl(0, 1%, 90%);
 $color-gray-95: hsl(0, 1%, 95%);
 $color-gray-97: hsl(0, 1%, 97%);
-$color-tint: #8CB4F3;
-$color-tint-secondary: #cb4fde;
-$color-tint-tertiary: #8CB4F3;
 
 .mapboxgl-popup .mapboxgl-popup-content {
   color: #efefef;
@@ -98,8 +95,9 @@ $color-tint-tertiary: #8CB4F3;
   max-width: 75%;
   padding: 1em;
   background: rgba(39, 38, 38, 0.98);
+}
 
-  .snippet {
-    white-space: pre-wrap;
-  }
+/* not required, since we are using maptiler */
+.mapboxgl-ctrl-logo {
+  display: none !important;
 }

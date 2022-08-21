@@ -1,0 +1,92 @@
+@use "element-plus/theme-chalk/src/index.scss" as *;
+
+.el-menu {
+  border-right: initial;
+  background-color: transparent;
+}
+
+.el-menu-item {
+  padding: 0 2em 0 1em !important;
+  font-size: 16px;
+  font-weight: 500;
+
+  .el-icon {
+    margin-right: 0.5em;
+  }
+}
+
+.el-menu-item {
+  &.is-active,
+  &:hover {
+    background-color: aliceblue;
+    color: var(--el-color-primary) !important;
+  }
+}
+
+.el-card__header {
+  font-size: 21px;
+  font-weight: 500;
+}
+
+.el-card,
+.el-drawer,
+.el-tree *,
+.el-dropdown-menu {
+  transition: none !important;
+}
+
+.el-menu--horizontal .el-menu-item {
+  min-width: 80px;
+}
+
+.el-alert {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.el-card__header {
+  border-bottom: 0;
+  font-size: 18px;
+  padding-bottom: 0;
+}
+
+.el-table .cell {
+  line-height: initial;
+}
+
+.el-card-nopad {
+  .el-card__header {
+    padding: 14px 12px 10px;
+  }
+
+  .el-card__body {
+    padding: 0;
+  }
+}
+
+.el-table--enable-row-hover .el-table__row {
+  cursor: pointer;
+}
+
+div.el-popover.el-popper {
+  text-align: left;
+  word-wrap: inherit;
+  word-break: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  white-space: pre-line;
+  color: hsl(0, 1%, 30%);
+}
+
+.el-button-ellipsis {
+  height: 18px;
+}
+
+.el-aside,
+.el-header {
+  background: #fff;
+}
+
+.up-input .el-input__suffix {
+  padding-right: 8px !important;
+}

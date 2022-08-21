@@ -1,15 +1,7 @@
-import { getCurrentInstance, onBeforeMount, onMounted, ref } from "vue";
 import axios from "axios";
-import qs from "qs";
-import { useRoute, useRouter } from "vue-router";
-import { object2array } from "@/lib/util";
-import { buildAjaxParams } from "@/composables/useTabulator/buildAjaxParams";
-import { columnDefaults, columns } from "./columns";
-import { updateRowsWithAttachments, updateRowsWithReferences } from "./updateRows";
-// import "tabulator-tables/dist/css/tabulator_simple.css";
-import "tabulator-tables/dist/css/tabulator_midnight.css";
 import * as tabulator from "tabulator-tables";
-import { sources } from "@/sources";
+import { buildFilters } from "./buildFilters";
+
 const {
   Tabulator,
   KeybindingsModule,
@@ -22,213 +14,120 @@ const {
   SelectRowModule
 } = tabulator;
 
-export async function buildTableData(url, params): Promise<PaginationData> {
-  let res = await axios.get(url, {
-    headers: { Prefer: `count=estimated` },
-    params: buildAjaxParams(params.filter, params.sort, params.page, params.size)
-  });
-  let rowCount = parseInt(res.headers["content-range"]?.split("/")?.[1]) || 1;
-  let lastPage = Math.ceil(rowCount / parseInt(params.size));
+export default function useTabulator(el, cols, headerFilter, initialSort, url, count = 'estimated', options = {}) {
+  let table = null;
+  let preferredCountMethod = `count=${count}`;
+  let columns = cols;
 
-  return {
-    last_page: lastPage,
-    rowCount,
-    data: res.data
-  };
-}
-
-function register() {
-  let isMobile = navigator.userAgent.includes(" Mobile/");
-
-  let tabulatorModules: any = [
-    AjaxModule,
-    PageModule,
-    SortModule,
-    FilterModule,
-    FormatModule,
-    EditModule,
-    SelectRowModule
-  ];
-
-  if (!isMobile) {
-    tabulatorModules = tabulatorModules.concat([KeybindingsModule]);
+  function paginationCounter(pageSize, _, currentPage, __) {
+    let from = (pageSize * (currentPage - 1) || 1).toLocaleString();
+    let to = Math.min(pageSize * currentPage, table.totalResults).toLocaleString();
+    if (table.totalResults === 1) return "Showing 1 report";
+    return "Showing " + from + "–" + to + " of " + table.totalResults.toLocaleString() + " reports";
   }
 
-  // @ts-ignore
-  Tabulator.registerModule(tabulatorModules);
+  registerModule();
 
-  let noop = () => {};
+  function buildAjaxParams(
+    filter: Record<string, any>[] = [],
+    sort: Record<string, any>[] = [],
+    page = 1,
+    size = 100
+  ) {
+    let order = sort?.map(p => p.field + "." + p.dir).join(",") || undefined;
+    let filters = buildFilters(filter);
+    let fields = Object.keys(table.columnManager.columnsByField).join(",");
+    let params: Record<string, unknown> = {
+      select: fields || undefined,
+      order,
+      ...filters
+    };
 
-  // @ts-ignore
-  Tabulator.extendModule("filter", "filters", {
-    ulike: noop,
-    "u=": noop,
-    fts: noop,
-    ov: noop
-  });
+    params.offset = (page - 1) * size;
+    if (size) params.limit = size;
 
-  return {
-    isMobile
-  };
-}
+    return params;
+  }
 
-export let totalResults = 0;
-
-function paginationCounter(pageSize, _, currentPage, __) {
-  let from = (pageSize * (currentPage - 1) || 1).toLocaleString();
-  let to = Math.min(pageSize * currentPage, totalResults).toLocaleString();
-  if (totalResults === 1) return "Showing 1 report";
-  return "Showing " + from + "–" + to + " of " + totalResults.toLocaleString() + " reports";
-}
-
-export function ajaxRequestFunc(cb: (paginationData: PaginationData) => void) {
-  return async function (url, config, params) {
+  async function ajaxRequestFunc(url, _, params) {
     if (!params.size) params.size = 20;
     if (!params.page) params.page = 1;
-    let data = await buildTableData(url, params);
-    return cb(data);
-  };
-}
-
-export let table = ref(null);
-
-export default function useTabulator(tabulator) {
-  let router = useRouter();
-  let route = useRoute();
-  let filtersParam = route.query.filters ? qs.parse(route.query.filters) : [];
-  let sortParam = qs.parse(route.query.sort) || [];
-  let headerFilter = object2array(filtersParam);
-  let initialSort = object2array(sortParam);
-
-  function handleAjaxData(paginationData) {
-    totalResults = paginationData.rowCount;
-
-    axios
-      .get("/api/reports/attachment", {
-        params: {
-          report: "in.(" + paginationData.data.map(d => d.id) + ")"
-        }
-      })
-      .then(updateRowsWithAttachments(table.value));
-
-    axios
-      .get("/api/reports/report_reference_view", {
-        params: {
-          report: "in.(" + paginationData.data.map(d => d.id) + ")"
-        }
-      })
-      .then(updateRowsWithReferences(table.value));
-
-    return paginationData;
-  }
-
-  function loadTable() {
-    let { emit } = getCurrentInstance();
-
-    table.value = new Tabulator(tabulator.value, {
-      index: "id",
-      columns,
-      columnDefaults,
-      layout: "fitDataStretch",
-      initialHeaderFilter: headerFilter.map(f => ({
-        field: f.field,
-        type: f.type,
-        value: f.value
-      })),
-      initialSort: initialSort.map(f => ({ column: f.field, dir: f.dir })),
-      selectable: 1,
-      keybindings: true,
-      sortMode: "remote",
-      filterMode: "remote",
-      headerFilterLiveFilterDelay: 1000,
-      pagination: true,
-      paginationSize: 40,
-      paginationSizeSelector: true,
-      paginationMode: "remote",
-      paginationButtonCount: 5,
-      paginationCounter,
-      ajaxURL: "/api/reports/report_view",
-      ajaxRequestFunc: ajaxRequestFunc(handleAjaxData)
+    let res = await axios.get(url, {
+      headers: { Prefer: preferredCountMethod },
+      params: buildAjaxParams(params.filter, params.sort, params.page, params.size)
     });
 
-    function dataFiltered() {
-      let filters = table.value.getFilters(true);
+    table.totalResults = parseInt(res.headers["content-range"]?.split("/")?.[1]) || 1;
 
-      for (const column of table.value.columnManager.columnsByIndex) {
-        let headerNode = column.element;
-        let field = headerNode.attributes["tabulator-field"].value;
-        let filter = filters.find(f => f.field === field);
+    let lastPage = Math.ceil(table.totalResults / parseInt(params.size));
 
-        if (filter) {
-          headerNode.classList.add("tabulator-field-filtered");
-        } else {
-          headerNode.classList.remove("tabulator-field-filtered");
-        }
-      }
+    let data = {
+      last_page: lastPage,
+      rowCount: table.totalResults,
+      data: res.data
+    };
 
-      let summary = document.querySelector(".table-filter-summary");
-      let filterString = `<span><strong>${totalResults.toLocaleString()}</strong> reports`;
-      if (filters.length) filterString += " matching:";
-      filterString += "</span>";
-
-      let filterStrings = [];
-
-      for (const filter of filters) {
-        let field = filter.field;
-        let value = filter.value;
-        let formattedValue = filter.value;
-        if (field === "date") {
-          if (value.length == 1) {
-            formattedValue = "From " + value;
-          } else if (!value[0] && value[1]) {
-            formattedValue = "To " + value[1];
-          } else if (!value[1] && value[0]) {
-            formattedValue = "From " + value[0];
-          } else if (value.length == 2) {
-            formattedValue = value[0] + "–" + value[1];
-          }
-        }
-        if (field === "source") {
-          formattedValue = [value]
-            .flat()
-            .map(s => sources[s])
-            .join(", ");
-        }
-        if (field === "description") formattedValue = `"${value}"`;
-
-        filterStrings.push(field.toUpperCase() + " = " + formattedValue);
-      }
-
-      summary.innerHTML = `${filterString} <small>${filterStrings.join("; ")}</small>`;
-
-      let sort = table.value.getSorters().map(s => ({ dir: s.dir, field: s.field }));
-      let f = filters?.length ? qs.stringify(filters) : undefined;
-      let s = sort?.length ? qs.stringify(sort) : undefined;
-      router.replace({
-        path: "/reports",
-        query: {
-          filters: f,
-          sort: s
-        }
-      });
-    }
-
-    let events = ["rowSelectionChanged", "dataLoaded"];
-
-    for (let event of ["dataFiltered", "dataSorted"]) {
-      table.value.on(event, ev => dataFiltered());
-    }
-
-    for (let event of events) {
-      table.value.on(event, ev => emit(event as any, ev, table));
-    }
+    return data;
   }
 
-  register();
+  function registerModule() {
+    let isMobile = navigator.userAgent.includes(" Mobile/");
 
-  onMounted(async () => loadTable());
+    let tabulatorModules: any = [
+      AjaxModule,
+      PageModule,
+      SortModule,
+      FilterModule,
+      FormatModule,
+      EditModule,
+      SelectRowModule
+    ];
 
-  return {
-    table
-  };
+    if (!isMobile) {
+      tabulatorModules = tabulatorModules.concat([KeybindingsModule]);
+    }
+
+    Tabulator.registerModule(tabulatorModules);
+
+    let noop = () => { /* */ };
+
+    Tabulator.extendModule("filter", "filters", {
+      ulike: noop,
+      "u=": noop,
+      fts: noop,
+      ov: noop
+    });
+
+    return {
+      isMobile
+    };
+  }
+
+  function loadTable(tabulator, headerFilter, initialSort, ajaxURL, opts = {}) {
+    return new Tabulator(tabulator, {
+      columns,
+      columnDefaults: { headerFilterLiveFilter: false },
+      initialHeaderFilter: headerFilter.map(f => ({ field: f.field, type: f.type, value: f })),
+      ajaxRequestFunc,
+      ajaxURL,
+      filterMode: "remote",
+      index: "id",
+      initialSort: initialSort.map(f => ({ column: f.field, dir: f.dir })),
+      keybindings: true,
+      layout: "fitDataStretch",
+      pagination: true,
+      paginationButtonCount: 5,
+      paginationCounter,
+      paginationMode: "remote",
+      paginationSize: 40,
+      paginationSizeSelector: true,
+      selectable: 1,
+      sortMode: "remote",
+      ...opts
+    });
+  }
+
+  table = loadTable(el, headerFilter, initialSort, url, options);
+
+  return table;
 }

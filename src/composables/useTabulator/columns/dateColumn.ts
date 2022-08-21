@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as chrono from "chrono-node";
 import { Tabulator } from "tabulator-tables";
-import { infoSvg, isNarrow } from "@/lib/util";
+import { infoSvg, isNarrow } from "@/util";
 
 function createDateEditor(placeholder: string, value: string, cb: () => void) {
   let editor = document.createElement("input");
@@ -28,7 +28,7 @@ export let dateRangeEditor = function (cell, onRendered, success, cancel, editor
   container.appendChild(editor2);
 
   function successFunc() {
-    if (!editor.value && !editor2.value) {
+    if (!editor && !editor2) {
       success();
       return;
     }
@@ -60,7 +60,8 @@ export let dateColumn: Tabulator.ColumnDefinition = {
   formatter(cell) {
     if (isNarrow) {
       return DateTime.fromISO(cell.getValue()).toLocaleString(DateTime.DATE_SHORT);
-    } else {
+    }
+ else {
       return DateTime.fromISO(cell.getValue()).toLocaleString(DateTime.DATETIME_SHORT);
     }
   },

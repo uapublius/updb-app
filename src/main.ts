@@ -1,29 +1,35 @@
+import axios from "axios";
+import { ElInfiniteScroll } from "element-plus";
 import { createSSRApp } from "vue";
-import { createPinia } from "pinia";
 import App from "./App.vue";
-import { registerIcons } from "./registerIcons";
-import { createRouter } from "./router";
+import head from "./buildHeadTags";
+import ClientOnly from "./components/widgets/client-only";
+import { pinia } from "./pinia";
 import meta from "./plugins/meta";
-import head from "./lib/headTags";
-import ClientOnly from "./components/client-only";
-import "./style/style.scss";
+import { createRouter } from "./router";
+import { baseUrl } from "@/util";
+axios.defaults.baseURL = baseUrl;
+
+function registerIcons(app) {
+  let components = import.meta.globEager('./assets/icons/*.svg');
+
+  Object.entries(components).forEach(([path, definition]) => {
+    let componentName = path.split('/').pop().replace(/\.\w+$/, '');
+    app.component("icon-" + componentName, definition.default);
+  });
+}
 
 export function createApp() {
-  const app = createSSRApp(App);
-  const router = createRouter({
-    scrollBehavior(to, from, savedPosition) {
-      if (to.hash) {
-        return {
-          el: to.hash,
-          behavior: "smooth"
-        };
-      }
-    }
-  });
+  let app = createSSRApp(App);
+  let router = createRouter();
 
   registerIcons(app);
+
+  app.use(ElInfiniteScroll);
+
   app.use(router);
-  app.use(createPinia());
+  app.use(pinia);
+
   app.use(meta, head);
   app.component("ClientOnly", ClientOnly);
 

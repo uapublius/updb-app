@@ -13,6 +13,86 @@ $color-gray-85: hsl(0, 1%, 85%);
 $color-gray-90: hsl(0, 1%, 90%);
 $color-gray-95: hsl(0, 1%, 95%);
 $color-gray-97: hsl(0, 1%, 97%);
-$color-tint: #8CB4F3;
 $color-tint-secondary: #cb4fde;
 $color-tint-tertiary: #8CB4F3;
+
+.text-gray-10, .text-gray-10>svg {
+  color: $color-gray-10;
+  fill: $color-gray-10;
+}
+
+.text-gray-20, .text-gray-20>svg {
+  color: $color-gray-20;
+  fill: $color-gray-20;
+}
+
+.text-gray-30, .text-gray-30>svg {
+  color: $color-gray-30;
+  fill: $color-gray-30;
+}
+
+.text-gray-40, .text-gray-40>svg {
+  color: $color-gray-40;
+  fill: $color-gray-40;
+}
+
+.text-gray-50, .text-gray-50>svg {
+  color: $color-gray-50;
+  fill: $color-gray-50;
+}
+
+.text-gray-60, .text-gray-60>svg {
+  color: $color-gray-60;
+  fill: $color-gray-60;
+}
+
+.text-gray-70, .text-gray-70>svg {
+  color: $color-gray-70;
+  fill: $color-gray-70;
+}
+
+.text-gray-80, .text-gray-80>svg {
+  color: $color-gray-80;
+  fill: $color-gray-80;
+}
+
+.text-gray-85, .text-gray-85>svg {
+  color: $color-gray-85;
+  fill: $color-gray-85;
+}
+
+.text-gray-90, .text-gray-90>svg {
+  color: $color-gray-90;
+  fill: $color-gray-90;
+}
+
+.text-gray-95, .text-gray-95>svg {
+  color: $color-gray-95;
+  fill: $color-gray-95;
+}
+
+.text-gray-97, .text-gray-97>svg {
+  color: $color-gray-97;
+  fill: $color-gray-97;
+}
+
+.text-green, .text-green svg {
+  color: rgb(63, 110, 53);
+  fill: rgb(63, 110, 53);
+}
+
+.border-top-80 {
+  border-top: 1px solid $color-gray-80;
+}
+
+.border-right-80 {
+  border-right: 1px solid $color-gray-80;
+}
+
+.border-bottom-80 {
+  border-bottom: 1px solid $color-gray-80;
+}
+
+.border-left-80 {
+  border-left: 1px solid $color-gray-80;
+}

@@ -1,5 +1,5 @@
-import { sources } from "@/sources";
-import { infoSvg, isNarrow } from "@/lib/util";
+import { sources } from "@/enums";
+import { infoSvg, isNarrow } from "@/util";
 
 export let sourceColumn = {
   title: "Name",

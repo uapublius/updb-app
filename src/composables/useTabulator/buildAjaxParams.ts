@@ -4,14 +4,15 @@ import { reportColumns } from "./columns";
 export function buildAjaxParams(
   filter: Record<string, any>[] = [],
   sort: Record<string, any>[] = [],
-  page: number = 1,
-  size: number = 100
+  page = 1,
+  size = 100,
+  columns = reportColumns
 ) {
   let order = sort?.map(p => p.field + "." + p.dir).join(",") || undefined;
   let filters = buildFilters(filter);
 
   let params: Record<string, unknown> = {
-    select: reportColumns.join(","),
+    select: columns.join(","),
     order,
     ...filters
   };
