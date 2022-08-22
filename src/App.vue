@@ -1,7 +1,7 @@
 <template>
   <el-aside
     width="166"
-    class="h-100"
+    class="h-100 hide-narrow"
     :class="{ 'sidebar-collapsed': collapseSidebar }">
     <a
       class="toggle-sidebar select-none"
@@ -72,6 +72,52 @@
       </div>
     </Suspense>
   </router-view>
+
+  <div class="mobile-nav flex show-narrow">
+    <el-menu
+      class="flex-grow justify-content-between"
+      mode="horizontal"
+      router
+      :collapse-transition="false">
+      <el-menu-item index="/">
+        <div class="flex align-items-center">
+          <h1 class="gradient-text">
+            <router-link
+              to="/"
+              title="Home"
+              class="mx-0">
+              U
+            </router-link>
+          </h1>
+        </div>
+        <template #title />
+      </el-menu-item>
+      <el-menu-item index="/reports">
+        <el-icon>
+          <Tickets />
+        </el-icon>
+        <template #title>Reports</template>
+      </el-menu-item>
+      <el-menu-item index="/documents">
+        <el-icon>
+          <TakeawayBox />
+        </el-icon>
+        <template #title>Documents</template>
+      </el-menu-item>
+      <el-menu-item index="/map">
+        <el-icon>
+          <MapLocation />
+        </el-icon>
+        <template #title>Map</template>
+      </el-menu-item>
+      <el-menu-item index="/download">
+        <el-icon>
+          <Download />
+        </el-icon>
+        <template #title>Database</template>
+      </el-menu-item>
+    </el-menu>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -141,6 +187,7 @@ onMounted(async () => {
   padding: 8px;
   font-size: 18px;
   display: none;
+  height: 56px;
 }
 
 .toggle-sidebar svg {
@@ -151,15 +198,41 @@ onMounted(async () => {
   fill: #aaa;
 }
 
-.sidebar-collapsed.el-aside {
-  width: 64px;
+.mobile-nav {
+  background: #fff;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  position: fixed;
+  font-size: 14px;
 }
 
-.sidebar-collapsed.el-aside + div {
-  padding-left: 64px;
+.mobile-nav .el-menu-item:first-child {
+  padding: 0 8px !important;
+  margin-left: 8px;
 }
 
-.el-aside + div {
-  padding-left: 166px;
+.mobile-nav .el-menu-item {
+  padding: 0 8px 0 3px !important;
+  font-size: 13px;
+}
+
+.mobile-nav .el-menu--horizontal {
+  border-bottom: 0;
+  padding: 0;
+  border-top: 1px solid #eeefee;
+}
+
+.mobile-nav .el-menu--horizontal .el-menu-item {
+  min-width: 0;
+  border-bottom: none;
+}
+
+.mobile-nav .el-menu--horizontal > .el-menu-item.is-active {
+  border-bottom: none;
+}
+
+.mobile-nav .el-menu-item .el-icon {
+  margin-right: 0.25em;
 }
 </style>

@@ -109,11 +109,16 @@ export let useLocationsStore = defineStore("locations", {
     async fetchSummaries() {
       let rows;
 
-      if (await localforage.getItem('summaries')) {
-        rows = await localforage.getItem('summaries');
+      let currentVersion = 'report_count_by_location-20220821';
+      let previousVersions = ['summaries'];
+
+      if (await localforage.getItem(currentVersion)) {
+        rows = await localforage.getItem(currentVersion);
       }
       else {
-        let { data } = await axios.get('/data/map/summaries.csv');
+        previousVersions.map(version => localforage.removeItem(version));
+
+        let { data } = await axios.get('/data/map/report_count_by_location.csv');
 
         let options = {
           from: 2,
@@ -156,7 +161,7 @@ export let useLocationsStore = defineStore("locations", {
         };
       }
 
-      localforage.setItem('summaries', rows);
+      localforage.setItem(currentVersion, rows);
     }
   }
 });

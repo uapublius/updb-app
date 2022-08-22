@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { ElPagination, ElDrawer } from 'element-plus';
 import { onMounted, watch } from "vue";
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRoute } from "vue-router";
 import Plural from "../widgets/plural.vue";
 import { useMap } from "@/composables/useMap";
 import { usePageMeta } from '@/composables/usePageMeta';
@@ -72,7 +72,6 @@ import { sources } from "@/enums";
 import { useReportsStore } from "@/store/reports";
 
 let route = useRoute();
-let router = useRouter();
 let reportsStore = useReportsStore();
 let { setPageTitle } = usePageMeta();
 
@@ -81,9 +80,9 @@ let drawer = $ref(false);
 let inspectorDrawer = $ref(false);
 let reportMap = $ref(null);
 
-let lon = route.query.lon ? parseFloat(route.query.lon.toString()) : -90;
-let lat = route.query.lat ? parseFloat(route.query.lat.toString()) : 36;
-let zoom = route.query.zoom ? parseFloat(route.query.zoom.toString()) : 3;
+let lon = route.query.lon ? parseFloat(route.query.lon.toString()) : -97.7;
+let lat = route.query.lat ? parseFloat(route.query.lat.toString()) : 38.8;
+let zoom = route.query.zoom ? parseFloat(route.query.zoom.toString()) : 4.20;
 let {
  createMap, selectedLocations, totalSelectedReports, unselectCluster
 } = useMap('report-map');
@@ -118,8 +117,6 @@ watch(selectedLocations, async () => {
   reportsStore.resultsTotal = null;
   reportsStore.results = [];
 
-  addStateToRoute();
-
   if (reportsStore.selectedLocations.length) {
     await reportsStore.doSearch(page);
     reportsStore.buildSummary();
@@ -142,17 +139,7 @@ function drawerClose() {
   unselectCluster();
 }
 
-function addStateToRoute() {
-  router.replace({
-    query: {
-      ...route.query,
-      page: page === 1 ? undefined : page
-    }
-  });
-}
-
-async function pageChange(e) {
-  addStateToRoute();
+async function pageChange() {
   await reportsStore.doSearch(page);
 }
 

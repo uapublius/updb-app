@@ -142,24 +142,19 @@ export function useMap(id: string) {
 
     locationsStore.fetchLocationDetails(selectedLocations.value);
     reportsStore.offset = 0;
-    loadSelectedReports();
-  }
-
-  async function loadSelectedReports() {
-    await reportsStore.fetchReports(selectedLocations.value);
   }
 
   function updateRoute(map) {
     let zoom = map.getZoom();
     let center = map.getCenter();
+    let query = {
+      zoom: zoom.toFixed(2),
+      lon: center.lng.toFixed(4),
+      lat: center.lat.toFixed(4)
+    };
 
     router.replace({
-      query: {
-        ...route.query,
-        zoom: zoom.toFixed(2),
-        lon: center.lng.toFixed(4),
-        lat: center.lat.toFixed(4)
-      }
+      query: Object.assign({}, route.query, query)
     });
   }
 
@@ -227,7 +222,6 @@ export function useMap(id: string) {
     totalSelectedReports,
     selectedLocations,
     zoomLevel,
-    loadSelectedReports,
     selectedReports,
     unselectCluster
   };

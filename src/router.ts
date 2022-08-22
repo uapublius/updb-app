@@ -34,6 +34,7 @@ let routes = [
         name: "ReportsTable",
         path: "table",
         component: ReportsTable,
+        redirect: '/reports/list',
         props: true
       },
       {

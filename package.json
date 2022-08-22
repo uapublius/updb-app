@@ -6,8 +6,8 @@
     "@/*": "src/*.ts"
   },
   "scripts": {
-    "dev": "node server-dev",
-    "build": "npm run build:client && npm run build:server",
+    "dev": "VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
+    "build": "VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
     "build:noExternal": "npm run build:client && npm run build:server:noExternal",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
@@ -44,6 +44,7 @@
     "@types/supercluster": "^7.1.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "compression": "^1.7.4",
+    "cross-env": "^7.0.3",
     "express": "^4.18.1",
     "sass": "^1.49.9",
     "unplugin-auto-import": "^0.6.9",

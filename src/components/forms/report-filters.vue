@@ -29,7 +29,7 @@
     </div>
 
     <div class="flex align-items-center ms-2">
-      <div class="flex me-2">
+      <div class="report-filters-location flex me-2">
         <el-input
           v-model="reportsStore.location.city"
           :disabled="disabled"

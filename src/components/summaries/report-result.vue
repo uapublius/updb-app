@@ -1,16 +1,16 @@
 <template>
   <div class="report-result">
     <div class="text-larger ms-2">
-      <a @click="emit('select', report)">
+      <a
+        class="inline"
+        @click="emit('select', report)">
         <date-inline
           :date="report.date"
           format="DATETIME_MED"
           class="me-2" />
-      </a>
 
-      <span class="text-gray-80 me-2">—</span>
+        <span class="me-2">—</span>
 
-      <a @click="emit('select', report)">
         <location-inline
           :id="report.location" />
       </a>

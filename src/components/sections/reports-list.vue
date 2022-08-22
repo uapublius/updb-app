@@ -8,6 +8,7 @@
   </el-card>
 
   <el-card
+    v-if="reportsStore.resultsTotal !== null"
     shadow="never"
     class="ms-3">
     <div
@@ -18,7 +19,7 @@
 
     <div
       v-show="reportsStore.resultsTotal === 0"
-      class="text-bold text-gray-50 ms-3">
+      class="text-bold text-gray-50">
       No reports found
     </div>
 
@@ -56,7 +57,7 @@ function handleSelect(report) {
   router.push(permalink);
 }
 
-watch(route, () => {
+function addFiltersFromRoute() {
   page = route.query.page ? parseInt(route.query.page?.toString()) : 1;
 
   reportsStore.keyword = route.query.keyword?.toString() || undefined;
@@ -67,24 +68,35 @@ watch(route, () => {
   reportsStore.location.country = route.query.country?.toString() || undefined;
   reportsStore.location.water = route.query.water?.toString() || undefined;
   reportsStore.location.other = route.query.other?.toString() || undefined;
-}, { immediate: true });
+}
 
-reportsStore.resultsTotal = null;
-reportsStore.results = [];
-await reportsStore.doSearch(page);
-reportsStore.buildSummary();
-setPageTitle("Reports | UPDB");
+addFiltersFromRoute();
+
+watch(route, () => {
+  addFiltersFromRoute();
+});
+
+resetResults();
+await doSearch();
 
 watch(route, async () => {
+  await doSearch();
+});
+
+function resetResults() {
+  reportsStore.resultsTotal = null;
+  reportsStore.results = [];
+}
+
+async function doSearch() {
   await reportsStore.doSearch(page);
   reportsStore.buildSummary();
   setPageTitle(reportsStore.filterSummary || "Reports" + " | UPDB");
-});
+}
 
 async function doNewSearch() {
   page = 1;
-  reportsStore.resultsTotal = null;
-  reportsStore.results = [];
+  resetResults();
   await pageChange();
 }
 
