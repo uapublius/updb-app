@@ -1,6 +1,6 @@
+let express = require("express");
 let fs = require("fs");
 let path = require("path");
-let express = require("express");
 
 let resolve = p => path.resolve(__dirname, p);
 
@@ -10,7 +10,8 @@ async function buildApp(root) {
     root,
     logLevel: "info",
     server: {
-      middlewareMode: "ssr"
+      middlewareMode: "ssr",
+      host: true
     }
   });
   app.use(vite.middlewares);
@@ -32,7 +33,8 @@ async function handleRequest(vite, req, res) {
     let html = template.replace(`<!--meta-tags-->`, meta).replace(`<!--app-html-->`, appHtml);
 
     res.status(200).set({ "Content-Type": "text/html" }).end(html);
-  } catch (e) {
+  }
+  catch (e) {
     vite && vite.ssrFixStacktrace(e);
     console.log(e.stack);
     res.status(500).end(e.stack);

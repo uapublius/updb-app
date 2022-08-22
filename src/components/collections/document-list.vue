@@ -4,10 +4,10 @@
 
     <div class="flex align-items-center ms-2">
       <el-input
+        ref="documentSearch"
         v-model="reportKeyword"
         :disabled="isSearching"
         name="documentSearch"
-        autofocus
         clearable
         autocomplete="on"
         placeholder="Search all documents"
@@ -86,6 +86,7 @@ let isSearching = $ref(null);
 let showTips = $ref(false);
 let hasMoreResults = $ref(false);
 let offset = $ref(0);
+let documentSearch = $ref(null);
 
 async function fetchDocs() {
   try {
@@ -104,6 +105,8 @@ async function fetchDocs() {
 }
 
 async function fetchInitialDocuments() {
+  documentSearch.blur();
+
   offset = 0;
 
   isSearching = true;
@@ -114,6 +117,7 @@ async function fetchInitialDocuments() {
       q: reportKeyword
     }
   });
+
   let docs = await fetchDocs();
   isSearching = false;
   hasMoreResults = docs.length >= props.pageSize;

@@ -46,7 +46,6 @@
           id="awf_field-114058979"
           placeholder="Email"
           required
-          autofocus
           type="email"
           name="email"
           value="">

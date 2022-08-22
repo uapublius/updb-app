@@ -172,7 +172,7 @@ onMounted(async () => {
 
 <style scoped>
 .el-aside {
-  position:fixed;
+  position: fixed;
   z-index: 2;
 }
 
@@ -200,9 +200,9 @@ onMounted(async () => {
 
 .mobile-nav {
   background: #fff;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   position: fixed;
   font-size: 14px;
 }
