@@ -120,7 +120,6 @@ watch(selectedLocations, async () => {
   if (reportsStore.selectedLocations.length) {
     await reportsStore.doSearch(page);
     reportsStore.buildSummary();
-    setPageMeta("Map | UPDB");
   }
 });
 

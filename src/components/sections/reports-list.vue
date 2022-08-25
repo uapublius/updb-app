@@ -83,7 +83,7 @@ function resetResults() {
 async function doSearch() {
   await reportsStore.doSearch(page);
   reportsStore.buildSummary();
-  setPageMeta(reportsStore.filterSummary || "Reports" + " | UPDB");
+  setPageMeta(reportsStore.filterSummary || "UFO Reports" + " | UPDB");
 }
 
 async function doNewSearch() {

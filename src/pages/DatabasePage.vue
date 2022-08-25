@@ -63,7 +63,7 @@ import {
 import { usePageMeta } from "@/composables/usePageMeta";
 let { setPageMeta } = usePageMeta();
 
-setPageMeta('UPDB | Download');
+setPageMeta('UPDB | Download UFO Reports Database in SQL Format');
 </script>
 
 <style scoped>

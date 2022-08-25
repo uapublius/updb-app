@@ -6,6 +6,7 @@ import DatabasePage from "./pages/DatabasePage.vue";
 import DocumentsPage from "./pages/DocumentsPage.vue";
 import HomePage from "./pages/HomePage.vue";
 import MapPage from "./pages/MapPage.vue";
+import NotFoundPage from "./pages/NotFoundPage.vue";
 import ReportPage from "./pages/ReportPage.vue";
 import ReportsPage from "./pages/ReportsPage.vue";
 import SubmitPage from "./pages/SubmitPage.vue";
@@ -16,6 +17,14 @@ let routes = [
     path: "/",
     component: HomePage,
     props: true
+  },
+  {
+    path: "/about",
+    redirect: '/'
+  },
+  {
+    path: "/news",
+    redirect: '/'
   },
   {
     name: "Submit",
@@ -76,6 +85,10 @@ let routes = [
     path: "/download",
     component: DatabasePage,
     props: true
+  },
+  {
+    path: '/:pathMatch(.*)',
+    component: NotFoundPage
   }
 ];
 

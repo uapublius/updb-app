@@ -45,11 +45,11 @@ let pageTitle = $computed(() => {
 
   let date = DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATETIME_SHORT);
 
-  return `${sources[props.source]} ${props.sourceId} – ${date} – ${filterStrings.join(', ')}`;
+  return `${sources[props.source]} ${props.sourceId} – ${date} – ${filterStrings.join(', ')} | UFO Report`;
 });
 
 let pageDescription = $computed(() => {
-  return `${report.description?.substring(0, 159).replaceAll(/\n+/g, ' / ')}…`;
+  return `${report.description?.substring(0, 239).replaceAll(/\n+/g, ' / ')}…`;
 });
 
 await reportsStore.fetchReport(props.source, props.sourceId);

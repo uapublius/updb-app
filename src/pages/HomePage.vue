@@ -215,7 +215,7 @@ import { usePageMeta } from "@/composables/usePageMeta";
 
 let { setPageMeta } = usePageMeta();
 
-setPageMeta('UPDB');
+setPageMeta('UPDB – The Unidentified Phenomena Database');
 
 let phenomainon =
   'Downloaded from <a href="https://www.phenomainon.com/data" target="_blank">phenomAInon</a> on 2022-05-08, case details parsed by Publius.';

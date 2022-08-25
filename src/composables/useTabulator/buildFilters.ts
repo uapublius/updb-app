@@ -12,39 +12,39 @@ export function buildFilters(allFilters: any) {
     if (curr.type === "like") {
       acc[curr.field] = "like.*" + curr + "*";
     }
- else if (curr.type === "ulike") {
+    else if (curr.type === "ulike") {
       acc[curr.field] = "like.*" + curr.value.toUpperCase() + "*";
     }
- else if (curr.type === "=") {
+    else if (curr.type === "=") {
       if (Array.isArray(curr)) {
         acc[curr.field] = acc[curr.field] || [];
         acc[curr.field].push("in.(" + curr.value.join(",") + ")");
       }
- else {
+      else {
         acc[curr.field] = "eq." + curr;
       }
     }
- else if (curr.type === "u=") {
+    else if (curr.type === "u=") {
       if (Array.isArray(curr)) {
         acc[curr.field] = acc[curr.field] || [];
         acc[curr.field].push("in.(" + curr.value.map(v => v.toUpperCase()).join(",") + ")");
       }
- else {
+      else {
         acc[curr.field] = "eq." + curr.value.toUpperCase();
       }
     }
- else if (curr.type === "in") {
+    else if (curr.type === "in") {
       if (Array.isArray(curr)) {
         acc[curr.field] = acc[curr.field] || [];
         acc[curr.field].push("in.(" + curr.value.join(",") + ")");
       }
     }
- else if (curr.type === "fts") {
+    else if (curr.type === "fts") {
       let field = curr.field;
       if ((field = "description")) field = "ts";
-      acc[field] = "wfts." + curr.value;
+      acc[field] = "wfts(en)." + curr.value;
     }
- else if (curr.type === "ov") {
+    else if (curr.type === "ov") {
       if (curr.value.length < 2) return;
       let from = curr.value[0];
       let to = curr.value[1];
@@ -53,7 +53,7 @@ export function buildFilters(allFilters: any) {
       if (to) ff.push(`${curr.field}.lte.${to}`);
       if (ff.length) acc["and"] = `(${ff.join(",")})`;
     }
- else {
+    else {
       console.log("Unknown filter type " + curr.type);
     }
 

@@ -32,7 +32,12 @@ async function handleRequest(vite, req, res) {
     let [appHtml, meta] = await render(url, {});
     let html = template.replace(`<!--meta-tags-->`, meta).replace(`<!--app-html-->`, appHtml);
 
-    res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    if (meta.title === '404 Not Found') {
+      res.status(404).set({ "Content-Type": "text/html" }).end(html);
+    }
+    else {
+      res.status(200).set({ "Content-Type": "text/html" }).end(html);
+    }
   }
   catch (e) {
     vite && vite.ssrFixStacktrace(e);

@@ -11,5 +11,5 @@ import { usePageMeta } from '@/composables/usePageMeta';
 
 let { setPageMeta } = usePageMeta();
 
-setPageMeta('UPDB | Map');
+setPageMeta('UPDB | Map of UFO Sightings', 'This map shows reports of UFO sightings around the world submitted to MUFON, NUFORC, and other organizations.');
 </script>

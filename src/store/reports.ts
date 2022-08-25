@@ -103,7 +103,7 @@ export const useReportsStore = defineStore("reports", {
         order: 'date.desc'
       };
 
-      if (this.keyword) params.ts = "wfts." + this.keyword;
+      if (this.keyword) params.ts = "wfts(en)." + this.keyword;
 
       if (this.selectedLocations?.length) params.location = "in.(" + this.selectedLocations.join(",") + ")";
       if (locations?.length) params.location = "in.(" + locations.join(",") + ")";
@@ -242,7 +242,7 @@ export const useReportsStore = defineStore("reports", {
       let filterStrings = [];
 
       if (this.hasFilter()) {
-        if (this.keyword) filterStrings.push(`matching keyword "${this.keyword}"`);
+        if (this.keyword) filterStrings.push(`matching keyword “${this.keyword}”`);
         if (this.from && this.to) filterStrings.push(`between ${this.from}–${this.to}`);
         else if (this.from) filterStrings.push(this.from);
         else if (this.to) filterStrings.push(this.to);

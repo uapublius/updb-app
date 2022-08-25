@@ -21,6 +21,7 @@
               <div>• Similar lexemes are combined; e.g. bounced, bouncing, bounces all return the same results.</div>
               <div>• Diametrics are indexed unaccented: i.e. search for "Leon" not "León".</div>
               <div>• The "OR" search operator is supported.</div>
+              <div>• Use quotes around words to search for an exact phrase.</div>
             </div>
           </template>
           <icon-info-circle class="text-gray-50" />
