@@ -35,7 +35,7 @@
         background
         hide-on-single-page
         class="mn-4"
-        @current-change="pageChange" />
+        @current-change="addFiltersToRoute" />
     </client-only>
   </el-card>
 </template>
@@ -52,12 +52,17 @@ let route = useRoute();
 let router = useRouter();
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
 
-function handleSelect(report) {
-  let permalink = `/report/${report.source}-${report.source_id}`;
-  router.push(permalink);
-}
+updateStoreFromRoute();
 
-function addFiltersFromRoute() {
+resetResults();
+await doSearch();
+
+watch(route, async () => {
+  updateStoreFromRoute();
+  await doSearch();
+});
+
+function updateStoreFromRoute() {
   page = route.query.page ? parseInt(route.query.page?.toString()) : 1;
 
   reportsStore.keyword = route.query.keyword?.toString() || undefined;
@@ -69,19 +74,6 @@ function addFiltersFromRoute() {
   reportsStore.location.water = route.query.water?.toString() || undefined;
   reportsStore.location.other = route.query.other?.toString() || undefined;
 }
-
-addFiltersFromRoute();
-
-watch(route, () => {
-  addFiltersFromRoute();
-});
-
-resetResults();
-await doSearch();
-
-watch(route, async () => {
-  await doSearch();
-});
 
 function resetResults() {
   reportsStore.resultsTotal = null;
@@ -95,16 +87,18 @@ async function doSearch() {
 }
 
 async function doNewSearch() {
+  let pageFrom = page;
   page = 1;
   resetResults();
-  await pageChange();
+  addFiltersToRoute();
+  if (pageFrom === 1) await doSearch();
 }
 
 function addFiltersToRoute() {
   router.push({
     name: 'ReportsList',
     query: {
-      page: page === 1 ? undefined : page,
+      page,
       locations: reportsStore.selectedLocations?.toString() || undefined,
       keyword: reportsStore.keyword?.toString() || undefined,
       from: reportsStore.from?.toString() || undefined,
@@ -118,8 +112,8 @@ function addFiltersToRoute() {
   });
 }
 
-async function pageChange() {
-  addFiltersToRoute();
-  await reportsStore.doSearch(page);
+function handleSelect(report) {
+  let permalink = `/report/${report.source}-${report.source_id}`;
+  router.push(permalink);
 }
 </script>

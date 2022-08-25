@@ -5,7 +5,7 @@ export function usePageMeta() {
   let route = useRoute();
   let meta = inject("meta") as HeadTags;
 
-  function setPageMeta(title, description) {
+  function setPageMeta(title, description = title) {
     if (!import.meta.env.SSR) {
       document.title = title;
     }
