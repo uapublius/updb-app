@@ -1,6 +1,22 @@
 import provinces from "provinces";
 import { sources } from "@/enums";
 
+export const isMobile = !import.meta.env.SSR && navigator.userAgent.includes(" Mobile/");
+export const isNarrow = !import.meta.env.SSR && document.body.offsetWidth <= 420;
+export const baseUrl = import.meta.env.VITE_API_BASEURL;
+
+export let infoSvg =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm0-338c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>';
+
+let provincesUpperCased = provinces.map(p => {
+  if (p.name) p.name = p.name.toUpperCase();
+  if (p.english) p.english = p.english.toUpperCase();
+  if (p.region) p.region = p.region.toUpperCase();
+  if (p.country) p.country = p.country.toUpperCase();
+  if (p.alt) p.alt = p.alt.map(a => a.toUpperCase());
+  return p;
+});
+
 export function linkify(text: string) {
   return text.replace(/(https?:\/\/.*)(\s)?/gm, '<a href="$1" target="_blank">$1</a>$2');
 }
@@ -33,14 +49,6 @@ export function object2array(o) {
 export function capitalize(str): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
-
-export const isMobile = !import.meta.env.SSR && navigator.userAgent.includes(" Mobile/");
-export const isNarrow = !import.meta.env.SSR && document.body.offsetWidth <= 420;
-export const baseUrl =
-  import.meta.env.PROD ? "https://updb.app" : "http://localhost:3000";
-
-export let infoSvg =
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm0-338c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/></svg>';
 
 export function paramSummary(param) {
   let filters = object2array(param);
@@ -117,15 +125,6 @@ export function paramSummary(param) {
 
   return value;
 }
-
-let provincesUpperCased = provinces.map(p => {
-  if (p.name) p.name = p.name.toUpperCase();
-  if (p.english) p.english = p.english.toUpperCase();
-  if (p.region) p.region = p.region.toUpperCase();
-  if (p.country) p.country = p.country.toUpperCase();
-  if (p.alt) p.alt = p.alt.map(a => a.toUpperCase());
-  return p;
-});
 
 export function getDistrictNames(district, country) {
   district = district.toUpperCase();

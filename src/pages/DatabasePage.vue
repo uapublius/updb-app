@@ -61,9 +61,9 @@ import {
  ElHeader, ElMain, ElCard, ElRow, ElCol
 } from 'element-plus';
 import { usePageMeta } from "@/composables/usePageMeta";
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 
-setPageTitle('UPDB | Download');
+setPageMeta('UPDB | Download');
 </script>
 
 <style scoped>

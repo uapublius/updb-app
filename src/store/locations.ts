@@ -1,11 +1,13 @@
 import axios from "axios";
 import localforage from "localforage";
 import { defineStore } from "pinia";
+import { useRoute } from 'vue-router';
 import { parse } from '@/lib/csv-parse.js';
 import { Location } from "@/models";
 
 let counts = {} as Record<number, number>;
 let locations = {} as Record<number, Location>;
+let route = useRoute();
 
 export let useLocationsStore = defineStore("locations", {
   state: () => ({
@@ -106,42 +108,9 @@ export let useLocationsStore = defineStore("locations", {
       }
     },
 
-    async fetchSummaries() {
-      let rows;
-
-      let currentVersion = 'report_count_by_location-20220821';
-      let previousVersions = ['summaries'];
-
-      if (await localforage.getItem(currentVersion)) {
-        rows = await localforage.getItem(currentVersion);
-      }
-      else {
-        previousVersions.map(version => localforage.removeItem(version));
-
-        let { data } = await axios.get('/data/map/report_count_by_location.csv');
-
-        let options = {
-          from: 2,
-          cast: function (value, context) {
-            if ([0, 1].includes(context.index)) {
-              return parseInt(value);
-            }
-
-            if ([7, 8].includes(context.index)) {
-              return parseFloat(value);
-            }
-
-            return value;
-          }
-        };
-
-        await new Promise(resolve => {
-          parse(data.toString(), options, (err, rowdata) => {
-            rows = rowdata;
-            resolve(null);
-          });
-        });
-      }
+    populateLocations(rows) {
+      counts = {};
+      locations = {};
 
       for (let row of rows) {
         let [location, count, latitude, longitude] = row;
@@ -160,8 +129,65 @@ export let useLocationsStore = defineStore("locations", {
           geoname_id: -1
         };
       }
+    },
 
-      localforage.setItem(currentVersion, rows);
+    async fetchSummaries(query) {
+      let rows;
+
+      async function parseRows(data) {
+        await new Promise(resolve => {
+          parse(data.toString(), parseOptions, (err, rowdata) => {
+            rows = rowdata;
+            resolve(null);
+          });
+        });
+      }
+
+      let currentVersion = 'report_count_by_location-20220821';
+      let previousVersions = ['summaries'];
+
+      let parseOptions = {
+        from: 2,
+        cast: function (value, context) {
+          if ([0, 1].includes(context.index)) {
+            return parseInt(value);
+          }
+
+          if ([7, 8].includes(context.index)) {
+            return parseFloat(value);
+          }
+
+          return value;
+        }
+      };
+
+      if (query.q) {
+        let { data } = await axios.get("/api/reports/rpc/location_search", {
+          params: {
+            q: query.q,
+            lim: 50000
+          }
+        });
+
+        let filteredRows = Object.values(data).map((d: any) => {
+          return [d.id, d.count, d.lat, d.lon];
+        });
+
+        this.populateLocations(filteredRows);
+      }
+      else if (await localforage.getItem(currentVersion)) {
+        rows = await localforage.getItem(currentVersion);
+        this.populateLocations(rows);
+      }
+      else {
+        previousVersions.map(version => localforage.removeItem(version));
+
+        let { data } = await axios.get('/data/map/report_count_by_location.csv');
+
+        parseRows(data);
+        this.populateLocations(rows);
+        localforage.setItem(currentVersion, rows);
+      }
     }
   }
 });

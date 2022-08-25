@@ -6,14 +6,14 @@
     "@/*": "src/*.ts"
   },
   "scripts": {
-    "dev": "VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
-    "build": "VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
+    "dev": "VITE_API_BASEURL='http://127.0.0.1:3000' && VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
+    "build": "VITE_API_BASEURL='https://updb.app' && VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
     "build:noExternal": "npm run build:client && npm run build:server:noExternal",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
     "build:server:noExternal": "vite build --config vite.config.noexternal.js --ssr src/entry-server.ts --outDir dist/server",
     "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender",
-    "serve": "cross-env NODE_ENV=production node server",
+    "serve": "node server",
     "debug": "node --inspect-brk server"
   },
   "dependencies": {

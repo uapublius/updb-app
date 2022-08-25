@@ -15,11 +15,12 @@
 
 <script setup lang="ts">
 import { ElHeader, ElMain } from 'element-plus';
+import { DateTime } from 'luxon';
 import { usePageMeta } from "@/composables/usePageMeta";
 import { sources } from "@/enums";
 import { useReportsStore } from "@/store/reports";
 
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 let reportsStore = useReportsStore();
 
 let props = defineProps<{
@@ -35,7 +36,23 @@ let report = $computed(() => {
   return reportsStore.reportBySourceId(parseInt(props.source), props.sourceId);
 });
 
+let pageTitle = $computed(() => {
+  let filterStrings = [];
+  let locs = ['city', 'district', 'country', 'water', 'other'].map(l => {
+    return report[l];
+  }).filter(l => l).join(', ');
+  filterStrings.push(locs);
+
+  let date = DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATETIME_SHORT);
+
+  return `${sources[props.source]} ${props.sourceId} – ${date} – ${filterStrings.join(', ')}`;
+});
+
+let pageDescription = $computed(() => {
+  return `${report.description?.substring(0, 159).replaceAll(/\n+/g, ' / ')}…`;
+});
+
 await reportsStore.fetchReport(props.source, props.sourceId);
 await reportsStore.getAttachmentsReferences([report.id]);
-setPageTitle(title);
+setPageMeta(pageTitle, pageDescription);
 </script>

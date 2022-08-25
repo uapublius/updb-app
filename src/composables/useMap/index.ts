@@ -58,7 +58,7 @@ export function useMap(id: string) {
   }
 
   async function loadMap(map) {
-    await locationsStore.fetchSummaries();
+    await locationsStore.fetchSummaries(route.query);
     superCluster.load(locationsStore.features);
     addReportsLayer(map);
   }

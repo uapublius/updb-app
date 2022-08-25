@@ -47,7 +47,7 @@ import { useRoute, useRouter } from "vue-router";
 import { usePageMeta } from '@/composables/usePageMeta';
 import { useReportsStore } from "@/store/reports";
 let reportsStore = useReportsStore();
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 let route = useRoute();
 let router = useRouter();
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
@@ -91,7 +91,7 @@ function resetResults() {
 async function doSearch() {
   await reportsStore.doSearch(page);
   reportsStore.buildSummary();
-  setPageTitle(reportsStore.filterSummary || "Reports" + " | UPDB");
+  setPageMeta(reportsStore.filterSummary || "Reports" + " | UPDB");
 }
 
 async function doNewSearch() {

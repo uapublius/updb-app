@@ -42,17 +42,17 @@
         </el-icon>
         <template #title>Reports</template>
       </el-menu-item>
-      <el-menu-item index="/documents">
-        <el-icon>
-          <TakeawayBox />
-        </el-icon>
-        <template #title>Documents</template>
-      </el-menu-item>
       <el-menu-item index="/map">
         <el-icon>
           <MapLocation />
         </el-icon>
         <template #title>Map</template>
+      </el-menu-item>
+      <el-menu-item index="/documents">
+        <el-icon>
+          <TakeawayBox />
+        </el-icon>
+        <template #title>Documents</template>
       </el-menu-item>
       <el-menu-item index="/download">
         <el-icon>
@@ -73,9 +73,9 @@
     </Suspense>
   </router-view>
 
-  <div class="mobile-nav flex show-narrow">
+  <div class="mobile-nav flex w-100 show-narrow">
     <el-menu
-      class="flex-grow justify-content-between"
+      class="flex justify-content-between w-100"
       mode="horizontal"
       router
       :collapse-transition="false">
@@ -98,17 +98,17 @@
         </el-icon>
         <template #title>Reports</template>
       </el-menu-item>
-      <el-menu-item index="/documents">
-        <el-icon>
-          <TakeawayBox />
-        </el-icon>
-        <template #title>Documents</template>
-      </el-menu-item>
       <el-menu-item index="/map">
         <el-icon>
           <MapLocation />
         </el-icon>
         <template #title>Map</template>
+      </el-menu-item>
+      <el-menu-item index="/documents">
+        <el-icon>
+          <TakeawayBox />
+        </el-icon>
+        <template #title>Documents</template>
       </el-menu-item>
       <el-menu-item index="/download">
         <el-icon>
@@ -204,23 +204,22 @@ onMounted(async () => {
   left: 0;
   right: 0;
   position: fixed;
-  font-size: 14px;
 }
 
 .mobile-nav .el-menu-item:first-child {
   padding: 0 8px !important;
-  margin-left: 8px;
 }
 
 .mobile-nav .el-menu-item {
-  padding: 0 8px 0 3px !important;
-  font-size: 13px;
+  padding: 0 6px 0 1px !important;
+  font-size: 14px;
 }
 
 .mobile-nav .el-menu--horizontal {
   border-bottom: 0;
   padding: 0;
   border-top: 1px solid #eeefee;
+  width: 100%;
 }
 
 .mobile-nav .el-menu--horizontal .el-menu-item {
@@ -233,6 +232,7 @@ onMounted(async () => {
 }
 
 .mobile-nav .el-menu-item .el-icon {
-  margin-right: 0.25em;
+  margin-right: 1px;
+  font-size: 13px;
 }
 </style>

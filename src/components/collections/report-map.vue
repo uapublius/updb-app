@@ -73,7 +73,7 @@ import { useReportsStore } from "@/store/reports";
 
 let route = useRoute();
 let reportsStore = useReportsStore();
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
 let drawer = $ref(false);
@@ -120,7 +120,7 @@ watch(selectedLocations, async () => {
   if (reportsStore.selectedLocations.length) {
     await reportsStore.doSearch(page);
     reportsStore.buildSummary();
-    setPageTitle("Map | UPDB");
+    setPageMeta("Map | UPDB");
   }
 });
 

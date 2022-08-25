@@ -1,8 +1,8 @@
+import vue from "@vitejs/plugin-vue";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { defineConfig } from "vite";
 import svgLoader from "vite-svg-loader";
-import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [
@@ -27,8 +27,8 @@ export default defineConfig({
       },
       output: {
         inlineDynamicImports: false
-      },
-    },
+      }
+    }
   },
   resolve: {
     alias: {

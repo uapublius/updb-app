@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { usePageMeta } from '@/composables/usePageMeta';
 
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 
-setPageTitle('UPDB | Map');
+setPageMeta('UPDB | Map');
 </script>

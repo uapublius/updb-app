@@ -213,9 +213,9 @@ import {
 import { onMounted } from "vue";
 import { usePageMeta } from "@/composables/usePageMeta";
 
-let { setPageTitle } = usePageMeta();
+let { setPageMeta } = usePageMeta();
 
-setPageTitle('UPDB');
+setPageMeta('UPDB');
 
 let phenomainon =
   'Downloaded from <a href="https://www.phenomainon.com/data" target="_blank">phenomAInon</a> on 2022-05-08, case details parsed by Publius.';
