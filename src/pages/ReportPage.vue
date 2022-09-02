@@ -2,7 +2,7 @@
   <el-header
     height="auto"
     class="p-4 flex justify-content-between">
-    <h2>{{ title }} </h2>
+    <h1>{{ title }}</h1>
     <slot />
   </el-header>
 
@@ -16,12 +16,15 @@
 <script setup lang="ts">
 import { ElHeader, ElMain } from 'element-plus';
 import { DateTime } from 'luxon';
+import { watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { usePageMeta } from "@/composables/usePageMeta";
 import { sources } from "@/enums";
 import { useReportsStore } from "@/store/reports";
 
 let { setPageMeta } = usePageMeta();
 let reportsStore = useReportsStore();
+let route = useRoute();
 
 let props = defineProps<{
   source: string;
@@ -43,9 +46,9 @@ let pageTitle = $computed(() => {
   }).filter(l => l).join(', ');
   filterStrings.push(locs);
 
-  let date = DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATETIME_SHORT);
+  let date = DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATE_SHORT);
 
-  return `${sources[props.source]} ${props.sourceId} – ${date} – ${filterStrings.join(', ')} | UFO Report`;
+  return `${filterStrings.join(', ')} – ${date} | ${sources[props.source]} UFO Report`;
 });
 
 let pageDescription = $computed(() => {
@@ -53,6 +56,10 @@ let pageDescription = $computed(() => {
 });
 
 await reportsStore.fetchReport(props.source, props.sourceId);
-await reportsStore.getAttachmentsReferences([report.id]);
+await reportsStore.fetchAttachmentsReferences([report.id]);
 setPageMeta(pageTitle, pageDescription);
+
+watch(route, () => {
+  setPageMeta(pageTitle, pageDescription);
+}, { immediate: true });
 </script>

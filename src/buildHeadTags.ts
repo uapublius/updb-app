@@ -1,8 +1,8 @@
 import { HeadTags } from "@/types/types";
 
-let title = "UPDB | The Unexplained Phenomena Database";
+let title = "UPDB | Unexplained Phenomena Database";
 let link = { icon: { type: "image/png", href: "/favicon.png" } };
-let description = "Find UAP/UFO reports near you, including tic-tacs, orbs, triangles & saucers.";
+let description = "Search engine and map for UFO reports & documents – including UAP, tic-tacs, and other unexplained phenomena.";
 let url = "https://updb.app";
 let image = "https://updb.app/updb_wide.jpg";
 

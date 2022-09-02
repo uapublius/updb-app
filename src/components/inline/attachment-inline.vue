@@ -1,18 +1,18 @@
 <template>
   <div class="attachment-inline ms-1">
-    <div v-if="mirroredUrl">
+    <div>
       <a
         v-if="isImage"
         :title="title"
         :href="archiveUrl"
         target="_blank">
-        <img :src="mirroredUrl">
+        <img :src="archiveUrl">
       </a>
       <video
         v-else-if="isVideo"
         controls
         preload="metadata"
-        :src="mirroredUrl" />
+        :src="archiveUrl" />
     </div>
     <div class="flex align-items-start lineheight-1 mn-1 ms-4">
       <el-icon
@@ -31,34 +31,27 @@
 <script setup lang="ts">
 import { Link } from '@element-plus/icons-vue';
 import { ElIcon } from 'element-plus';
-import { onMounted } from 'vue';
-import { urlForAttachment } from '@/attachments';
 
 let props = defineProps<{
   url: any;
 }>();
 
-let mirroredUrl = $ref("");
 let archiveUrl = $ref("https://web.archive.org/web/" + props.url);
-
-onMounted(async () => {
-  mirroredUrl = await urlForAttachment(props.url);
-});
 
 let title = $computed(() => {
   let title = `Original: ${props.url}`;
-  if (mirroredUrl) title += `\n\nMirrored: ${mirroredUrl}`;
+  if (archiveUrl) title += `\n\nMirrored: ${archiveUrl}`;
   return title;
 });
 
 let isImage = $computed(() => {
   return ['jpg', 'png', 'jpeg', 'gif', 'webp']
-    .some(extension => mirroredUrl?.toLowerCase().endsWith(extension));
+    .some(extension => archiveUrl?.toLowerCase().endsWith(extension));
 });
 
 let isVideo = $computed(() => {
   return ['mp4', 'mpv', 'mov', 'webm']
-    .some(extension => mirroredUrl?.toLowerCase().endsWith(extension));
+    .some(extension => archiveUrl?.toLowerCase().endsWith(extension));
 });
 
 function labelForAttachment(attachment: string) {

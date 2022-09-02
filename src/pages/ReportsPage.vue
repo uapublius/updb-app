@@ -2,22 +2,7 @@
   <el-header
     height="auto"
     class="flex align-items-center p-4">
-    <h2 class="me-3">Reports</h2>
-    <!--
-    <el-radio-group
-      :model-value="route.name.toString()"
-      @change="changeView">
-      <el-radio-button
-        name="ReportsList"
-        label="ReportsList">
-        List
-      </el-radio-button>
-      <el-radio-button
-        name="ReportsTable"
-        label="ReportsTable">
-        Table
-      </el-radio-button>
-    </el-radio-group> -->
+    <h1 class="me-3">Search UFO Reports</h1>
   </el-header>
 
   <el-main class="px-4">
@@ -26,20 +11,13 @@
 </template>
 
 <script setup lang="ts">
-import {
- ElHeader, ElMain, ElRadioGroup, ElRadioButton
-} from 'element-plus';
-import { useRouter, useRoute } from 'vue-router';
+import { ElHeader, ElMain } from 'element-plus';
 
-let router = useRouter();
-let route = useRoute();
-
-function changeView(val) {
-  router.push({
-    name: val,
-    query: {
-      ...route.query
-    }
-  });
-}
+let props = defineProps<{
+  country?: string;
+  district?: string;
+  city?: string;
+  water?: string;
+  other?: string;
+}>();
 </script>

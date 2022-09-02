@@ -20,15 +20,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 32px;
 }
 
 h2 {
-  font-size: 21px;
+  font-size: 26px;
 }
 
 h3 {
-  font-size: 19px;
+  font-size: 20px;
 }
 
 h4 {
@@ -52,7 +52,6 @@ a:visited {
   color: var(--el-color-primary);
   cursor: pointer;
   text-decoration: none;
-  display: inline-flex;
 
   svg {
     fill: var(--el-color-primary);

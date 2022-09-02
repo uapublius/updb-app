@@ -174,3 +174,16 @@ a.action-link:visited {
 .report-result a {
   word-break: break-word;
 }
+
+.bulleted {
+  > span {
+    &:after {
+      content: ' • ';
+    }
+  }
+  > span:last-child {
+    &:after {
+      content: '';
+    }
+  }
+}

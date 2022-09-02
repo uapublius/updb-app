@@ -6,20 +6,21 @@
     "@/*": "src/*.ts"
   },
   "scripts": {
-    "dev": "VITE_API_BASEURL='http://127.0.0.1:3000' && VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
-    "build": "VITE_API_BASEURL='https://updb.app' && VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
-    "build:noExternal": "npm run build:client && npm run build:server:noExternal",
+    "dev": "export VITE_API_BASEURL='http://127.0.0.1:3000' && export VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
+    "build": "export VITE_API_BASEURL='https://updb.app' && export VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
-    "build:server:noExternal": "vite build --config vite.config.noexternal.js --ssr src/entry-server.ts --outDir dist/server",
-    "generate": "vite build --ssrManifest --outDir dist/static && npm run build:server && node prerender",
     "serve": "node server",
-    "debug": "node --inspect-brk server"
+    "debug": "node --inspect-brk server",
+    "deploy": "npm run deploy:sync && npm run deploy:restart",
+    "deploy:sync": "rsync --port 22000 -a --delete-after dist/ root@updb.app:/var/www/updb.app/server/dist/",
+    "deploy:restart": "ssh -p 22000 root@updb.app 'systemctl restart node && rm -rf /var/cache/nginx/*'"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.1",
     "axios": "^0.26.1",
     "chrono-node": "^2.3.9",
+    "countries-list": "^2.6.1",
     "element-plus": "^2.2.4",
     "html-entities": "^2.3.3",
     "localforage": "^1.10.0",

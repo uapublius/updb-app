@@ -38,10 +38,21 @@
       :collapse="collapseSidebar">
       <el-menu-item index="/reports">
         <el-icon>
-          <Tickets />
+          <Search />
         </el-icon>
-        <template #title>Reports</template>
+        <template #title>Search</template>
       </el-menu-item>
+      <el-sub-menu index="">
+        <template #title>
+          <el-icon>
+            <Tickets />
+          </el-icon>
+          Reports
+        </template>
+        <el-menu-item index="/reports/country">
+          <template #title>By Country</template>
+        </el-menu-item>
+      </el-sub-menu>
       <el-menu-item index="/map">
         <el-icon>
           <MapLocation />
@@ -123,10 +134,10 @@
 <script setup lang="ts">
 import "./style/style.scss";
 import {
-  MapLocation, Download, TakeawayBox, Tickets, User
+  MapLocation, Download, TakeawayBox, Tickets, Search
 } from '@element-plus/icons-vue';
 import {
-  ElMenu, ElIcon, ElMenuItem, ElAside
+  ElMenu, ElIcon, ElMenuItem, ElAside, ElSubMenu
 } from 'element-plus';
 import { onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";

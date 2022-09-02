@@ -210,12 +210,13 @@ import axios from "axios";
 import {
  ElMain, ElCard, ElRow, ElCol
 } from 'element-plus';
-import { onMounted } from "vue";
+import { watch } from "vue";
+import { useRoute } from "vue-router";
+import headTags from "@/buildHeadTags";
 import { usePageMeta } from "@/composables/usePageMeta";
 
 let { setPageMeta } = usePageMeta();
-
-setPageMeta('UPDB – The Unidentified Phenomena Database');
+let route = useRoute();
 
 let phenomainon =
   'Downloaded from <a href="https://www.phenomainon.com/data" target="_blank">phenomAInon</a> on 2022-05-08, case details parsed by Publius.';
@@ -241,10 +242,13 @@ let descriptions = $ref({
 });
 
 let sourceCounts = $ref([]);
+let { data } = await axios.get("/api/reports/source_view");
+data = data.sort((a, b) => b.count - a.count);
+sourceCounts = data;
 
-onMounted(async () => {
-  let { data } = await axios.get("/api/reports/source_view");
-  data = data.sort((a, b) => b.count - a.count);
-  sourceCounts = data;
-});
+setPageMeta('Unidentified Phenomena Database | UFO Map, Search Engine, and Database', headTags.description);
+
+watch(route, async () => {
+  setPageMeta('Unidentified Phenomena Database | UFO Map, Search Engine, and Database', headTags.description);
+}, { immediate: true });
 </script>

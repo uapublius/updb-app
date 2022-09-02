@@ -44,6 +44,13 @@
         class="ms-4">
         <table class="definition-table">
           <tbody>
+            <tr v-if="source">
+              <td>Source</td>
+              <td>
+                {{ source }}
+              </td>
+            </tr>
+
             <tr v-if="report.date">
               <td title="Date of event in local time">Date</td>
               <td :title="report.date_detail">

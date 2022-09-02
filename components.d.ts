@@ -6,6 +6,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     AttachmentInline: typeof import('./src/components/inline/attachment-inline.vue')['default']
     AttachmentsInline: typeof import('./src/components/inline/attachments-inline.vue')['default']
+    ContinentSummary: typeof import('./src/components/summaries/continent-summary.vue')['default']
+    CountrySummary: typeof import('./src/components/summaries/country-summary.vue')['default']
     DateInline: typeof import('./src/components/inline/date-inline.vue')['default']
     DocumentList: typeof import('./src/components/collections/document-list.vue')['default']
     DocumentPagesSummary: typeof import('./src/components/summaries/document-pages-summary.vue')['default']

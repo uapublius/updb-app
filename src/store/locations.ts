@@ -7,7 +7,6 @@ import { Location } from "@/models";
 
 let counts = {} as Record<number, number>;
 let locations = {} as Record<number, Location>;
-let route = useRoute();
 
 export let useLocationsStore = defineStore("locations", {
   state: () => ({
@@ -92,7 +91,7 @@ export let useLocationsStore = defineStore("locations", {
       }
     },
 
-    setLocationsDetailsFromReports(reports: any[]) {
+    setLocationsDetailsFromReports(reports: any[] = []) {
       for (let report of reports) {
         this.details[report.location] = {
           id: report.location,

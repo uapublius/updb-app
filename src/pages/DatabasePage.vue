@@ -1,17 +1,12 @@
 <template>
-  <el-header
-    height="auto"
-    class="p-4">
-    <h2>Database</h2>
+  <el-header height="auto" class="p-4">
+    <h1>Database</h1>
   </el-header>
 
   <el-main class="px-4">
     <el-row :gutter="20">
       <el-col :md="16">
-        <el-card
-          shadow="never"
-          header="Reports"
-          class="ms-3">
+        <el-card shadow="never" header="Reports" class="ms-3">
           <a
             class="flex-inline align-items-center text-larger"
             target="_blank"
@@ -22,10 +17,7 @@
           <p>Download the entire reports database in postgreSQL format.</p>
         </el-card>
 
-        <el-card
-          shadow="never"
-          header="Document Index"
-          class="ms-3">
+        <el-card shadow="never" header="Document Index" class="ms-3">
           <a
             class="flex-inline align-items-center text-larger"
             target="_blank"
@@ -40,9 +32,7 @@
       </el-col>
 
       <el-col :md="8">
-        <el-card
-          shadow="never"
-          class="ms-3">
+        <el-card shadow="never" class="ms-3">
           <figure class="text-gray-40 m-0">
             <img src="../assets/pliny.jpg">
             <blockquote class="mn-1">
@@ -58,12 +48,20 @@
 
 <script setup lang="ts">
 import {
- ElHeader, ElMain, ElCard, ElRow, ElCol
+  ElHeader, ElMain, ElCard, ElRow, ElCol
 } from 'element-plus';
+import { watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { usePageMeta } from "@/composables/usePageMeta";
-let { setPageMeta } = usePageMeta();
 
-setPageMeta('UPDB | Download UFO Reports Database in SQL Format');
+let { setPageMeta } = usePageMeta();
+let route = useRoute();
+
+setPageMeta('Download UFO Report & Document Databases | UPDB');
+
+watch(route, async () => {
+  setPageMeta('Download UFO Report & Document Databases | UPDB');
+}, { immediate: true });
 </script>
 
 <style scoped>

@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage.vue";
 import MapPage from "./pages/MapPage.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 import ReportPage from "./pages/ReportPage.vue";
+import ReportsByCountry from "./pages/ReportsByCountry.vue";
 import ReportsPage from "./pages/ReportsPage.vue";
 import SubmitPage from "./pages/SubmitPage.vue";
 
@@ -43,16 +44,40 @@ let routes = [
         name: "ReportsTable",
         path: "table",
         component: ReportsTable,
-        redirect: '/reports/list',
+        redirect: '/reports/search',
         props: true
       },
       {
         name: "ReportsList",
         path: "list",
         component: ReportsList,
+        redirect: '/reports/search',
+        props: true
+      },
+      {
+        name: "ReportsSearch",
+        path: "search",
+        component: ReportsList,
+        props: true
+      },
+      {
+        name: "ReportsForCountryDistrict",
+        path: "country/:country/:district",
+        component: ReportsList,
+        props: true
+      },
+      {
+        name: "ReportsForCountry",
+        path: "country/:country",
+        component: ReportsList,
         props: true
       }
     ]
+  },
+  {
+    name: "ReportsByCountry",
+    path: "/reports/country",
+    component: ReportsByCountry
   },
   {
     name: "ReportPage",

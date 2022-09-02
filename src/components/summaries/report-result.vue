@@ -1,18 +1,12 @@
 <template>
   <div class="report-result">
     <div class="text-larger ms-2">
-      <a
-        class="inline"
-        @click="emit('select', report)">
-        <date-inline
-          :date="report.date"
-          format="DATETIME_MED"
-          class="me-2" />
+      <a class="inline" :href="`/report/${report.source}-${report.source_id}`">
+        <date-inline :date="report.date" format="DATETIME_MED" class="me-2" />
 
         <span class="me-2">—</span>
 
-        <location-inline
-          :id="report.location" />
+        <location-inline :id="report.location" />
       </a>
     </div>
 
@@ -21,9 +15,7 @@
         {{ sourceName }} {{ report.source_id }}
       </span>
 
-      <span
-        class="flex align-items-center me-2"
-        title="Word Count">
+      <span class="flex align-items-center me-2" title="Word Count">
         <icon-align-left class="me-1" /> {{ report.word_count }}
       </span>
 
@@ -32,23 +24,17 @@
         :references="reportsStore.referencesForReport(report.id)"
         class="me-2" />
 
-      <attachments-inline
-        v-if="attachments.length"
-        :attachments="attachments" />
+      <attachments-inline v-if="attachments.length" :attachments="attachments" />
     </div>
 
     <div
       v-if="report.description?.trim().length"
       class="ms-2 flex align-items-center text-gray-30 snippet cursor-pointer"
       @click="emit('toggle', report.id)">
-      <span
-        v-if="expanded"
-        class="inline me-1">
+      <span v-if="expanded" class="inline me-1">
         {{ description }}
       </span>
-      <span
-        v-else
-        class="inline me-1">
+      <span v-else class="inline me-1">
         {{ snippet }}
       </span>
     </div>

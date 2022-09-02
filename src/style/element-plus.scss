@@ -15,7 +15,26 @@
   }
 }
 
-.el-menu-item {
+.el-sub-menu {
+  .el-sub-menu__title {
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 1em !important;
+  }
+
+  .el-icon {
+    margin-right: 0.5em;
+  }
+
+  .el-menu-item {
+    padding: 0 0 0 2em !important;
+    font-size: 16px;
+    font-weight: 500;
+    min-width: 156px;
+  }
+}
+
+.el-menu-item, .el-sub-menu {
   &.is-active,
   &:hover {
     background-color: aliceblue;

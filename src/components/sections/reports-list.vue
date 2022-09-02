@@ -1,29 +1,21 @@
 <template>
-  <el-card
-    shadow="never"
-    class="ms-3">
-    <report-filters
-      :disabled="reportsStore.isSearching"
-      @search="doNewSearch" />
+  <el-card shadow="never" class="ms-3">
+    <report-filters :disabled="reportsStore.isSearching" @search="doNewSearch" />
   </el-card>
 
   <el-card
     v-if="reportsStore.resultsTotal !== null"
     shadow="never"
     class="ms-3">
-    <div
-      v-show="reportsStore.resultsTotal"
-      class="text-bold text-gray-50 ms-3">
+    <h2 v-show="reportsStore.resultsTotal" class="text-bold text-gray-50 text-larger ms-4">
       Found {{ reportsStore.filterSummary }}
-    </div>
+    </h2>
 
-    <div
-      v-show="reportsStore.resultsTotal === 0"
-      class="text-bold text-gray-50">
+    <div v-show="reportsStore.resultsTotal === 0" class="text-bold text-gray-50">
       No reports found
     </div>
 
-    <report-list @select="handleSelect" />
+    <report-list />
 
     <client-only>
       <el-pagination
@@ -35,7 +27,7 @@
         background
         hide-on-single-page
         class="mn-4"
-        @current-change="addFiltersToRoute" />
+        @current-change="updateRouteFromStore" />
     </client-only>
   </el-card>
 </template>
@@ -52,49 +44,38 @@ let route = useRoute();
 let router = useRouter();
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
 
-updateStoreFromRoute();
+let props = defineProps<{
+  country?: string;
+  district?: string;
+  city?: string;
+  water?: string;
+  other?: string;
+}>();
 
-resetResults();
-await doSearch();
+updateStoreFromRoute();
+reportsStore.resetResults();
+await searchAndBuildSummary();
 
 watch(route, async () => {
   updateStoreFromRoute();
-  await doSearch();
+  await searchAndBuildSummary();
 });
-
-function updateStoreFromRoute() {
-  page = route.query.page ? parseInt(route.query.page?.toString()) : 1;
-
-  reportsStore.keyword = route.query.keyword?.toString() || undefined;
-  reportsStore.from = route.query.from?.toString() || undefined;
-  reportsStore.to = route.query.to?.toString() || undefined;
-  reportsStore.location.city = route.query.city?.toString() || undefined;
-  reportsStore.location.district = route.query.district?.toString() || undefined;
-  reportsStore.location.country = route.query.country?.toString() || undefined;
-  reportsStore.location.water = route.query.water?.toString() || undefined;
-  reportsStore.location.other = route.query.other?.toString() || undefined;
-}
-
-function resetResults() {
-  reportsStore.resultsTotal = null;
-  reportsStore.results = [];
-}
-
-async function doSearch() {
-  await reportsStore.doSearch(page);
-  reportsStore.buildSummary();
-  setPageMeta(reportsStore.filterSummary || "UFO Reports" + " | UPDB");
-}
 
 async function doNewSearch() {
   let pageFrom = page;
   page = 1;
-  resetResults();
-  addFiltersToRoute();
-  if (pageFrom === 1) await doSearch();
+  reportsStore.resetResults();
+  updateRouteFromStore();
+  if (pageFrom === 1) await searchAndBuildSummary();
 }
 
-function addFiltersToRoute() {
+async function searchAndBuildSummary() {
+  await reportsStore.doSearch(page);
+  reportsStore.buildSummary();
+  setPageMeta((reportsStore.filterSummary || "Search UFO Reports") + " | UPDB");
+}
+
+function updateRouteFromStore() {
   router.push({
     name: 'ReportsList',
     query: {
@@ -112,8 +93,16 @@ function addFiltersToRoute() {
   });
 }
 
-function handleSelect(report) {
-  let permalink = `/report/${report.source}-${report.source_id}`;
-  router.push(permalink);
+function updateStoreFromRoute() {
+  page = route.query.page ? parseInt(route.query.page?.toString()) : 1;
+
+  reportsStore.keyword = route.query.keyword?.toString() || undefined;
+  reportsStore.from = route.query.from?.toString() || undefined;
+  reportsStore.to = route.query.to?.toString() || undefined;
+  reportsStore.location.city = props.city || route.query.city?.toString() || undefined;
+  reportsStore.location.district = props.district?.replaceAll('_', ' ') || route.query.district?.toString() || undefined;
+  reportsStore.location.country = props.country?.toUpperCase() || route.query.country?.toString().toUpperCase() || undefined;
+  reportsStore.location.water = props.water || route.query.water?.toString() || undefined;
+  reportsStore.location.other = props.other || route.query.other?.toString() || undefined;
 }
 </script>
