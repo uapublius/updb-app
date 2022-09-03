@@ -1,11 +1,12 @@
 <template>
   <div class="report-result">
     <div class="text-larger ms-2">
-      <a class="inline" :href="`/report/${report.source}-${report.source_id}`">
+      <a
+        class="inline"
+        :href="link"
+        @click="emit('select', report)">
         <date-inline :date="report.date" format="DATETIME_MED" class="me-2" />
-
         <span class="me-2">—</span>
-
         <location-inline :id="report.location" />
       </a>
     </div>
@@ -52,10 +53,15 @@ let emit = defineEmits(['select', 'toggle']);
 
 let props = defineProps<{
   id: number;
+  anchor?: boolean;
   attachments?: Attachment[];
   references?: ReportReferenceView[];
   expanded?: boolean;
 }>();
+
+let link = $computed(() => {
+  return props.anchor ? `/report/${report.source}-${report.source_id}` : undefined;
+});
 
 let report = $computed(() => {
   return reportsStore.reports[props.id];

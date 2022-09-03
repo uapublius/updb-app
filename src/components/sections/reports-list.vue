@@ -15,7 +15,7 @@
       No reports found
     </div>
 
-    <report-list />
+    <report-list anchor />
 
     <client-only>
       <el-pagination

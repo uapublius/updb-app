@@ -67,13 +67,11 @@ import { onMounted, watch } from "vue";
 import { onBeforeRouteLeave, useRoute } from "vue-router";
 import Plural from "../widgets/plural.vue";
 import { useMap } from "@/composables/useMap";
-import { usePageMeta } from '@/composables/usePageMeta';
 import { sources } from "@/enums";
 import { useReportsStore } from "@/store/reports";
 
 let route = useRoute();
 let reportsStore = useReportsStore();
-let { setPageMeta } = usePageMeta();
 
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
 let drawer = $ref(false);

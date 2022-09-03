@@ -8,6 +8,7 @@
         <report-result
           :id="report"
           :expanded="expanded[report]"
+          :anchor="anchor"
           :references="reportsStore.references[report]"
           :attachments="reportsStore.attachments[report]"
           @select="r => emit('select', r)"
@@ -21,6 +22,10 @@
 import { useReportsStore } from "@/store/reports";
 let reportsStore = useReportsStore();
 let expanded = $ref({} as any);
+
+defineProps<{
+  anchor?: boolean;
+}>();
 
 let emit = defineEmits(['select']);
 </script>

@@ -61,12 +61,12 @@ let reportsStore = useReportsStore();
 let { setPageMeta } = usePageMeta();
 let route = useRoute();
 
-setPageMeta("UFO Reports by Country | UPDB", 'This searchable database contains over 500,000 pages of UFO related documents, journals, magazines, newspaper clippings, and more.');
+setPageMeta("UFO Reports by Country | UPDB");
 
 watch(route, () => {
-  setPageMeta("UFO Reports by Country | UPDB", 'This searchable database contains over 500,000 pages of UFO related documents, journals, magazines, newspaper clippings, and more.');
+  setPageMeta("UFO Reports by Country | UPDB");
 }, { immediate: true });
 
 await reportsStore.fetchReportCountryCounts();
-setPageMeta("UFO Reports by Country | UPDB", 'This searchable database contains over 500,000 pages of UFO related documents, journals, magazines, newspaper clippings, and more.');
+setPageMeta("UFO Reports by Country | UPDB");
 </script>

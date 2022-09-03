@@ -1,7 +1,6 @@
 import axios from "axios";
 import localforage from "localforage";
 import { defineStore } from "pinia";
-import { useRoute } from 'vue-router';
 import { parse } from '@/lib/csv-parse.js';
 import { Location } from "@/models";
 
@@ -29,7 +28,6 @@ export let useLocationsStore = defineStore("locations", {
   getters: {
     counts: () => counts,
     locations: () => locations,
-
     features() {
       let features = Object.values(locations).map((location: Location) => {
         return {
@@ -107,7 +105,7 @@ export let useLocationsStore = defineStore("locations", {
       }
     },
 
-    populateLocations(rows) {
+    populateLocations(rows = []) {
       counts = {};
       locations = {};
 
@@ -132,19 +130,8 @@ export let useLocationsStore = defineStore("locations", {
 
     async fetchSummaries(query) {
       let rows;
-
-      async function parseRows(data) {
-        await new Promise(resolve => {
-          parse(data.toString(), parseOptions, (err, rowdata) => {
-            rows = rowdata;
-            resolve(null);
-          });
-        });
-      }
-
       let currentVersion = 'report_count_by_location-20220821';
       let previousVersions = ['summaries'];
-
       let parseOptions = {
         from: 2,
         cast: function (value, context) {
@@ -160,32 +147,50 @@ export let useLocationsStore = defineStore("locations", {
         }
       };
 
-      if (query.q) {
-        let { data } = await axios.get("/api/reports/rpc/location_search", {
-          params: {
-            q: query.q,
-            lim: 50000
-          }
+      async function parseRows(data) {
+        await new Promise(resolve => {
+          parse(data.toString(), parseOptions, (err, rowdata) => {
+            rows = rowdata;
+            resolve(null);
+          });
         });
-
-        let filteredRows = Object.values(data).map((d: any) => {
-          return [d.id, d.count, d.lat, d.lon];
-        });
-
-        this.populateLocations(filteredRows);
       }
-      else if (await localforage.getItem(currentVersion)) {
-        rows = await localforage.getItem(currentVersion);
-        this.populateLocations(rows);
-      }
-      else {
-        previousVersions.map(version => localforage.removeItem(version));
+
+      let fetchCounts = async () => {
+        previousVersions.map(async version => await localforage.removeItem(version));
 
         let { data } = await axios.get('/data/map/report_count_by_location.csv');
 
-        parseRows(data);
+        await parseRows(data);
         this.populateLocations(rows);
         localforage.setItem(currentVersion, rows);
+      };
+
+      try {
+        if (query.q) {
+          let { data } = await axios.get("/api/reports/rpc/location_search", {
+            params: {
+              q: query.q,
+              lim: 50000
+            }
+          });
+
+          let filteredRows = Object.values(data).map((d: any) => {
+            return [d.id, d.count, d.lat, d.lon];
+          });
+
+          this.populateLocations(filteredRows);
+        }
+        else if (await localforage.getItem(currentVersion)) {
+          rows = await localforage.getItem(currentVersion);
+          this.populateLocations(rows);
+        }
+        else {
+          await fetchCounts();
+        }
+      }
+      catch (error) {
+        await fetchCounts();
       }
     }
   }

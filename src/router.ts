@@ -123,6 +123,9 @@ export function createRouter(args = {}) {
     routes,
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
+        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 150);
+        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 300);
+        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 900);
         return savedPosition;
       }
 
