@@ -61,12 +61,20 @@ let reportsStore = useReportsStore();
 let { setPageMeta } = usePageMeta();
 let route = useRoute();
 
-setPageMeta("UFO Reports by Country | UPDB");
+let title = "UFO Reports by Country | UPDB";
+let description = "UFO Reports in Europe, Asia, North & South America, Australia, Africa, and Antarctica";
+
+setPageMeta(title, description);
 
 watch(route, () => {
-  setPageMeta("UFO Reports by Country | UPDB");
+  setPageMeta(title, description);
 }, { immediate: true });
 
-await reportsStore.fetchReportCountryCounts();
-setPageMeta("UFO Reports by Country | UPDB");
+try {
+  await reportsStore.fetchReportCountryCounts();
+  setPageMeta(title, description);
+}
+catch (error) {
+  console.error(error.message);
+}
 </script>

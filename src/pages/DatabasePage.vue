@@ -33,7 +33,7 @@
 
       <el-col :md="8">
         <el-card shadow="never" class="ms-3">
-          <figure class="text-gray-40 m-0">
+          <figure class="text-gray-40 line-height-1 m-0">
             <img src="../assets/pliny.jpg">
             <blockquote class="mn-1">
               &ldquo;Nothing which we can imagine about Nature is incredible.&rdquo;
@@ -57,16 +57,12 @@ import { usePageMeta } from "@/composables/usePageMeta";
 let { setPageMeta } = usePageMeta();
 let route = useRoute();
 
-setPageMeta('Download UFO Report & Document Databases | UPDB');
+let description = 'Download the entire SQL database of 300,000+ UFO reports and 500,000+ pages of documents';
+let title = 'Download UFO Report & Document SQL Databases | UPDB';
+
+setPageMeta(title, description);
 
 watch(route, async () => {
-  setPageMeta('Download UFO Report & Document Databases | UPDB');
+  setPageMeta(title, description);
 }, { immediate: true });
 </script>
-
-<style scoped>
-figure {
-  color: hsl(0, 1%, 40%);
-  line-height: 1;
-}
-</style>

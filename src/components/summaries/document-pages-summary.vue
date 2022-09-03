@@ -1,21 +1,21 @@
 <template>
   <div class="my-4">
-    <div class="text-gray-50 ms-1">
+    <div class="text-gray-40 ms-1">
       {{ breadcrumbsForUrl(doc.name) }}
     </div>
 
-    <h4 class="ms-2">
+    <div class="text-green ms-1 lineheight-1 text-large text-bold">
       {{ titleForUrl(doc.name) }}
-    </h4>
+    </div>
 
     <div
       v-for="(page, idx) in doc.pages"
       :key="idx"
-      class="my-1">
+      class="my-2">
       <a
         :href="hrefForDocResult(doc, page)"
         target="_blank"
-        class="mn-1">Page {{ page }}</a>
+        class="mn-1 text-large">Page {{ page }}</a>
       <div
         class="snippet"
         v-html="doc.text[idx]" />
@@ -34,7 +34,7 @@ function hrefForDocResult(doc, page) {
 
 function titleForUrl(url) {
   let parts = url.split("/");
-  return parts.pop().replace(".pdf", "");
+  return parts.pop();
 }
 
 function breadcrumbsForUrl(url) {

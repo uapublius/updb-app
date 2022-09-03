@@ -30,7 +30,6 @@
     "provinces": "^1.11.0",
     "qs": "^6.10.3",
     "supercluster": "^7.1.5",
-    "tabulator-tables": "5.1.7",
     "vue": "^3.2.37",
     "vue-router": "^4.0.14"
   },

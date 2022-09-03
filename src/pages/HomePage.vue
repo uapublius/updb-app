@@ -242,13 +242,22 @@ let descriptions = $ref({
 });
 
 let sourceCounts = $ref([]);
-let { data } = await axios.get("/api/reports/source_view");
-data = data.sort((a, b) => b.count - a.count);
-sourceCounts = data;
 
-setPageMeta('Unidentified Phenomena Database | UFO Map, Search Engine, and Database', headTags.description);
+try {
+  let { data } = await axios.get("/api/reports/source_view");
+  data = data.sort((a, b) => b.count - a.count);
+  sourceCounts = data;
+}
+ catch (error) {
+  console.error(error.message);
+}
+
+let title = 'Unidentified Phenomena Database | UFO Map, Search Engine, and Database';
+let description = 'Search Engine and Map for UFO Reports & Documents – including UAP, tic-tacs, orbs, and other unexplained phenomena.';
+
+setPageMeta(title, description);
 
 watch(route, async () => {
-  setPageMeta('Unidentified Phenomena Database | UFO Map, Search Engine, and Database', headTags.description);
+  setPageMeta(title, description);
 }, { immediate: true });
 </script>

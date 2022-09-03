@@ -25,12 +25,10 @@ declare module 'vue' {
     ReportResult: typeof import('./src/components/summaries/report-result.vue')['default']
     ReportsList: typeof import('./src/components/sections/reports-list.vue')['default']
     ReportsTable: typeof import('./src/components/sections/reports-table.vue')['default']
-    ReportTable: typeof import('./src/components/collections/report-table.vue')['default']
     SamfordQuote: typeof import('./src/components/widgets/samford-quote.vue')['default']
     SearchNav: typeof import('./src/components/nav/search-nav.vue')['default']
     SectionNav: typeof import('./src/components/nav/section-nav.vue')['default']
     SourceInline: typeof import('./src/components/inline/source-inline.vue')['default']
-    Tabulator: typeof import('./src/components/widgets/tabulator.vue')['default']
   }
 }
 

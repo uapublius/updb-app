@@ -48,6 +48,8 @@
       <li>• The "or" search operator is supported.</li>
     </ul>
 
+    <h2 class="text-bold text-gray-50 mn-4">{{ summary }}</h2>
+
     <div
       v-for="document in documents"
       :key="document.id">
@@ -70,8 +72,9 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { ElDivider, ElButton, ElInput } from 'element-plus';
-import { onMounted } from 'vue';
+import { watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { usePageMeta } from '@/composables/usePageMeta';
 
 let props = defineProps<{
   pageSize: number;
@@ -79,8 +82,11 @@ let props = defineProps<{
 
 let router = useRouter();
 let route = useRoute();
+let { setPageMeta } = usePageMeta();
 
 let reportKeyword = $ref("");
+let summary = $ref("");
+let resultsTotal = $ref(null);
 let documents = $ref([]);
 let isSearching = $ref(null);
 let showTips = $ref(false);
@@ -88,15 +94,37 @@ let hasMoreResults = $ref(false);
 let offset = $ref(0);
 let documentSearch = $ref(null);
 
+let title = $computed(() => {
+  return summary ? `${summary} | UFO Document Search Engine` : "UFO Document Search Engine | UPDB";
+});
+
+let description = 'Search engine for 500,000+ pages of UFO & UAP related documents, indexed using machine learning.';
+
+if (route.query.q) {
+  reportKeyword = route.query.q.toString();
+  await fetchInitialDocuments();
+}
+
+setPageMeta(`${title}`, description);
+
+watch(route, async () => {
+  setPageMeta(`${title}`, description);
+}, { immediate: true });
+
 async function fetchDocs() {
   try {
-    let { data } = await axios.get("/api/docs/rpc/doc_search", {
+    let { data, headers } = await axios.get("/api/docs/rpc/doc_search", {
       params: {
         q: reportKeyword,
         lim: props.pageSize,
         off: offset
-      }
+      },
+      headers: { Prefer: 'count=estimated' }
     });
+
+    resultsTotal = parseInt(headers["content-range"]?.split("/")?.[1]) || 0;
+    summary = `${resultsTotal} documents matching “${reportKeyword}”`;
+
     return data;
   }
   catch (error) {
@@ -105,8 +133,6 @@ async function fetchDocs() {
 }
 
 async function fetchInitialDocuments() {
-  documentSearch.blur();
-
   offset = 0;
 
   isSearching = true;
@@ -118,11 +144,14 @@ async function fetchInitialDocuments() {
     }
   });
 
+
   let docs = await fetchDocs();
   isSearching = false;
   hasMoreResults = docs.length >= props.pageSize;
   documents = docs;
   offset += props.pageSize;
+
+  setPageMeta(`${title}`, description);
 }
 
 async function fetchMoreDocuments() {
@@ -134,10 +163,4 @@ async function fetchMoreDocuments() {
   offset += props.pageSize;
 }
 
-onMounted(() => {
-  if (route.query.q) {
-    reportKeyword = route.query.q.toString();
-    fetchInitialDocuments();
-  }
-});
 </script>

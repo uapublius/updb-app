@@ -38,10 +38,12 @@ import { watch } from 'vue';
 import { useRoute, useRouter } from "vue-router";
 import { usePageMeta } from '@/composables/usePageMeta';
 import { useReportsStore } from "@/store/reports";
+
 let reportsStore = useReportsStore();
 let { setPageMeta } = usePageMeta();
 let route = useRoute();
 let router = useRouter();
+
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
 
 let props = defineProps<{
@@ -52,9 +54,23 @@ let props = defineProps<{
   other?: string;
 }>();
 
-updateStoreFromRoute();
-reportsStore.resetResults();
-await searchAndBuildSummary();
+let title = $computed(() => {
+  let start = reportsStore.filterSummary || "Search 300,000+ UFO & UAP Reports";
+  return start + " | UPDB";
+});
+
+let description = $computed(() => {
+  return "Search 300,000+ UFO & UAP Reports";
+});
+
+try {
+  updateStoreFromRoute();
+  reportsStore.resetResults();
+  await searchAndBuildSummary();
+}
+ catch (error) {
+  console.error(error.message);
+}
 
 watch(route, async () => {
   updateStoreFromRoute();
@@ -72,7 +88,7 @@ async function doNewSearch() {
 async function searchAndBuildSummary() {
   await reportsStore.doSearch(page);
   reportsStore.buildSummary();
-  setPageMeta((reportsStore.filterSummary || "Search UFO Reports") + " | UPDB");
+  setPageMeta(title, description);
 }
 
 function updateRouteFromStore() {

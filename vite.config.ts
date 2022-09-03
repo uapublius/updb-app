@@ -22,7 +22,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 1024,
     rollupOptions: {
       manualChunks: {
-        'tabulator-tables': ['tabulator-tables'],
         'mapbox-gl': ['mapbox-gl']
       },
       output: {
