@@ -110,6 +110,22 @@ div.el-popover.el-popper {
   padding-right: 8px !important;
 }
 
-.mobile-nav .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
-  padding: 0 5px !important;
+.el-popper > .el-autocomplete-suggestion + .el-popper__arrow + .el-menu--horizontal.el-menu--popup-container {
+  display: none !important;
+}
+
+.el-tag--large.text-larger {
+  .el-tag__content {
+    margin-top: -0.2em;
+    padding-top: 0.1125em;
+  }
+}
+
+.el-select__tags-text {
+  margin-top: -1px;
+  line-height: 1.2;
+}
+
+.select-trigger .el-input__wrapper {
+  display: flex;
 }

@@ -27,6 +27,8 @@ h1.gradient-text {
 .report-text {
   white-space: pre-wrap;
   font-style: italic;
+  line-height: 1.4;
+  background: rgba(252, 252, 232, 0.4) !important;
 }
 
 .small-caps {
@@ -186,4 +188,20 @@ a.action-link:visited {
       content: '';
     }
   }
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
+}
+
+.text-small-caps {
+  font-variant: small-caps;
 }

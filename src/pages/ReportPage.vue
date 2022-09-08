@@ -48,11 +48,11 @@ let pageTitle = $computed(() => {
 
   let date = DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATE_SHORT);
 
-  return `${filterStrings.join(', ')} – ${date} | ${sources[props.source]} UFO Report`;
+  return `${filterStrings.join(', ')} – ${date} | UFO Sighting Report`;
 });
 
 let pageDescription = $computed(() => {
-  return `${report.description?.substring(0, 239).replaceAll(/\n+/g, ' / ')}…`;
+  return `“${report.description?.substring(0, 238).replaceAll(/\n+/g, ' / ')}…`;
 });
 
 await reportsStore.fetchReport(props.source, props.sourceId);

@@ -47,7 +47,7 @@
           <el-icon>
             <Tickets />
           </el-icon>
-          Reports
+          <span class="sub-menu-title">Reports</span>
         </template>
         <el-menu-item index="/reports/country">
           <template #title>By Country</template>

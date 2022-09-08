@@ -55,12 +55,12 @@ let props = defineProps<{
 }>();
 
 let title = $computed(() => {
-  let start = reportsStore.filterSummary || "Search 300,000+ UFO & UAP Reports";
-  return start + " | UPDB";
+  if (reportsStore.filterSummary) return reportsStore.filterSummary + " | Search UFO Sightings";
+  return "Search UFO Sightings | UPDB";
 });
 
 let description = $computed(() => {
-  return "Search 300,000+ UFO & UAP Reports";
+  return "Search 300,000+ UFO Sightings & UAP Reports from around the world.";
 });
 
 try {

@@ -95,7 +95,7 @@ let offset = $ref(0);
 let documentSearch = $ref(null);
 
 let title = $computed(() => {
-  return summary ? `${summary} | UFO Document Search Engine` : "UFO Document Search Engine | UPDB";
+  return summary ? `${summary} | UFO Document Search` : "UFO Document Search | UPDB";
 });
 
 let description = 'Search engine for 500,000+ pages of UFO & UAP related documents, indexed using machine learning.';

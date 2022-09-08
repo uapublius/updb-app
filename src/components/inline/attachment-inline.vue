@@ -14,6 +14,7 @@
         preload="metadata"
         :src="archiveUrl" />
     </div>
+
     <div class="flex align-items-start lineheight-1 mn-1 ms-4">
       <el-icon
         :size="16"
@@ -64,6 +65,7 @@ function labelForAttachment(attachment: string) {
 <style>
 .attachment-inline video,
 .attachment-inline img {
-  max-height: 90vh;
+  width: 100%;
+  height: auto;
 }
 </style>

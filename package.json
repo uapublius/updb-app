@@ -7,6 +7,9 @@
   },
   "scripts": {
     "dev": "export VITE_API_BASEURL='http://127.0.0.1:3000' && export VITE_MAP_BASEURL='https://api.maptiler.com' && node server-dev",
+    "dev:api": "npm-run-all --parallel dev:api:reports dev:api:docs",
+    "dev:api:reports": "postgrest ../updb-importers/server/postgrest.conf",
+    "dev:api:docs": "postgrest ../updb-importers/server/postgrest_docs.conf",
     "build": "export VITE_API_BASEURL='https://updb.app' && export VITE_MAP_BASEURL='https://updb.app/api/maps' && npm run build:client && npm run build:server",
     "build:client": "vite build --ssrManifest --outDir dist/client",
     "build:server": "vite build --ssr src/entry-server.ts --outDir dist/server",
@@ -46,6 +49,7 @@
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
     "express": "^4.18.1",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.49.9",
     "unplugin-auto-import": "^0.6.9",
     "unplugin-vue-components": "^0.18.5",

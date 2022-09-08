@@ -1,14 +1,8 @@
 <template>
-  <el-row
-    v-if="report"
-    :gutter="20">
+  <el-row v-if="report" :gutter="20">
     <el-col :md="16">
-      <el-card
-        shadow="never"
-        class="ms-4">
-        <div
-          class="report-text"
-          v-html="report.description" />
+      <el-card shadow="never" class="ms-4" :body-style="{ 'padding': '0' }">
+        <div class="report-text text-large p-3" v-html="report.description" />
       </el-card>
 
       <el-card
@@ -16,10 +10,7 @@
         header="References"
         shadow="never"
         class="ms-4">
-        <div
-          v-for="reference in references"
-          :key="reference.id"
-          class="break-all ms-1">
+        <div v-for="reference in references" :key="reference.id" class="break-all ms-1">
           <reference-inline :reference="reference.text" />
         </div>
       </el-card>
@@ -29,39 +20,29 @@
         header="Media"
         shadow="never"
         class="ms-4">
-        <div
-          v-for="attachment in attachments"
-          :key="attachment.id"
-          class="break-all ms-1">
+        <div v-for="attachment in attachments" :key="attachment.id" class="break-all ms-1">
           <attachment-inline :url="attachment.url" />
         </div>
       </el-card>
     </el-col>
 
-    <el-col :md="8">
+    <el-col itemscope itemtype="https://schema.org/Event" :md="8">
       <el-card
         shadow="never"
-        class="ms-4">
-        <table class="definition-table">
+        class="ms-4"
+        itemprop="location"
+        itemscope
+        itemtype="https://schema.org/Place">
+        <table
+          class="definition-table text-larger"
+          itemprop="address"
+          itemscope
+          itemtype="https://schema.org/PostalAddress">
           <tbody>
-            <tr v-if="source">
-              <td>Source</td>
-              <td>
-                {{ source }}
-              </td>
-            </tr>
-
-            <tr v-if="report.date">
-              <td title="Date of event in local time">Date</td>
-              <td :title="report.date_detail">
-                {{ date }}
-              </td>
-            </tr>
-
             <tr v-if="location.city">
               <td>City</td>
               <td>
-                {{ location.city }}
+                <span itemprop="addressLocality">{{ location.city }}</span>
               </td>
             </tr>
 
@@ -70,14 +51,14 @@
                 <div>District</div>
               </td>
               <td>
-                {{ location.district }}
+                <span itemprop="addressRegion">{{ location.district }}</span>
               </td>
             </tr>
 
             <tr v-if="location.country">
               <td>Country</td>
               <td>
-                {{ location.country }}
+                <span itemprop="addressCountry">{{ location.country }}</span>
               </td>
             </tr>
 
@@ -98,9 +79,43 @@
         </table>
       </el-card>
 
-      <el-card
-        shadow="never"
-        class="ms-4">
+      <el-card shadow="never" class="ms-4">
+        <table class="definition-table text-larger">
+          <tbody>
+            <tr v-if="report.date">
+              <td title="Date of event in local time">Date</td>
+              <td :title="report.date_detail">
+                <time itemprop="startDate" :datetime="report.date">{{ date }}</time>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </el-card>
+
+      <el-card shadow="never" class="ms-4">
+        <table class="definition-table text-larger">
+          <tbody>
+            <tr v-if="source">
+              <td>Source</td>
+              <td>
+                {{ source }}
+              </td>
+            </tr>
+            <tr v-if="source">
+              <td>Source ID</td>
+              <td>
+                {{ report.source_id }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </el-card>
+
+      <el-card header="Tags" shadow="never" class="ms-4">
+        <report-tags :report="report" />
+      </el-card>
+
+      <el-card shadow="never" class="ms-4 text-larger">
         <client-only>
           <a
             class="action-link flex align-items-center ms-2"
@@ -117,12 +132,8 @@
             title="Copy permalink"
             @click="copyLink">
             <icon-copy />
-            <div
-              v-if="copiedLink"
-              class="underlined text-gray-10">Copied</div>
-            <div
-              v-else
-              class="underdotted">Copy link</div>
+            <div v-if="copiedLink" class="underlined text-gray-10">Copied</div>
+            <div v-else class="underdotted">Copy link</div>
           </a>
 
           <a
@@ -143,6 +154,7 @@
 import { ElCard, ElRow, ElCol } from 'element-plus';
 import { DateTime } from "luxon";
 import { onMounted } from "vue";
+import ReportTags from '../collections/report-tags.vue';
 import iconCopy from "@/assets/icons/copy.svg";
 import { sources } from "@/enums";
 import Location from '@/models/Location';

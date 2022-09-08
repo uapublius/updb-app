@@ -139,7 +139,19 @@
     padding-left: 64px;
   }
 
+  .sidebar-collapsed {
+    .el-sub-menu {
+      .el-sub-menu__title {
+        padding: 0 20px !important;
+      }
+    }
+  }
+
   .el-aside + div {
     padding-left: 166px;
   }
+}
+
+.mobile-nav .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+  padding: 0 5px !important;
 }

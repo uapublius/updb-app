@@ -29,7 +29,13 @@ defineProps<{
 }>();
 
 function hrefForDocResult(doc, page) {
-  return doc.name.replace("http://", "https://") + "#page=" + page;
+  let name = doc.name.replace("http://", "https://");
+
+  if (!name.includes('files.afu.se')) {
+    name = "https://web.archive.org/web/" + name;
+  }
+
+  return name + "#page=" + page;
 }
 
 function titleForUrl(url) {

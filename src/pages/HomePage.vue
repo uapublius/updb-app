@@ -6,9 +6,9 @@
           shadow="never"
           class="ms-3">
           <div class="ms-3">
-            <strong class="bg-highlight-vivid text-larger">
-              UPDB is an open database of unexplained phenomena reports.
-            </strong>
+            <h1 class="bg-highlight-vivid text-larger py-1">
+              UPDB is an open database of unexplained phenomena (UFO/UAP) reports.
+            </h1>
           </div>
 
           <div class="ms-3">
@@ -17,7 +17,7 @@
             together in a <strong>unified format</strong>.
           </div>
 
-          <div>
+          <div class="ms-4">
             <ul>
               <li>• UPDB does not contain any exclusive, private, or classified data</li>
               <li>• UPDB does not vouch for the accuracy or truthfulness of any reports</li>
@@ -26,6 +26,25 @@
                 public UAP/UFO database
               </li>
             </ul>
+          </div>
+
+          <div itemscope itemtype="https://schema.org/WebSite">
+            <meta itemprop="url" content="https://updb.app/">
+            <form
+              itemprop="potentialAction"
+              itemscope
+              itemtype="https://schema.org/SearchAction"
+              action="/reports/search"
+              method="get">
+              <meta itemprop="target" content="https://updb.app/reports/search?keyword={keyword}">
+              <input
+                class="me-1"
+                itemprop="query-input"
+                type="text"
+                name="keyword"
+                required>
+              <input type="submit" value="Search UFO Reports">
+            </form>
           </div>
         </el-card>
 
