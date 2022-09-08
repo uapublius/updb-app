@@ -112,7 +112,9 @@
       </el-card>
 
       <el-card header="Tags" shadow="never" class="ms-4">
-        <report-tags :report="report" />
+        <client-only>
+          <report-tags :report="report" />
+        </client-only>
       </el-card>
 
       <el-card shadow="never" class="ms-4 text-larger">

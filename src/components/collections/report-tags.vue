@@ -115,9 +115,10 @@ async function showInput() {
 async function saveTags() {
   try {
     await tagsStore.addTagsToReport(draftTags, props.report);
+    let s = draftTags.length > 1 ? 's' : '';
     draftTags = [];
     inputVisible = false;
-    ElMessage({ type: 'success', message: 'Tag added' });
+    ElMessage({ type: 'success', message: `Tag${s} added` });
   }
   catch (error) {
     ElMessage({ type: 'error', message: 'Error adding tag' });
