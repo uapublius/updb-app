@@ -55,8 +55,14 @@ let pageDescription = $computed(() => {
   return `“${report.description?.substring(0, 238).replaceAll(/\n+/g, ' / ')}…`;
 });
 
-await reportsStore.fetchReport(props.source, props.sourceId);
-await reportsStore.fetchAttachmentsReferences([report.id]);
+try {
+  await reportsStore.fetchReport(props.source, props.sourceId);
+  await reportsStore.fetchAttachmentsReferences([report.id]);
+}
+ catch (error) {
+  console.error(error);
+}
+
 setPageMeta(pageTitle, pageDescription);
 
 watch(route, () => {

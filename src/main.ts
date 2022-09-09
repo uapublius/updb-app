@@ -7,8 +7,6 @@ import ClientOnly from "./components/widgets/client-only";
 import { pinia } from "./pinia";
 import meta from "./plugins/meta";
 import { createRouter } from "./router";
-import { baseUrl } from "@/util";
-axios.defaults.baseURL = baseUrl;
 
 function registerIcons(app) {
   let components = import.meta.globEager('./assets/icons/*.svg');

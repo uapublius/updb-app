@@ -7,6 +7,8 @@ import { Location } from "@/models";
 let counts = {} as Record<number, number>;
 let locations = {} as Record<number, Location>;
 
+const API_REPORTS = import.meta.env.VITE_API_REPORTS;
+
 export let useLocationsStore = defineStore("locations", {
   state: () => ({
     details: {} as Record<number, Location>,
@@ -70,7 +72,7 @@ export let useLocationsStore = defineStore("locations", {
         params.other = "like.*" + this.filter.other.trim().toUpperCase() + "*";
       }
 
-      let { data } = await axios.get("/api/reports/location", {
+      let { data } = await axios.get(API_REPORTS + "/location", {
         params
       });
 
@@ -168,7 +170,7 @@ export let useLocationsStore = defineStore("locations", {
 
       try {
         if (query.q) {
-          let { data } = await axios.get("/api/reports/rpc/location_search", {
+          let { data } = await axios.get(API_REPORTS + "/rpc/location_search", {
             params: {
               q: query.q,
               lim: 50000

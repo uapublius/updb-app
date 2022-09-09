@@ -231,8 +231,9 @@ import {
 } from 'element-plus';
 import { watch } from "vue";
 import { useRoute } from "vue-router";
-import headTags from "@/buildHeadTags";
 import { usePageMeta } from "@/composables/usePageMeta";
+
+const API_REPORTS = import.meta.env.VITE_API_REPORTS;
 
 let { setPageMeta } = usePageMeta();
 let route = useRoute();
@@ -263,7 +264,7 @@ let descriptions = $ref({
 let sourceCounts = $ref([]);
 
 try {
-  let { data } = await axios.get("/api/reports/source_view");
+  let { data } = await axios.get(API_REPORTS + "/source_view");
   data = data.sort((a, b) => b.count - a.count);
   sourceCounts = data;
 }
@@ -272,7 +273,7 @@ try {
 }
 
 let title = 'Unidentified Phenomena Database | UFO Map, Search Engine, and Database';
-let description = 'Search Engine and Map for UFO Reports & Documents – including UAP, tic-tacs, orbs, and other unexplained phenomena.';
+let description = 'Search Engine and Map for UFO Sightings, Reports, and Documents – including UAP, tic-tacs, orbs, and other unexplained phenomena.';
 
 setPageMeta(title, description);
 

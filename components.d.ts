@@ -12,7 +12,6 @@ declare module 'vue' {
     DocumentPagesSummary: typeof import('./src/components/summaries/document-pages-summary.vue')['default']
     DocumentsList: typeof import('./src/components/sections/documents-list.vue')['default']
     LocationInline: typeof import('./src/components/inline/location-inline.vue')['default']
-    LocationTable: typeof import('./src/components/collections/location-table.vue')['default']
     Newsletter: typeof import('./src/components/forms/newsletter.vue')['default']
     Plural: typeof import('./src/components/widgets/plural.vue')['default']
     ReferenceInline: typeof import('./src/components/inline/reference-inline.vue')['default']

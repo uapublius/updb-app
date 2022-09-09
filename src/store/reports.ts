@@ -7,6 +7,8 @@ import { pinia } from "@/pinia";
 import { useLocationsStore } from "@/store/locations";
 import { linkify } from "@/util";
 
+const API_REPORTS = import.meta.env.VITE_API_REPORTS;
+
 let locationsStore = useLocationsStore(pinia);
 
 export const useReportsStore = defineStore("reports", {
@@ -168,7 +170,7 @@ export const useReportsStore = defineStore("reports", {
 
     async fetchReportCountryCounts() {
       try {
-        let res = await axios.get("/api/reports/report_count_by_country");
+        let res = await axios.get(API_REPORTS + "/report_count_by_country");
         this.reportCountryCounts = res.data;
       }
       catch (error) {
@@ -178,7 +180,7 @@ export const useReportsStore = defineStore("reports", {
 
     async fetchReport(source: string, sourceId: string) {
       try {
-        let res = await axios.get("/api/reports/report_view", {
+        let res = await axios.get(API_REPORTS + "/report_view", {
           params: {
             source: "eq." + source,
             source_id: "eq." + sourceId,
@@ -244,7 +246,7 @@ export const useReportsStore = defineStore("reports", {
       let res;
 
       try {
-        res = await axios.get("/api/reports/report_view", {
+        res = await axios.get(API_REPORTS + "/report_view", {
           headers: { Prefer: 'count=estimated' },
           params
         });
@@ -298,12 +300,12 @@ export const useReportsStore = defineStore("reports", {
     async fetchAttachmentsReferences(reports: number[]) {
       try {
         let [attachments, references] = await Promise.all([
-          axios.get("/api/reports/attachment", {
+          axios.get(API_REPORTS + "/attachment", {
             params: {
               report: "in.(" + reports + ")"
             }
           }),
-          axios.get("/api/reports/report_reference_view", {
+          axios.get(API_REPORTS + "/report_reference_view", {
             params: {
               report: "in.(" + reports + ")"
             }
