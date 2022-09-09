@@ -1,61 +1,63 @@
 <template>
   <el-row v-if="report" :gutter="20">
     <el-col :md="16">
-      <el-card shadow="never" class="ms-4" :body-style="{ 'padding': '0' }">
-        <div class="report-text text-large p-3" v-html="report.description" />
-      </el-card>
+      <div class="flex flex-column">
+        <el-card
+          v-if="attachments?.length"
+          shadow="never"
+          class="card-report-attachments ms-4">
+          <template #header>
+            <div class="flex justify-content-between">
+              <div>Media</div>
+              <client-only>
+                <el-popover
+                  placement="auto"
+                  :width="200"
+                  trigger="hover">
+                  <template #reference>
+                    <el-button size="small" :icon="Picture">Filter</el-button>
+                  </template>
+                  <div>
+                    <el-radio-group v-model="videoFilter">
+                      <el-radio label="">Original</el-radio>
+                      <el-radio label="soft-light">Exposure</el-radio>
+                      <el-radio label="plus-lighter">Brightness</el-radio>
+                      <el-radio label="difference">Difference</el-radio>
+                    </el-radio-group>
 
-      <el-card
-        v-if="references?.length"
-        header="References"
-        shadow="never"
-        class="ms-4">
-        <div v-for="reference in references" :key="reference.id" class="break-all ms-1">
-          <reference-inline :reference="reference.text" />
-        </div>
-      </el-card>
+                    <el-slider
+                      v-if="videoFilter"
+                      v-model="videoFilterAmount"
+                      label="Amount"
+                      class="mn-1" />
+                  </div>
+                </el-popover>
+              </client-only>
+            </div>
+          </template>
 
-      <el-card
-        v-if="attachments?.length"
-        shadow="never"
-        class="ms-4">
-        <template #header>
-          <div class="flex justify-content-between">
-            <div>Media</div>
-            <client-only>
-              <el-popover
-                placement="auto"
-                :width="200"
-                trigger="hover">
-                <template #reference>
-                  <el-button size="small" :icon="Picture">Filter</el-button>
-                </template>
-                <div>
-                  <el-radio-group v-model="videoFilter">
-                    <el-radio label="">Original</el-radio>
-                    <el-radio label="soft-light">Exposure</el-radio>
-                    <el-radio label="plus-lighter">Brightness</el-radio>
-                    <el-radio label="difference">Difference</el-radio>
-                  </el-radio-group>
-
-                  <el-slider
-                    v-if="videoFilter"
-                    v-model="videoFilterAmount"
-                    label="Amount"
-                    class="mn-1" />
-                </div>
-              </el-popover>
-            </client-only>
+          <div v-for="attachment in attachments" :key="attachment.id" class="break-all mn-3">
+            <attachment-inline
+              :url="attachment.url"
+              :video-filter="videoFilter"
+              :video-filter-amount="videoFilterAmount" />
           </div>
-        </template>
+        </el-card>
 
-        <div v-for="attachment in attachments" :key="attachment.id" class="break-all mn-3">
-          <attachment-inline
-            :url="attachment.url"
-            :video-filter="videoFilter"
-            :video-filter-amount="videoFilterAmount" />
-        </div>
-      </el-card>
+        <el-card shadow="never" class="card-report-description ms-4" :body-style="{ 'padding': '0' }">
+          <div class="report-text text-large p-3" v-html="report.description" />
+        </el-card>
+
+        <el-card
+          v-if="references?.length"
+          header="References"
+          shadow="never"
+          class="card-report-references ms-4">
+          <div v-for="reference in references" :key="reference.id" class="break-all ms-1">
+            <reference-inline :reference="reference.text" />
+          </div>
+        </el-card>
+      </div>
     </el-col>
 
     <el-col itemscope itemtype="https://schema.org/Event" :md="8">
@@ -261,3 +263,15 @@ async function copyLink() {
   }, 3000);
 }
 </script>
+
+<style scoped>
+  .card-report-attachments {
+    order: 3;
+  }
+  .card-report-description {
+    order: 1;
+  }
+  .card-report-references {
+    order: 2;
+  }
+</style>
