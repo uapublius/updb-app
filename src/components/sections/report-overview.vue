@@ -22,11 +22,9 @@
         <template #header>
           <div class="flex justify-content-between">
             <div>Media</div>
-
-            <div>
+            <client-only>
               <el-popover
                 placement="auto"
-                title=""
                 :width="200"
                 trigger="hover">
                 <template #reference>
@@ -35,9 +33,8 @@
                 <div>
                   <el-radio-group v-model="videoFilter">
                     <el-radio label="">Original</el-radio>
-                    <el-radio label="soft-light">Soft light</el-radio>
-                    <el-radio label="overlay">Overlay</el-radio>
-                    <el-radio label="plus-lighter">Plus lighter</el-radio>
+                    <el-radio label="soft-light">Exposure</el-radio>
+                    <el-radio label="plus-lighter">Brightness</el-radio>
                     <el-radio label="difference">Difference</el-radio>
                   </el-radio-group>
 
@@ -48,11 +45,11 @@
                     class="mn-1" />
                 </div>
               </el-popover>
-            </div>
+            </client-only>
           </div>
         </template>
 
-        <div v-for="attachment in attachments" :key="attachment.id" class="break-all my-1">
+        <div v-for="attachment in attachments" :key="attachment.id" class="break-all mn-3">
           <attachment-inline
             :url="attachment.url"
             :video-filter="videoFilter"
@@ -207,8 +204,6 @@ let locationsStore = useLocationsStore();
 
 let props = defineProps<{
   id: number;
-  references?: string[];
-  attachments?: string[];
 }>();
 
 defineEmits(["close"]);

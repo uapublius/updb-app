@@ -7,9 +7,7 @@
   </el-header>
 
   <el-main class="report-page px-4">
-    <report-overview
-      v-if="report"
-      :id="report.id" />
+    <report-overview v-if="report?.id" :id="report.id" />
   </el-main>
 </template>
 
