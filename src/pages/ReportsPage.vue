@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { ElHeader, ElMain } from 'element-plus';
 
-let props = defineProps<{
+defineProps<{
   country?: string;
   district?: string;
   city?: string;

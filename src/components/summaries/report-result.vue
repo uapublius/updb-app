@@ -25,7 +25,7 @@
       </span>
 
       <span class="flex align-items-center me-2" title="Word Count">
-        <icon-align-left class="me-1" /> {{ report.word_count }}
+        <icon-align-left class="me-1" /> <span>{{ report.word_count }}</span>
       </span>
 
       <references-inline
@@ -36,13 +36,15 @@
       <attachments-inline v-if="attachments.length" :attachments="attachments" />
     </div>
 
-    <div
-      v-if="report.description?.trim().length"
-      class="ms-2 flex align-items-center text-gray-30 snippet cursor-pointer"
-      @click="emit('toggle', report.id)">
-      <span class="inline me-1">
-        {{ description }}
-      </span>
+    <div class="snippet-wrapper">
+      <div
+        v-if="report.description?.trim().length"
+        class="ms-2 flex align-items-center text-gray-30 snippet cursor-pointer"
+        @click="emit('toggle', report.id)">
+        <span class="inline me-1">
+          {{ description }}
+        </span>
+      </div>
     </div>
   </div>
 </template>

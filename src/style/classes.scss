@@ -148,6 +148,12 @@ a.action-link:visited {
   background-color: #f8f9fc;
 }
 
+.snippet-wrapper {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .snippet {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
@@ -185,11 +191,9 @@ a.action-link:visited {
 
 .report-result.is-collapsed {
   padding: 0;
-  margin: -0;
+  margin: 0;
   background: initial;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
   .snippet {
     display: inline !important;
     white-space: nowrap;
@@ -204,7 +208,7 @@ a.action-link:visited {
   .el-pager li {
     font-size: 15px;
     &.number {
-      padding: 0 15px;
+      padding: 0 10px;
     }
   }
 }
@@ -212,12 +216,12 @@ a.action-link:visited {
 .bulleted {
   > span {
     &:after {
-      content: ' • ';
+      content: " • ";
     }
   }
   > span:last-child {
     &:after {
-      content: '';
+      content: "";
     }
   }
 }

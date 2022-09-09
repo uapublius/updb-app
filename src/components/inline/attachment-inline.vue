@@ -1,19 +1,6 @@
 <template>
   <div class="attachment-inline ms-1">
     <div>
-      <div class="flex ms-2">
-        <el-select
-          v-model="videoFilter"
-          clearable
-          placeholder="Adjustment"
-          class="me-3">
-          <el-option value="soft-light" label="Soft light" />
-          <el-option value="overlay" label="Overlay" />
-          <el-option value="plus-lighter" label="Plus lighter" />
-          <el-option value="difference" label="Difference" />
-        </el-select>
-        <el-slider v-if="videoFilter" v-model="videoFilterAmount" label="Amount" />
-      </div>
       <div class="flex video-container">
         <a
           v-if="isImage"
@@ -45,15 +32,17 @@
 
 <script setup lang="ts">
 import { Link } from '@element-plus/icons-vue';
-import { ElIcon, ElSelect, ElOption, ElSlider } from 'element-plus';
+import {
+ ElIcon, ElSelect, ElOption, ElSlider, ElPopover, ElRadio, ElRadioGroup, ElButton
+} from 'element-plus';
 
 let props = defineProps<{
   url: any;
+  videoFilter: string;
+  videoFilterAmount: number;
 }>();
 
 let archiveUrl = $ref("https://web.archive.org/web/" + props.url);
-let videoFilter = $ref("");
-let videoFilterAmount = $ref(50);
 
 let title = $computed(() => {
   let title = `Original: ${props.url}`;

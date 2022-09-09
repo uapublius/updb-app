@@ -3,7 +3,9 @@
     class="flex-inline align-items-center"
     title="Attachments">
     <icon-paperclip class="me-1" />
-    {{ attachments.length }}
+    <span>
+      {{ attachments.length }}
+    </span>
   </span>
 </template>
 

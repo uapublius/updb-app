@@ -17,16 +17,20 @@
 
     <report-list anchor />
 
-    <el-pagination
+    <div
       v-if="reportsStore.resultsTotal"
-      v-model:currentPage="page"
-      v-model:pageSize="reportsStore.limit"
-      :total="reportsStore.resultsTotal"
-      layout="prev, pager, next"
-      background
-      hide-on-single-page
-      class="text-large mn-4"
-      @current-change="updateRouteFromStore" />
+      class="flex justify-content-center">
+      <el-pagination
+        v-model:currentPage="page"
+        v-model:pageSize="reportsStore.limit"
+        :total="reportsStore.resultsTotal"
+        :pager-count="5"
+        layout="pager"
+        background
+        hide-on-single-page
+        class="text-large mn-4"
+        @current-change="updateRouteFromStore" />
+    </div>
   </el-card>
 </template>
 

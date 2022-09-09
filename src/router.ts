@@ -86,6 +86,10 @@ let routes = [
     props: true
   },
   {
+    path: "/docs",
+    redirect: '/documents/list'
+  },
+  {
     name: "Documents",
     path: "/documents",
     component: DocumentsPage,

@@ -17,11 +17,46 @@
 
       <el-card
         v-if="attachments?.length"
-        header="Media"
         shadow="never"
         class="ms-4">
-        <div v-for="attachment in attachments" :key="attachment.id" class="break-all ms-1">
-          <attachment-inline :url="attachment.url" />
+        <template #header>
+          <div class="flex justify-content-between">
+            <div>Media</div>
+
+            <div>
+              <el-popover
+                placement="auto"
+                title=""
+                :width="200"
+                trigger="hover">
+                <template #reference>
+                  <el-button size="small" :icon="Picture">Filter</el-button>
+                </template>
+                <div>
+                  <el-radio-group v-model="videoFilter">
+                    <el-radio label="">Original</el-radio>
+                    <el-radio label="soft-light">Soft light</el-radio>
+                    <el-radio label="overlay">Overlay</el-radio>
+                    <el-radio label="plus-lighter">Plus lighter</el-radio>
+                    <el-radio label="difference">Difference</el-radio>
+                  </el-radio-group>
+
+                  <el-slider
+                    v-if="videoFilter"
+                    v-model="videoFilterAmount"
+                    label="Amount"
+                    class="mn-1" />
+                </div>
+              </el-popover>
+            </div>
+          </div>
+        </template>
+
+        <div v-for="attachment in attachments" :key="attachment.id" class="break-all my-1">
+          <attachment-inline
+            :url="attachment.url"
+            :video-filter="videoFilter"
+            :video-filter-amount="videoFilterAmount" />
         </div>
       </el-card>
     </el-col>
@@ -157,9 +192,10 @@
 </template>
 
 <script setup lang="ts">
-import { ElCard, ElRow, ElCol } from 'element-plus';
-import { DateTime } from "luxon";
-import { onMounted } from "vue";
+import { Picture } from '@element-plus/icons-vue';
+import {
+ ElCard, ElRow, ElCol, ElSlider, ElPopover, ElRadio, ElRadioGroup, ElButton
+} from 'element-plus';
 import ReportTags from '../collections/report-tags.vue';
 import iconCopy from "@/assets/icons/copy.svg";
 import { sources } from "@/enums";
@@ -178,6 +214,8 @@ let props = defineProps<{
 defineEmits(["close"]);
 
 let copiedLink = $ref(false);
+let videoFilter = $ref("");
+let videoFilterAmount = $ref(50);
 
 let report = $computed(() => {
   return reportsStore.formattedReport(props.id);
@@ -203,14 +241,12 @@ let permalink = $computed(() => {
   return `https://updb.app/report/${report.source}-${report.source_id}`;
 });
 
-let date = $computed(() => {
-  if (!report.date) return "–";
-  return DateTime.fromISO(report.date.toString()).toLocaleString(DateTime.DATETIME_SHORT);
-});
-
-onMounted(() => {
-  locationsStore.fetchLocationDetails([report.location]);
-});
+try {
+  await locationsStore.fetchLocationDetails([report.location]);
+}
+catch (error) {
+  console.error(error);
+}
 
 let tweetUrl = $computed(() => {
   const myUrlWithParams = new URL("https://twitter.com/intent/tweet");

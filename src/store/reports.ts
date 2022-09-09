@@ -31,7 +31,7 @@ export const useReportsStore = defineStore("reports", {
     to: null,
     selectedLocations: [],
     offset: 0,
-    limit: 10,
+    limit: 20,
     isSearching: false,
     filterSummary: "",
     reportCountryCounts: []
@@ -276,7 +276,7 @@ export const useReportsStore = defineStore("reports", {
       this.isSearching = false;
       locationsStore.setLocationsDetailsFromReports(reports);
 
-      this.fetchAttachmentsReferences(reports.map(r => r.id));
+      await this.fetchAttachmentsReferences(reports.map(r => r.id));
 
       return reports;
     },
