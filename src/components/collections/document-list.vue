@@ -94,6 +94,8 @@ let hasMoreResults = $ref(false);
 let offset = $ref(0);
 let documentSearch = $ref(null);
 
+const API_DOCS = import.meta.env.VITE_API_DOCS;
+
 let title = $computed(() => {
   return summary ? `${summary} | UFO Document Search` : "UFO Document Search | UPDB";
 });
@@ -113,7 +115,7 @@ watch(route, async () => {
 
 async function fetchDocs() {
   try {
-    let { data, headers } = await axios.get("/api/docs/rpc/doc_search", {
+    let { data, headers } = await axios.get(API_DOCS + "/rpc/doc_search", {
       params: {
         q: reportKeyword,
         lim: props.pageSize,

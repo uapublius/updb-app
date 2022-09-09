@@ -85,7 +85,11 @@
             <tr v-if="report.date">
               <td title="Date of event in local time">Date</td>
               <td :title="report.date_detail">
-                <time itemprop="startDate" :datetime="report.date">{{ date }}</time>
+                <date-inline
+                  itemprop="startDate"
+                  :datetime="report.date"
+                  :date="report.date"
+                  format="DATETIME_SHORT" />
               </td>
             </tr>
           </tbody>

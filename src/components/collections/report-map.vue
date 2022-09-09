@@ -25,7 +25,7 @@
 
         <report-list
           :key="page"
-          class="px-3"
+          class="px-3 map-result-list"
           @select="handleSelect" />
 
         <template #footer>

@@ -1,20 +1,18 @@
 <template>
   <div>
-    <client-only>
-      <div
-        v-for="report in reportsStore.reportsForCurrentPage"
-        :key="report"
-        class="report-results ms-4">
-        <report-result
-          :id="report"
-          :expanded="expanded[report]"
-          :anchor="anchor"
-          :references="reportsStore.references[report]"
-          :attachments="reportsStore.attachments[report]"
-          @select="r => emit('select', r)"
-          @toggle="expanded[report] = !expanded[report]" />
-      </div>
-    </client-only>
+    <div
+      v-for="report in reportsStore.reportsForCurrentPage"
+      :key="report"
+      class="report-results ms-4">
+      <report-result
+        :id="report"
+        :expanded="expanded[report]"
+        :anchor="anchor"
+        :references="reportsStore.references[report]"
+        :attachments="reportsStore.attachments[report]"
+        @select="r => emit('select', r)"
+        @toggle="expanded[report] = !expanded[report]" />
+    </div>
   </div>
 </template>
 

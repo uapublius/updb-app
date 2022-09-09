@@ -1,6 +1,15 @@
 <template>
-  <span class="location-inline">
-    <template v-if="showCount">({{ count }}) </template>{{ summary }}
+  <span
+    itemprop="address"
+    itemscope
+    itemtype="https://schema.org/PostalAddress"
+    class="location-inline">
+    <template v-if="showCount">({{ count }}) </template>
+    <span
+      itemprop="address"
+      itemscope
+      itemtype="https://schema.org/PostalAddress"
+      v-html="summary" />
   </span>
 </template>
 
@@ -26,7 +35,13 @@ let summary = $computed(() => {
   let defined = [];
 
   for (const locationField of fields) {
-    if (location[locationField]) defined.push(location[locationField]);
+    if (location[locationField]) {
+      let val = `${location[locationField]}`;
+      if (locationField === 'city') defined.push(`<span itemprop="addressLocality">${val}</span>`);
+      else if (locationField === 'district') defined.push(`<span itemprop="addressRegion">${val}</span>`);
+      else if (locationField === 'country') defined.push(`<span itemprop="addressCountry">${val}</span>`);
+      else defined.push(val);
+    }
   }
 
   if (!defined.length) return props.id;

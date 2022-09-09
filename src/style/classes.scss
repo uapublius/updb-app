@@ -177,6 +177,38 @@ a.action-link:visited {
   word-break: break-word;
 }
 
+.report-result {
+  background: hsl(0, 1%, 98%);
+  padding: 20px;
+  margin: -20px;
+}
+
+.report-result.is-collapsed {
+  padding: 0;
+  margin: -0;
+  background: initial;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  .snippet {
+    display: inline !important;
+    white-space: nowrap;
+  }
+}
+
+.map-result-list .report-result.is-collapsed {
+  white-space: break-spaces;
+}
+
+.el-pagination.text-large {
+  .el-pager li {
+    font-size: 15px;
+    &.number {
+      padding: 0 15px;
+    }
+  }
+}
+
 .bulleted {
   > span {
     &:after {

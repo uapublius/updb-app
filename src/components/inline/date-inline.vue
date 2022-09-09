@@ -1,7 +1,7 @@
 <template>
-  <span>
+  <time>
     {{ formatted }}
-  </span>
+  </time>
 </template>
 
 <script setup lang="ts">

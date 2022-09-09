@@ -1,13 +1,21 @@
 <template>
-  <div class="report-result">
-    <div class="text-larger ms-2">
+  <div class="report-result" :class="{ 'is-collapsed': !expanded }">
+    <div itemscope itemtype="https://schema.org/Event" class="text-larger ms-2">
       <a
         class="inline"
         :href="link"
         @click="emit('select', report)">
-        <date-inline :date="report.date" format="DATETIME_MED" class="me-2" />
-        <span class="me-2">—</span>
-        <location-inline :id="report.location" />
+        <location-inline
+          :id="report.location"
+          itemprop="location"
+          itemscope
+          itemtype="https://schema.org/Place" />
+        <span class="mx-2">—</span>
+        <date-inline
+          itemprop="startDate"
+          :datetime="report.date"
+          :date="report.date"
+          format="DATETIME_MED" />
       </a>
     </div>
 
@@ -32,11 +40,8 @@
       v-if="report.description?.trim().length"
       class="ms-2 flex align-items-center text-gray-30 snippet cursor-pointer"
       @click="emit('toggle', report.id)">
-      <span v-if="expanded" class="inline me-1">
+      <span class="inline me-1">
         {{ description }}
-      </span>
-      <span v-else class="inline me-1">
-        {{ snippet }}
       </span>
     </div>
   </div>
@@ -69,10 +74,6 @@ let report = $computed(() => {
 
 let description = $computed(() => {
   return report.description?.trim();
-});
-
-let snippet = $computed(() => {
-  return report.description?.trim()?.replace(/\n/g, ' ').substring(0, 120).trim() + "...";
 });
 
 let sourceName = $computed(() => {

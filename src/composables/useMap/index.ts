@@ -66,9 +66,6 @@ export function useMap(id: string) {
   async function refreshMap(map) {
     if (!hasMapMovedSignificantly(map)) return;
 
-    selectedLocations.value = [];
-    reportsStore.viewingReport = null;
-
     let [[lg1, lt1], [lg2, lt2]] = map.getBounds().toArray();
     let zoom = Math.floor(map.getZoom());
 
@@ -190,7 +187,6 @@ export function useMap(id: string) {
       await loadMap(target);
       refreshMap(target);
 
-      // this gets called before load, so we bind after loading
       target.on('moveend', ({ target }) => {
         refreshMap(target);
         updateRoute(target);
