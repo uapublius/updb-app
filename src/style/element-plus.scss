@@ -129,3 +129,12 @@ div.el-popover.el-popper {
 .select-trigger .el-input__wrapper {
   display: flex;
 }
+
+.el-popper {
+  max-width: 400px;
+  max-height: 50vw;
+}
+
+div.el-popover.el-popper {
+  overflow: hidden auto;
+}

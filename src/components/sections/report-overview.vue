@@ -1,5 +1,9 @@
 <template>
-  <el-row v-if="report" :gutter="20">
+  <el-row
+    v-if="report"
+    itemscope
+    itemtype="https://schema.org/Event"
+    :gutter="20">
     <el-col :md="16">
       <div class="flex flex-column">
         <el-card
@@ -60,7 +64,7 @@
       </div>
     </el-col>
 
-    <el-col itemscope itemtype="https://schema.org/Event" :md="8">
+    <el-col :md="8">
       <el-card
         shadow="never"
         class="ms-4"
@@ -131,7 +135,7 @@
       </el-card>
 
       <el-card shadow="never" class="ms-4">
-        <table class="definition-table text-larger">
+        <table itemprop="name" class="definition-table text-larger">
           <tbody>
             <tr v-if="source">
               <td>Source</td>

@@ -10,6 +10,7 @@ import { linkify } from "@/util";
 const API_REPORTS = import.meta.env.VITE_API_REPORTS;
 
 let locationsStore = useLocationsStore(pinia);
+let wordpos;
 
 export const useReportsStore = defineStore("reports", {
   state: () => ({
@@ -34,7 +35,8 @@ export const useReportsStore = defineStore("reports", {
     limit: 20,
     isSearching: false,
     filterSummary: "",
-    reportCountryCounts: []
+    reportCountryCounts: [],
+    wordData: {} as Record<number, Record<string, string[]>>
   }),
 
   getters: {
@@ -77,6 +79,44 @@ export const useReportsStore = defineStore("reports", {
   },
 
   actions: {
+    wordDataForReport(id: number) {
+      let wd = this.wordData[id];
+      if (!wd) return;
+      let data = {
+        formatted: {
+          adjectives: wd.adjectives?.filter(w => w.length > 2).join(' • '),
+          adverbs: wd.adverbs?.filter(w => w.length > 2).join(' • '),
+          verbs: wd.verbs?.filter(w => w.length > 2).join(' • ')
+        },
+        original: {
+          adjectives: wd.adjectives?.filter(w => w.length > 2),
+          adverbs: wd.adverbs?.filter(w => w.length > 2),
+          verbs: wd.verbs?.filter(w => w.length > 2)
+        }
+      };
+      return data;
+    },
+
+    async getAdverbs(id: number) {
+      let report = this.reports[id];
+
+      if (!import.meta.env.SSR) {
+        if (!wordpos) {
+          wordpos = new window.WordPOS({
+            dictPath: 'https://cdn.jsdelivr.net/npm/wordpos-web@1.0.2/dict',
+            preload: ['a', 'v', 'r'],
+            includeData: false,
+            stopwords: true
+          });
+        }
+      }
+
+      let adjectives = await wordpos?.getAdjectives(report?.description.toLowerCase());
+      let adverbs = await wordpos?.getAdverbs(report?.description.toLowerCase());
+      let verbs = await wordpos?.getVerbs(report?.description.toLowerCase());
+      this.wordData[id] = { adjectives, adverbs, verbs };
+    },
+
     formattedReport(id: number) {
       let report = this.reports[id];
 

@@ -9,9 +9,11 @@
           target="_blank">
           <img :src="archiveUrl">
         </a>
-        <div v-else-if="isVideo">
-          <video controls preload="metadata" :src="archiveUrl" />
-        </div>
+        <video
+          v-else-if="isVideo"
+          controls
+          preload="metadata"
+          :src="archiveUrl" />
         <div v-if="videoFilter" class="video-filter" :style="{ 'mix-blend-mode': videoFilter, 'background-color': `hsl(0,0%,${videoFilterAmount}%)` }" />
       </div>
     </div>

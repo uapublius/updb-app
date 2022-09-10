@@ -1,10 +1,3 @@
-https://updb.app/
-https://updb.app/reports/search
-https://updb.app/reports/country
-https://updb.app/map
-https://updb.app/documents/list
-https://updb.app/download
-
 https://updb.app/reports/country/US/Alabama
 https://updb.app/reports/country/US/Alaska
 https://updb.app/reports/country/US/Arizona
@@ -62,3 +55,9 @@ https://updb.app/reports/country/US/Northern_Mariana_Islands
 https://updb.app/reports/country/US/Puerto_Rico
 https://updb.app/reports/country/US/United_States_Minor_Outlying_Islands
 https://updb.app/reports/country/US/Virgin_Islands
+https://updb.app/
+https://updb.app/reports/search
+https://updb.app/reports/country
+https://updb.app/map
+https://updb.app/documents/list
+https://updb.app/download

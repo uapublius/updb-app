@@ -1,9 +1,6 @@
 <template>
-  <span
-    itemprop="address"
-    itemscope
-    itemtype="https://schema.org/PostalAddress"
-    class="location-inline">
+  <span class="location-inline">
+    <span itemprop="name" />
     <template v-if="showCount">({{ count }}) </template>
     <span
       itemprop="address"

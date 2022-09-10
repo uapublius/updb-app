@@ -1,4 +1,3 @@
-import axios from "axios";
 import { ElInfiniteScroll } from "element-plus";
 import { createSSRApp } from "vue";
 import App from "./App.vue";

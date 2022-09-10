@@ -26,6 +26,7 @@ defineProps<{
 }>();
 
 let emit = defineEmits(['select']);
+
 </script>
 
 <style>
