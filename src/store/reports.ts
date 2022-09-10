@@ -155,7 +155,7 @@ export const useReportsStore = defineStore("reports", {
     },
 
     buildSummary() {
-      let filterString = `${this.resultsTotal?.toLocaleString()} UFO report`;
+      let filterString = `${this.resultsTotal?.toLocaleString()} UFO Report`;
 
       if (this.resultsTotal > 1) filterString += 's';
 
@@ -172,13 +172,22 @@ export const useReportsStore = defineStore("reports", {
           filterStrings.push("in ");
 
           let locs = ['city', 'district', 'country', 'water', 'other'].map(l => {
+            if (l === 'country') {
+              let country = countries[this.location[l]];
+              if (country) {
+                let val = country.name;
+                if (country.name !== country.native) val += ` (${country.native})`;
+                return val;
+              }
+              else {
+                return this.location[l];
+              }
+            }
+
             return this.location[l];
           }).filter(l => l);
 
           if (locs.length === 1) {
-            if (this.location.country) {
-              filterStrings.push("country: ");
-            }
             if (this.location.city) {
               filterStrings.push("city: ");
             }

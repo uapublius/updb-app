@@ -6,10 +6,13 @@ export function usePageMeta() {
   let route = useRoute();
   let meta = inject("meta") as HeadTags;
 
-  function setPageMeta(title: string, description = title) {
+  function setPageMeta(title: string, description = title, imageUrl = "https://updb.app/updb_wide.jpg") {
     if (!import.meta.env.SSR) {
       document.title = title;
     }
+
+    meta.meta["og:image"] = { content: imageUrl };
+    meta.meta["twitter:image"] = { content: imageUrl };
 
     meta.title = title;
     meta.meta["og:title"] = { content: title };

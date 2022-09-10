@@ -1,4 +1,1 @@
-User-agent: *
-Disallow: /api/
-
 Sitemap: https://updb.app/sitemap.txt

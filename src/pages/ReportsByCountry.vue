@@ -21,14 +21,6 @@
         <el-card shadow="never" class="ms-3">
           <continent-summary name="Antarctica" abbreviation="AN" />
         </el-card>
-
-        <!-- <el-card
-          shadow="never"
-          class="ms-3">
-          <continent-summary
-            name="Unknown"
-            abbreviation="unknown" />
-        </el-card> -->
       </el-col>
 
       <el-col :md="12">
