@@ -42,6 +42,7 @@
 
           <div v-for="attachment in attachments" :key="attachment.id" class="break-all mn-3">
             <attachment-inline
+              :report="report"
               :url="attachment.url"
               :video-filter="videoFilter"
               :video-filter-amount="videoFilterAmount" />

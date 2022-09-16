@@ -16,6 +16,10 @@ h1.gradient-text {
   font-weight: 800;
 }
 
+.hidden {
+  display: none;
+}
+
 .bg-highlight {
   background: rgba(252, 252, 232, 0.4) !important;
 }
@@ -112,7 +116,7 @@ a.action-link:visited {
     margin-top: 1px !important;
     width: 16px !important;
     padding: 0px !important;
-    fill: $color-gray-70 !important;
+    fill: $color-gray-70  !important;
   }
 }
 
@@ -126,7 +130,7 @@ a.action-link:visited {
   color: #cb4fde;
 }
 
-.tabs > a {
+.tabs>a {
   border-bottom: 3px solid transparent;
   margin: 0;
   padding: 0 0 2px 0;
@@ -211,6 +215,7 @@ a.action-link:visited {
 .el-pagination.text-large {
   .el-pager li {
     font-size: 15px;
+
     &.number {
       padding: 0 10px;
     }
@@ -218,12 +223,13 @@ a.action-link:visited {
 }
 
 .bulleted {
-  > span {
+  >span {
     &:after {
       content: " • ";
     }
   }
-  > span:last-child {
+
+  >span:last-child {
     &:after {
       content: "";
     }

@@ -4,13 +4,16 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AttachmentImage: typeof import('./src/components/summaries/attachment-image.vue')['default']
     AttachmentInline: typeof import('./src/components/inline/attachment-inline.vue')['default']
     AttachmentsInline: typeof import('./src/components/inline/attachments-inline.vue')['default']
+    AttachmentVideo: typeof import('./src/components/summaries/attachment-video.vue')['default']
     ContinentSummary: typeof import('./src/components/summaries/continent-summary.vue')['default']
     DateInline: typeof import('./src/components/inline/date-inline.vue')['default']
     DocumentList: typeof import('./src/components/collections/document-list.vue')['default']
     DocumentPagesSummary: typeof import('./src/components/summaries/document-pages-summary.vue')['default']
     DocumentsList: typeof import('./src/components/sections/documents-list.vue')['default']
+    Dropzone: typeof import('./src/components/forms/dropzone.vue')['default']
     LocationInline: typeof import('./src/components/inline/location-inline.vue')['default']
     Newsletter: typeof import('./src/components/forms/newsletter.vue')['default']
     Plural: typeof import('./src/components/widgets/plural.vue')['default']

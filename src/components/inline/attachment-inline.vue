@@ -1,50 +1,44 @@
 <template>
   <div class="attachment-inline ms-1">
-    <div>
-      <div class="flex video-container">
-        <a
-          v-if="isImage"
-          :title="title"
-          :href="archiveUrl"
-          target="_blank">
-          <img :src="archiveUrl">
-        </a>
-        <video
-          v-else-if="isVideo"
-          controls
-          preload="metadata"
-          :src="archiveUrl" />
-        <div v-if="videoFilter" class="video-filter" :style="{ 'mix-blend-mode': videoFilter, 'background-color': `hsl(0,0%,${videoFilterAmount}%)` }" />
-      </div>
-    </div>
-
-    <div class="flex align-items-start lineheight-1 mn-1 ms-4">
-      <el-icon
-        :size="16"
-        class="me-1 text-gray-60">
-        <Link />
-      </el-icon>
-      <a
-        :title="title"
-        :href="archiveUrl"
-        target="_blank">{{ labelForAttachment(url) }}</a>
+    <div class="media-container">      
+      <attachment-image
+        v-if="isImage"
+        :id="id"
+        :url="url"
+        :date="report.date"
+        :label="labelForAttachment(url)"
+        :video-filter="videoFilter"
+        :video-filter-amount="videoFilterAmount"
+      />
+      <attachment-video
+        v-else-if="isVideo"
+        :id="id"
+        :url="url"
+        :date="report.date"
+        :label="labelForAttachment(url)"
+        :video-filter="videoFilter"
+        :video-filter-amount="videoFilterAmount" 
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Link } from '@element-plus/icons-vue';
-import {
- ElIcon, ElSelect, ElOption, ElSlider, ElPopover, ElRadio, ElRadioGroup, ElButton
-} from 'element-plus';
+import { sources } from '@/enums';
+import { ReportView } from '@/models';
 
 let props = defineProps<{
   url: any;
+  report: ReportView;
   videoFilter: string;
   videoFilterAmount: number;
 }>();
 
 let archiveUrl = $ref("https://web.archive.org/web/" + props.url);
+
+let id = $computed(() => {
+  return `${sources[props.report.source]}-${props.report.source_id}`;
+});
 
 let title = $computed(() => {
   let title = `Original: ${props.url}`;
@@ -76,7 +70,7 @@ function labelForAttachment(attachment: string) {
   height: auto;
 }
 
-.video-container {
+.media-container {
   position: relative;
 }
 

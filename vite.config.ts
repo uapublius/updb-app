@@ -36,6 +36,16 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "/api/reports": {
+        target: "http://127.0.0.1:4000",
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/reports/, "")
+      },
+      "/api/docs": {
+        target: "http://127.0.0.1:4010",
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/docs/, "")
+      },
       "/api/maps": {
         target: "https://api.maptiler.com",
         changeOrigin: true,

@@ -122,14 +122,20 @@ let routes = [
 ];
 
 export function createRouter(args = {}) {
+  function scrollWindow(savedPosition) {
+    if (window.scrollY === 0) {
+      window.scrollTo(savedPosition.left, savedPosition.top);
+    }
+  }
+
   return _createRouter({
     history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
       if (savedPosition) {
-        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 150);
-        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 300);
-        setTimeout(() => window.scrollTo(savedPosition.left, savedPosition.top), 900);
+        setTimeout(() => scrollWindow(savedPosition), 150);
+        setTimeout(() => scrollWindow(savedPosition), 300);
+        setTimeout(() => scrollWindow(savedPosition), 900);
         return savedPosition;
       }
 
