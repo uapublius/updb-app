@@ -78,7 +78,7 @@ try {
   await tagsStore.fetchTagsForReport(props.report);
 }
 catch (error) {
-  console.log(error.message);
+  console.error(error);
 }
 
 let tags = $computed(() => {

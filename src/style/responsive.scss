@@ -1,4 +1,5 @@
 @media screen and (max-width: 420px) {
+
   .el-main,
   .el-card__body {
     padding: 10px !important;
@@ -17,6 +18,10 @@
     max-height: 90vw;
   }
 
+  .block-narrow {
+    display: block !important;
+  }
+
   .hide-narrow {
     display: none !important;
   }
@@ -31,7 +36,7 @@
 
   button[data-page="first"],
   button[data-page="last"],
-  .tabulator-paginator > label,
+  .tabulator-paginator>label,
   .tabulator-page-size,
   .tabulator-pages {
     display: none !important;
@@ -55,6 +60,7 @@
   }
 
   .icon-links {
+
     a,
     a:visited {
       &:active {
@@ -64,7 +70,7 @@
         top: 1px;
       }
 
-      > div {
+      >div {
         display: none;
       }
 
@@ -76,27 +82,8 @@
     }
   }
 
-  div.tabulator {
-    .tabulator-footer .tabulator-footer-contents {
-      padding: 0.5em 0.75em 0.5em 0.5em;
-
-      .tabulator-page {
-        padding: 0.3em 1em;
-
-        &:hover {
-          background: initial;
-          color: var(--el-color-primary);
-        }
-      }
-    }
-
-    .tabulator-row .tabulator-cell {
-      letter-spacing: -0.5px;
-    }
-  }
-
-  .features-drawer > div,
-  .inspector-drawer > div {
+  .features-drawer>div,
+  .inspector-drawer>div {
     width: auto !important;
     height: 100% !important;
     top: 0 !important;
@@ -109,11 +96,28 @@
   .report-filters-location {
     display: block !important;
 
-    > div {
+    >div {
       margin-bottom: 0.25em;
     }
-    > div:last-child {
+
+    >div:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  .search-header {
+    display: block !important;
+  }
+
+  .search-message {
+    margin-bottom: 1rem !important;
+  }
+
+  .search-actions {
+    margin-bottom: 0 !important;
+
+    .el-button {
+      margin-left: 0 !important;
     }
   }
 }
@@ -140,7 +144,7 @@
     width: 64px;
   }
 
-  .sidebar-collapsed.el-aside + div {
+  .sidebar-collapsed.el-aside+div {
     padding-left: 64px;
   }
 
@@ -152,11 +156,11 @@
     }
   }
 
-  .el-aside + div {
+  .el-aside+div {
     padding-left: 166px;
   }
 }
 
-.mobile-nav .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
+.mobile-nav .el-menu--horizontal>.el-sub-menu .el-sub-menu__title {
   padding: 0 5px !important;
 }

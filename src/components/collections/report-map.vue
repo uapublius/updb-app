@@ -68,9 +68,11 @@ import { onBeforeRouteLeave, useRoute } from "vue-router";
 import Plural from "../widgets/plural.vue";
 import { useMap } from "@/composables/useMap";
 import { sources } from "@/enums";
+import { useFiltersStore } from "@/store/filters";
 import { useReportsStore } from "@/store/reports";
 
 let route = useRoute();
+let filtersStore = useFiltersStore();
 let reportsStore = useReportsStore();
 
 let page = $ref(route.query.page ? parseInt(route.query.page?.toString()) : 1);
@@ -116,8 +118,12 @@ watch(selectedLocations, async () => {
   reportsStore.results = [];
 
   if (reportsStore.selectedLocations.length) {
-    await reportsStore.doSearch(page);
-    reportsStore.buildSummary();
+    await reportsStore.fetchNextReportsAndLocationDetails(page);
+    
+    let prefix = `${reportsStore.resultsTotal?.toLocaleString()} report`;
+    if (reportsStore.resultsTotal > 1) prefix += 's';
+
+    filtersStore.buildSummary(prefix);
   }
 });
 
@@ -137,7 +143,7 @@ function drawerClose() {
 }
 
 async function pageChange() {
-  await reportsStore.doSearch(page);
+  await reportsStore.fetchNextReportsAndLocationDetails(page);
 }
 
 function handleSelect(report) {

@@ -1,7 +1,5 @@
 <template>
-  <el-header
-    height="auto"
-    class="flex align-items-center p-4">
+  <el-header height="auto" class="flex align-items-center p-4">
     <h1 class="me-3">Search UFO Reports</h1>
   </el-header>
 
@@ -14,6 +12,7 @@
 import { ElHeader, ElMain } from 'element-plus';
 
 defineProps<{
+  sourcename?: string;
   country?: string;
   district?: string;
   city?: string;

@@ -2,7 +2,9 @@ html {
   scrollbar-gutter: stable;
 }
 
-html, body, #app {
+html,
+body,
+#app {
   min-height: 100vh;
   background-color: #f8f9fc;
   padding: 0;
@@ -15,12 +17,17 @@ body {
   color: $color-darker;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 500;
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 30px;
 }
 
 h2 {
@@ -101,7 +108,7 @@ h6 {
   color: $color-gray-60;
 }
 
-h6 > small {
+h6>small {
   line-height: 1rem;
   display: block;
   font-weight: normal;

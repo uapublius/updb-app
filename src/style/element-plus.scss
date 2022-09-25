@@ -34,7 +34,9 @@
   }
 }
 
-.el-menu-item, .el-sub-menu {
+.el-menu-item,
+.el-sub-menu {
+
   &.is-active,
   &:hover {
     background-color: aliceblue;
@@ -110,7 +112,7 @@ div.el-popover.el-popper {
   padding-right: 8px !important;
 }
 
-.el-popper > .el-autocomplete-suggestion + .el-popper__arrow + .el-menu--horizontal.el-menu--popup-container {
+.el-popper>.el-autocomplete-suggestion+.el-popper__arrow+.el-menu--horizontal.el-menu--popup-container {
   display: none !important;
 }
 
@@ -132,7 +134,7 @@ div.el-popover.el-popper {
 
 .el-popper {
   max-width: 400px;
-  max-height: 50vw;
+  max-height: 100vh;
 }
 
 div.el-popover.el-popper {
@@ -141,4 +143,16 @@ div.el-popover.el-popper {
 
 .el-form-item {
   margin-bottom: 0;
+}
+
+.el-input--large {
+  font-size: 17px;
+}
+
+.el-popper__arrow {
+  display: none !important;
+}
+
+.el-select-dropdown__wrap {
+  max-height: 70vh;
 }

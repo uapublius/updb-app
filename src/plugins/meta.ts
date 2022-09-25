@@ -17,7 +17,7 @@ function toString() {
   let linkTags = Object.entries(this.link)
     .map(([rel, link]) => {
       let es = Object.entries(link).map(([n, v]) => `${clean(n)}="${clean(v)}" `);
-      let e = `  <link rel="${rel} ${es.join(" ")} />`;
+      let e = `  <link rel="${rel}" ${es.join(" ")} />`;
       return e;
     })
     .join("\n");

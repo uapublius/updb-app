@@ -9,12 +9,20 @@
       :src="archiveUrl" />
     <div v-if="videoFilter" class="video-filter" :style="videoFilterStyle" />
 
+    <div class="hidden" itemprop="description">
+      {{ description }}
+    </div>
+
+    <div class="hidden" itemprop="name">
+      {{ id }} - {{ label }}
+    </div>
+
     <div>
       <el-icon :size="16" class="me-1 text-gray-60">
         <Link />
       </el-icon>
       <a :href="archiveUrl" target="_blank">
-        <span itemprop="name"><span class="hidden">{{ id }} </span>{{ label }}</span>
+        {{ label }}
       </a>
     </div>
   </div>
@@ -29,6 +37,7 @@ let props = defineProps<{
   url: string;
   date: string;
   label: string;
+  description: string;
   videoFilter: string;
   videoFilterAmount: number;
 }>();

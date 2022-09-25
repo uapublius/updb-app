@@ -44,42 +44,28 @@
             trigger="hover">
             <template #reference>
               <span
-                class="text-green lineheight-1 underdotted cursor-default">
+                class="text-gray-50 lineheight-1 text-small cursor-default">
                 <span>{{ report.word_count }} words&nbsp;</span>
-                <span>({{ wordData.original.adjectives.length }}adj&nbsp;</span>
-                <span>{{ wordData.original.adverbs.length }}adv&nbsp;</span>
-                <span>{{ wordData.original.verbs.length }}v)</span>
+                <span>({{ wordData.original.adjectives.length }} adj.&nbsp;</span>
+                <span>{{ wordData.original.adverbs.length }} adv.&nbsp;</span>
+                <span>{{ wordData.original.verbs.length }} v.)</span>
               </span>
             </template>
-            <div>
+
+            <div class="lineheight-1">
               <div class="ms-2">
-                <div class="text-bold text-larger ms-1">
-                  {{ report.word_count }} Words
-                </div>
+                <div class="text-bold ms-1 text-gray-30">Adjectives</div>
+                <div class="text-small text-gray-50 lineheight-12" v-html="wordData.formatted.adjectives" />
               </div>
+
               <div class="ms-2">
-                <div class="text-bold text-large ms-1 text-gray-50">
-                  Adjectives
-                </div>
-                <div>
-                  {{ wordData.formatted.adjectives }}
-                </div>
+                <div class="text-bold ms-1 text-gray-30">Adverbs</div>
+                <div class="text-small text-gray-50 lineheight-12" v-html="wordData.formatted.adverbs" />
               </div>
-              <div class="ms-2">
-                <div class="text-bold text-large ms-1 text-gray-50">
-                  Adverbs
-                </div>
-                <div>
-                  {{ wordData.formatted.adverbs }}
-                </div>
-              </div>
+
               <div>
-                <div class="text-bold text-large ms-1 text-gray-50">
-                  Verbs
-                </div>
-                <div>
-                  {{ wordData.formatted.verbs }}
-                </div>
+                <div class="text-bold ms-1 text-gray-30">Verbs</div>
+                <div class="text-small text-gray-50 lineheight-12" v-html="wordData.formatted.verbs" />
               </div>
             </div>
           </el-popover>

@@ -4,13 +4,27 @@ import { countries } from "countries-list";
 import { defineStore } from "pinia";
 import { Report, Attachment, Reference, ReportReferenceView } from "@/models";
 import { pinia } from "@/pinia";
+import { useFiltersStore } from "@/store/filters";
 import { useLocationsStore } from "@/store/locations";
-import { linkify } from "@/util";
+import { linkify, saveToFile } from "@/util";
 
 const API_REPORTS = import.meta.env.VITE_API_REPORTS;
 
 let locationsStore = useLocationsStore(pinia);
+let filtersStore = useFiltersStore(pinia);
 let wordpos;
+
+function buildDateParam(raw: string) {
+  let isYearOnly = raw.match(/^\d{4}$/)?.length;
+  if (isYearOnly) raw += '-01-01';
+  
+  let value = chrono.parse(raw);
+
+  if (!value.length) return;
+  let thisFrom = value[0].start;
+  let fromParam = `${thisFrom.get("month")}/${thisFrom.get("day")}/${thisFrom.get("year")}`;
+  return fromParam;
+}
 
 export const useReportsStore = defineStore("reports", {
   state: () => ({
@@ -20,22 +34,12 @@ export const useReportsStore = defineStore("reports", {
     viewingReport: null,
     results: [] as number[],
     resultsTotal: null,
-    keyword: "",
-    location: {
-      city: "",
-      district: "",
-      country: "",
-      water: "",
-      other: ""
-    },
-    from: null,
-    to: null,
     selectedLocations: [],
     offset: 0,
     limit: 20,
     isSearching: false,
-    filterSummary: "",
     reportCountryCounts: [],
+    sort: 'date.desc,country,district,city',
     wordData: {} as Record<number, Record<string, string[]>>
   }),
 
@@ -43,12 +47,6 @@ export const useReportsStore = defineStore("reports", {
     reportsForCurrentPage() {
       let resultInCurrentPage = (_, idx) => idx < this.offset + this.limit && idx >= this.offset;
       return this.results.filter(resultInCurrentPage);
-    },
-
-    hasFilter() {
-      if (this.keyword || this.from || this.to || this.location.city || this.location.district || this.location.country || this.location.water || this.location.other) {
-        return true;
-      }
     },
 
     reportCountsByContinent() {
@@ -79,19 +77,37 @@ export const useReportsStore = defineStore("reports", {
   },
 
   actions: {
+    async download(filename, extraParams: Record<string, unknown> = {}) {
+      let params = this.buildParams();
+      let { data } = await axios.get(API_REPORTS + "/report_view", {
+        headers: { Accept: "text/csv" },
+        params: { ...params, ...extraParams }
+      });
+    
+      saveToFile(data, filename);
+    },
+        
     wordDataForReport(id: number) {
       let wd = this.wordData[id];
       if (!wd) return;
+      
+      function filterWords(words: string[] = []) {
+        return words
+          .filter(w => w.length > 2)
+          .filter(w => !w.match(/^\d/))
+          .map(w => `<a href="/reports/search?keyword=${w}" target="_blank">${w}</a>`);
+      }
+
       let data = {
         formatted: {
-          adjectives: wd.adjectives?.filter(w => w.length > 2).join(' • '),
-          adverbs: wd.adverbs?.filter(w => w.length > 2).join(' • '),
-          verbs: wd.verbs?.filter(w => w.length > 2).join(' • ')
+          adjectives: filterWords(wd.adjectives).join(' • '),
+          adverbs: filterWords(wd.adverbs).join(' • '),
+          verbs: filterWords(wd.verbs).join(' • ')
         },
         original: {
-          adjectives: wd.adjectives?.filter(w => w.length > 2),
-          adverbs: wd.adverbs?.filter(w => w.length > 2),
-          verbs: wd.verbs?.filter(w => w.length > 2)
+          adjectives: filterWords(wd.adjectives),
+          adverbs: filterWords(wd.adverbs),
+          verbs: filterWords(wd.verbs)
         }
       };
       return data;
@@ -102,7 +118,8 @@ export const useReportsStore = defineStore("reports", {
 
       if (!import.meta.env.SSR) {
         if (!wordpos) {
-          wordpos = new window.WordPOS({
+          wordpos = new window['WordPOS']({
+            // TODO: Use local version
             dictPath: 'https://cdn.jsdelivr.net/npm/wordpos-web@1.0.2/dict',
             preload: ['a', 'v', 'r'],
             includeData: false,
@@ -154,76 +171,13 @@ export const useReportsStore = defineStore("reports", {
       this.results = [];
     },
 
-    buildSummary() {
-      let filterString = `${this.resultsTotal?.toLocaleString()} UFO Report`;
-
-      if (this.resultsTotal > 1) filterString += 's';
-
-      let filterStrings = [];
-
-      if (this.hasFilter) {
-        if (this.keyword) filterStrings.push(`matching keyword “${this.keyword}”`);
-
-        if (this.from && this.to) filterStrings.push(`between ${this.from}–${this.to}`);
-        else if (this.from) filterStrings.push(this.from);
-        else if (this.to) filterStrings.push(this.to);
-
-        if (this.location.city || this.location.district || this.location.country || this.location.water || this.location.other) {
-          filterStrings.push("in ");
-
-          let locs = ['city', 'district', 'country', 'water', 'other'].map(l => {
-            if (l === 'country') {
-              let country = countries[this.location[l]];
-              if (country) {
-                let val = country.name;
-                if (country.name !== country.native) val += ` (${country.native})`;
-                return val;
-              }
-              else {
-                return this.location[l];
-              }
-            }
-
-            return this.location[l];
-          }).filter(l => l);
-
-          if (locs.length === 1) {
-            if (this.location.city) {
-              filterStrings.push("city: ");
-            }
-            if (this.location.water) {
-              filterStrings.push("water body: ");
-            }
-            if (this.location.district) {
-              filterStrings.push("district: ");
-            }
-            if (this.location.other) {
-              filterStrings.push("other location: ");
-            }
-          }
-
-          filterStrings.push(locs.join(', '));
-        }
-      }
-
-      if (filterStrings.length) {
-        this.filterSummary = `${filterString} ${filterStrings.join(" ")}`.trim();
-      }
-    },
-
-    async doSearch(page) {
-      if (this.keyword || this.selectedLocations.length || this.from || this.to || this.location.city || this.location.district || this.location.country || this.location.water || this.location.other) {
-        await this.fetchNextReportsAndLocationDetails(page, this.selectedLocations);
-      }
-    },
-
     async fetchReportCountryCounts() {
       try {
         let res = await axios.get(API_REPORTS + "/report_count_by_country");
         this.reportCountryCounts = res.data;
       }
       catch (error) {
-        console.log(error.message);
+        console.error(error);
       }
     },
 
@@ -241,62 +195,68 @@ export const useReportsStore = defineStore("reports", {
         this.reports[datum.id] = datum;
       }
       catch (error) {
-        console.log(error.message);
+        console.error(error);
         return null;
       }
     },
 
-    async fetchReports(locations?: number[]) {
+    buildParams(locations?: number[]) {
       let params: any = {
         offset: this.offset,
         limit: this.limit,
-        order: 'date.desc'
+        order: this.sort
       };
 
-      if (this.keyword) params.ts = "wfts(en)." + this.keyword;
-
       if (this.selectedLocations?.length) params.location = "in.(" + this.selectedLocations.join(",") + ")";
+
       if (locations?.length) params.location = "in.(" + locations.join(",") + ")";
+
+      if (filtersStore.keyword) params.ts = "wfts(en)." + filtersStore.keyword;
 
       let dates = [];
 
-      if (this.from) {
-        let value = chrono.parse(this.from.toString());
-        if (value.length) {
-          let thisFrom = value[0].start;
-          let fromParam = `${thisFrom.get("month")}/${thisFrom.get("day")}/${thisFrom.get("year")}`;
-          dates.push(`date.gte.${fromParam}`);
-        }
+      if (filtersStore.from) {
+        let param = buildDateParam(filtersStore.from.toString());
+        if (param) dates.push(`date.gte.${param}`);
       }
 
-      if (this.to) {
-        let value = chrono.parse(this.to.toString());
-        if (value.length) {
-          let thisTo = value[0].start;
-          let toParam = `${thisTo.get("month")}/${thisTo.get("day")}/${thisTo.get("year")}`;
-          dates.push(`date.lt.${toParam}`);
-        }
+      if (filtersStore.to) {
+        let param = buildDateParam(filtersStore.to.toString());
+        if (param) dates.push(`date.lt.${param}`);
       }
 
       if (dates.length) params.and = `(${dates.join(",")})`;
 
-      if (this.location.city) params.city = "ilike.*" + this.location.city.trim().toUpperCase() + "*";
+      if (filtersStore.location.city) params.city = "ilike.*" + filtersStore.location.city.trim().toUpperCase() + "*";
 
-      if (this.location.district) params.district = "eq." + this.location.district.trim().toUpperCase();
+      if (filtersStore.location.district) params.district = "eq." + filtersStore.location.district.trim().toUpperCase();
 
-      if (this.location.country) params.country = "eq." + this.location.country.trim().toUpperCase();
+      if (filtersStore.location.country) params.country = "eq." + filtersStore.location.country.trim().toUpperCase();
 
-      if (this.location.water) params.water = "ilike.*" + this.location.water.trim().toUpperCase() + "*";
+      if (filtersStore.location.water) params.water = "ilike.*" + filtersStore.location.water.trim().toUpperCase() + "*";
 
-      if (this.location.other) params.other = "ilike.*" + this.location.other.trim().toUpperCase() + "*";
+      if (filtersStore.location.other) params.other = "ilike.*" + filtersStore.location.other.trim().toUpperCase() + "*";
+      
+      if (filtersStore.minWords) params.word_count = "gte." + filtersStore.minWords;
 
+      if (filtersStore.source.length) params.source = "in.(" + filtersStore.source.map(s=>s.id).join(",") + ")";
+      
       params.select = 'id,location,geoname_id,latitude,longitude,city,district,country,water,other,source,source_id,date,date_detail,description,word_count';
 
+      return params;
+    },
+
+    async fetchReports(locations?: number[]) {
+      let params = this.buildParams(locations);
       let res;
 
+      let count = 'estimated';
+
+      if (!filtersStore.hasFilter) count = 'exact';
+      
       try {
         res = await axios.get(API_REPORTS + "/report_view", {
-          headers: { Prefer: 'count=estimated' },
+          headers: { Prefer: `count=${count}` },
           params
         });
       }
@@ -325,15 +285,13 @@ export const useReportsStore = defineStore("reports", {
       this.isSearching = false;
       locationsStore.setLocationsDetailsFromReports(reports);
 
-      await this.fetchAttachmentsReferences(reports.map(r => r.id));
+      await this.fetchAttachmentsReferences(reports?.map(r => r.id));
 
       return reports;
     },
 
-    async fetchNextReportsAndLocationDetails(page, locations = []) {
-      this.selectedLocations = locations;
+    async fetchNextReportsAndLocationDetails(page) {
       this.offset = (page - 1) * this.limit;
-      // if offset thru offset + limit is already in reports, then skip
       let start = this.offset;
       let end = this.offset + this.limit;
 
@@ -346,7 +304,9 @@ export const useReportsStore = defineStore("reports", {
       }
     },
 
-    async fetchAttachmentsReferences(reports: number[]) {
+    async fetchAttachmentsReferences(reports?: number[]) {
+      if (!reports) return;
+
       try {
         let [attachments, references] = await Promise.all([
           axios.get(API_REPORTS + "/attachment", {
@@ -371,7 +331,7 @@ export const useReportsStore = defineStore("reports", {
 
       }
       catch (error) {
-        console.log(error.message);
+        console.error(error.message);
         // TODO: show error notification
         return;
       }

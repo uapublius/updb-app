@@ -1,4 +1,4 @@
-import { ElInfiniteScroll } from "element-plus";
+import { ElInfiniteScroll, ID_INJECTION_KEY } from "element-plus";
 import { createSSRApp } from "vue";
 import App from "./App.vue";
 import head from "./buildHeadTags";
@@ -21,6 +21,11 @@ export function createApp() {
   let router = createRouter();
 
   registerIcons(app);
+
+  app.provide(ID_INJECTION_KEY, {
+    prefix: Math.floor(Math.random() * 10000),
+    current: 0
+  });
 
   app.use(ElInfiniteScroll);
 

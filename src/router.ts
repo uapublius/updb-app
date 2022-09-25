@@ -10,7 +10,6 @@ import NotFoundPage from "./pages/NotFoundPage.vue";
 import ReportPage from "./pages/ReportPage.vue";
 import ReportsByCountry from "./pages/ReportsByCountry.vue";
 import ReportsPage from "./pages/ReportsPage.vue";
-import SubmitPage from "./pages/SubmitPage.vue";
 
 let routes = [
   {
@@ -26,12 +25,6 @@ let routes = [
   {
     path: "/news",
     redirect: '/'
-  },
-  {
-    name: "Submit",
-    path: "/submit",
-    component: SubmitPage,
-    props: true
   },
   {
     name: "Reports",
@@ -69,6 +62,12 @@ let routes = [
       {
         name: "ReportsForCountry",
         path: "country/:country",
+        component: ReportsList,
+        props: true
+      },
+      {
+        name: "ReportsForSource",
+        path: "source/:sourcename",
         component: ReportsList,
         props: true
       }
