@@ -5,7 +5,7 @@
       @search="doNewSearch" />
   </el-card>
   
-  <div v-if="reportsStore.resultsTotal !== null" shadow="never" class="ms-4 pn-2 pw-1">
+  <div v-if="!reportsStore.isSearching && reportsStore.resultsTotal !== null" shadow="never" class="ms-4 pn-2 pw-1">
     <div class="flex align-items-center justify-content-end search-header">
       <div class="flex-grow search-message">
         <h2 v-show="reportsStore.resultsTotal" class="text-bold text-gray-50 text-larger lineheight-13">
@@ -43,7 +43,7 @@
     </div>
   </div>
 
-  <el-card shadow="never" class="ms-3">
+  <el-card v-show="!reportsStore.isSearching" shadow="never" class="ms-3">
     <report-list anchor />
 
     <div v-if="reportsStore.resultsTotal" class="flex justify-content-center">

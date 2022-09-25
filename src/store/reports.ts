@@ -282,12 +282,10 @@ export const useReportsStore = defineStore("reports", {
     async fetchReportsAndAttachments() {
       this.isSearching = true;
       let reports = await this.fetchReports();
-      this.isSearching = false;
       locationsStore.setLocationsDetailsFromReports(reports);
 
       await this.fetchAttachmentsReferences(reports?.map(r => r.id));
-
-      return reports;
+      this.isSearching = false;
     },
 
     async fetchNextReportsAndLocationDetails(page) {
