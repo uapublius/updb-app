@@ -29,61 +29,43 @@
 
       <div class="flex align-items-center ms-2">
         <div class="report-filters-location flex me-2">
-          <el-input
-            v-model="filtersStore.location.city"
-            :disabled="searching"
-            name="city"
-            class="up-input me-2"
-            placeholder="City"
-            autocomplete="on"
-            clearable
-            size="large"
-            @keyup.enter="emit('search')" />
+          <client-only>
+            <filter-country
+              v-model="filtersStore.location.country"
+              :disabled="searching"
+              name="country"
+              class="w-100 up-input me-2"
+              @keyup.enter="emit('search')" />
 
-          <el-input
-            v-model="filtersStore.location.district"
-            :disabled="searching"
-            name="district"
-            class="up-input me-2"
-            placeholder="District"
-            autocomplete="on"
-            clearable
-            size="large"
-            @keyup.enter="emit('search')" />
+            <filter-district 
+              v-model="filtersStore.location.district" 
+              :disabled="searching"
+              :country="filtersStore.location.country"
+              name="district"
+              class="w-100 up-input me-2"
+              @keyup.enter="emit('search')"
+            />
 
-          <el-input
-            v-model="filtersStore.location.country"
-            :disabled="searching"
-            name="country"
-            class="up-input me-2"
-            placeholder="Country"
-            autocomplete="on"
-            clearable
-            maxlength="2"
-            size="large"
-            @keyup.enter="emit('search')" />
+            <filter-city 
+              v-model="filtersStore.location.city" 
+              :disabled="searching"
+              :country="filtersStore.location.country"
+              :district="filtersStore.location.district"
+              name="city"
+              class="w-100 up-input me-2"
+              @keyup.enter="emit('search')"
+            />
 
-          <el-input
-            v-model="filtersStore.location.water"
-            :disabled="searching"
-            name="water"
-            class="up-input"
-            placeholder="Water"
-            autocomplete="on"
-            clearable
-            size="large"
-            @keyup.enter="emit('search')" />
-
-        <!-- <el-input
-          v-model="filtersStore.location.other"
-          :disabled="searching"
-          name="other"
-          class="up-input"
-          placeholder="Other"
-          autocomplete="on"
-          clearable
-          size="large"
-          @keyup.enter="emit('search')" /> -->
+            <filter-water 
+              v-model="filtersStore.location.water" 
+              :disabled="searching"
+              :country="filtersStore.location.country"
+              :district="filtersStore.location.district"
+              name="water"
+              class="w-100 up-input"
+              @keyup.enter="emit('search')"
+            />
+          </client-only>
         </div>
 
         <div>
