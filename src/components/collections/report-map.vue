@@ -31,10 +31,10 @@
         <template #footer>
           <client-only>
             <el-pagination
-              v-if="reportsStore.resultsTotal"
+              v-if="reportsStore.resultsTotal > reportsStore.limit" 
               v-model:currentPage="page"
               v-model:pageSize="reportsStore.limit"
-              :pager-count="5"
+              :pager-count="3"
               :total="reportsStore.resultsTotal"
               layout="prev, pager, next"
               class="p-0"

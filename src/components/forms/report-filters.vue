@@ -166,7 +166,7 @@
           placeholder="Min Words" />
 
         <div class="text-right flex-grow">
-          <el-button text type="primary" @click="filtersStore.resetFilters">Reset</el-button>
+          <el-button text type="primary" @click="handleReset">Reset</el-button>
         </div>
       </div>
 
@@ -200,14 +200,21 @@ import {
 } from 'element-plus';
 import { sources } from "@/enums";
 import { useFiltersStore } from "@/store/filters";
+import { useReportsStore } from "@/store/reports";
 
 let filtersStore = useFiltersStore();
+let reportsStore = useReportsStore();
 
 let emit = defineEmits(['search']);
 
 defineProps<{
   searching?: boolean;
 }>();
+
+function handleReset() {
+  filtersStore.resetFilters();
+  reportsStore.resetResults();
+}
 
 function thisYear() {
   filtersStore.resetFilters();

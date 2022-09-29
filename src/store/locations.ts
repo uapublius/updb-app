@@ -132,8 +132,8 @@ export let useLocationsStore = defineStore("locations", {
 
     async fetchSummaries(query) {
       let rows;
-      let currentVersion = 'report_count_by_location-20220821';
-      let previousVersions = ['summaries'];
+      let currentVersion = 'report_count_by_location-20220928';
+      let previousVersions = ['summaries', 'report_count_by_location-20220821'];
       let parseOptions = {
         from: 2,
         cast: function (value, context) {
@@ -159,8 +159,6 @@ export let useLocationsStore = defineStore("locations", {
       }
 
       let fetchCounts = async () => {
-        previousVersions.map(async version => await localforage.removeItem(version));
-
         let { data } = await axios.get('/data/map/report_count_by_location.csv');
 
         await parseRows(data);
@@ -169,6 +167,8 @@ export let useLocationsStore = defineStore("locations", {
       };
 
       try {
+        await Promise.all(previousVersions.map(version => localforage.removeItem(version)));
+
         if (query.q) {
           let { data } = await axios.get(API_REPORTS + "/rpc/location_search", {
             params: {

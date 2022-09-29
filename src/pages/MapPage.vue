@@ -23,3 +23,9 @@ watch(route, async () => {
   setPageMeta(title, description, "https://updb.app/updb_wide_map.jpg");
 }, { immediate: true });
 </script>
+
+<style>
+  .page-map .report-result-words {
+    display: none !important;
+  }
+</style>

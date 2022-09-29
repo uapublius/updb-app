@@ -12,7 +12,7 @@
             target="_blank"
             href="https://web.archive.org/web/https://updb.app/phenomenon.sql.gz">
             <icon-download />
-            <div class="mw-1">phenomenon.sql.gz (104 MB)</div>
+            <div class="mw-1">phenomenon.sql.gz (106 MB)</div>
           </a>
           <p>Download the entire reports database in postgreSQL format.</p>
         </el-card>

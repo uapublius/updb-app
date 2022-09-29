@@ -35,7 +35,7 @@
 
       <attachments-inline v-if="attachments.length" :attachments="attachments" class="me-3" />
 
-      <span v-if="wordData" class="flex align-items-center">
+      <span v-if="wordData" class="flex align-items-center report-result-words">
         <client-only>
           <el-popover
             :show-after="200"
